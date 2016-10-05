@@ -7,10 +7,6 @@
     <ImageView android:id="@+id/splashscreen" android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:src="@drawable/bk"
-        android:maxHeight="20dp"
-        android:maxWidth="20dp"
-        android:minHeight="20dp"
-        android:minWidth="20dp"
         android:layout_gravity="center"/>
 
     <TextView android:layout_width="fill_parent"
