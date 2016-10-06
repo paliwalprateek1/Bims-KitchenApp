@@ -64,8 +64,8 @@ public class MenuPage extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Veg(), "ONE");
-        adapter.addFragment(new NonVeg(), "TWO");
+        adapter.addFragment(new Veg(), "VEG");
+        adapter.addFragment(new NonVeg(), "NON-VEG");
         viewPager.setAdapter(adapter);
     }
 
