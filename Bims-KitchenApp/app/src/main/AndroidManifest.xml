@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rajeevpc.bims_kitchenapp">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -15,12 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".M"
-
-                android:label="@string/app_name"
-                android:theme="@style/the">
-
-        </activity>
+        <activity
+            android:name=".M"
+            android:label="@string/app_name"
+            android:theme="@style/the" />
+        <activity android:name=".Login" />
+        <activity
+            android:name=".MenuPage"
+            android:label="@string/title_activity_menu_page"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
