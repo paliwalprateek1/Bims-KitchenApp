@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,16 +18,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MenuPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    public List<Food> orderedList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +44,11 @@ public class MenuPage extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "You have ordered "+orderedList.size()
+                + " items", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+
             }
         });
 
@@ -69,6 +77,10 @@ public class MenuPage extends AppCompatActivity
         viewPager.setAdapter(adapter);
     }
 
+//    public void fab(View view) {
+//        Toast.makeText(MenuPage.this, "hi"+orderedList.size()+"", Toast.LENGTH_SHORT).show();
+//    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -96,6 +108,13 @@ public class MenuPage extends AppCompatActivity
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+
+    }
+
+    public void addFood(Food food){
+        orderedList.add(food);
+        Log.d("adf"+food.getFood().toString(), "adsfasdfasdfsdddddddd");
     }
 
     @Override
@@ -135,3 +154,4 @@ public class MenuPage extends AppCompatActivity
         return true;
     }
 }
+

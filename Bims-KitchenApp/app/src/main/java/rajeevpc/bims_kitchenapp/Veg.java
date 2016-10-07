@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,17 @@ public class Veg extends Fragment {
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
 
+   // private List<Food> orderList = new ArrayList<>();
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
+
+    MenuPage order = new MenuPage();
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,6 +67,7 @@ public class Veg extends Fragment {
 
         mAdapter = new FoodAdapter(foodList);
 
+
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -67,10 +75,13 @@ public class Veg extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Food food = foodList.get(position);
+                order.addFood(food);
+                Log.d("adf"+food.getFood().toString(), "adsf");
                 Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
             }
 
@@ -89,17 +100,6 @@ public class Veg extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
- /*   @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
 
     @Override
     public void onDetach() {
