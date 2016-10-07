@@ -4,26 +4,32 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Veg extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private List<Food> foodList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private FoodAdapter mAdapter;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
     public Veg() {
-        // Required empty public constructor
     }
 
     public static Veg newInstance(String param1, String param2) {
@@ -47,8 +53,35 @@ public class Veg extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_veg, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_veg, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
+        mAdapter = new FoodAdapter(foodList);
+
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Food food = foodList.get(position);
+                Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+        prepareFoodData();
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {
@@ -75,7 +108,47 @@ public class Veg extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private void prepareFoodData() {
+        Food food = new Food("Maggie", "30 Rs");
+        foodList.add(food);
+
+        food = new Food("Burger", "60 Rs");
+        foodList.add(food);
+
+        food = new Food("Pizza", "90 Rs");
+        foodList.add(food);
+
+        food = new Food("Sandwich", "120 Rs");
+        foodList.add(food);
+
+        food = new Food("Maggie", "30 Rs");
+        foodList.add(food);
+
+        food = new Food("Burger", "60 Rs");
+        foodList.add(food);
+
+        food = new Food("Pizza", "90 Rs");
+        foodList.add(food);
+
+        food = new Food("Sandwich", "120 Rs");
+        foodList.add(food);
+
+        food = new Food("Maggie", "30 Rs");
+        foodList.add(food);
+
+        food = new Food("Burger", "60 Rs");
+        foodList.add(food);
+
+        food = new Food("Pizza", "90 Rs");
+        foodList.add(food);
+
+        food = new Food("Sandwich", "120 Rs");
+        foodList.add(food);
+
+        mAdapter.notifyDataSetChanged();
+    }
+
 }
