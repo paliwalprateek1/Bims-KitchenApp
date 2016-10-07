@@ -26,8 +26,8 @@ public class Food {
             return price;
         }
 
-        public void setPrice(String year) {
-            this.price = year;
+        public void setPrice(String price) {
+            this.price = price;
         }
 
 
