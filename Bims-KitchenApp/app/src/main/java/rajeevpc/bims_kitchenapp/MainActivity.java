@@ -40,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }, SPLASH_DISPLAY_LENGTH);
 
-        Button btn =(Button) findViewById(R.id.button1);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =new Intent(MainActivity.this,WelcomeActivity.class);
-                startActivity(i);
-            }
-        });
+//        Button btn =(Button) findViewById(R.id.button1);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Intent i =new Intent(MainActivity.this,WelcomeActivity.class);
+//                //startActivity(i);
+//            }
+//        });
 
     }
 }
