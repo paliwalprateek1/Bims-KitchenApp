@@ -5,10 +5,12 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }, SPLASH_DISPLAY_LENGTH);
 
+        Button btn =(Button) findViewById(R.id.button1);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(MainActivity.this,WelcomeActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 }
