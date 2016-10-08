@@ -26,6 +26,7 @@
             android:name=".MenuPage"
             android:label="@string/title_activity_menu_page"
             android:theme="@style/MyMaterialTheme" />
+        <activity android:name=".WelcomeActivity"></activity>
     </application>
 
 </manifest>
