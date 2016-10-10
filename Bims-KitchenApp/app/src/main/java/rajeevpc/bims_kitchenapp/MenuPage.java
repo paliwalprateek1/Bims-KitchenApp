@@ -1,5 +1,6 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -44,11 +45,16 @@ public class MenuPage extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "You have ordered "+orderedList.size()
-                + " items", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
-
+                StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
+                List a = storeSharedPreferences.loadFavorites(getApplicationContext());
+                if(a==null){
+                    Toast.makeText(MenuPage.this, "Select atleast on item", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(MenuPage.this, ProceedOrder.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -112,10 +118,6 @@ public class MenuPage extends AppCompatActivity
 
     }
 
-    public void addFood(Food food){
-        orderedList.add(food);
-        Log.d("adf"+food.getFood().toString(), "adsfasdfasdfsdddddddd");
-    }
 
     @Override
     public void onBackPressed() {

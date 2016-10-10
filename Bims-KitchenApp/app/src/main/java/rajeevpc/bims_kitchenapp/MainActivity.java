@@ -16,11 +16,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private final int SPLASH_DISPLAY_LENGTH = 500;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "21", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "30", Toast.LENGTH_SHORT).show();
 
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);

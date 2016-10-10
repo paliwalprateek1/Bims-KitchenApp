@@ -73,6 +73,8 @@ public class NonVeg extends Fragment {
             public void onClick(View view, int position) {
                 Food food = foodList.get(position);
                 Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
+                StoreSharedPreferences s = new StoreSharedPreferences();
+                s.addFavorite(getContext(), food);
             }
 
             @Override

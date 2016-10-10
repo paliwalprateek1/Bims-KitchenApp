@@ -9,7 +9,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="rajeevpc.bims_kitchenapp.Order"
-    tools:showIn="@layout/activity_order">
+    tools:context="rajeevpc.bims_kitchenapp.ProceedOrder"
+    tools:showIn="@layout/activity_proceed_order">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

@@ -1,8 +1,9 @@
 package rajeevpc.bims_kitchenapp;
 
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,7 +23,7 @@ public class Veg extends Fragment {
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
 
-   // private List<Food> orderList = new ArrayList<>();
+
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -61,6 +62,8 @@ public class Veg extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //StoreSharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         View view = inflater.inflate(R.layout.fragment_veg, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -80,9 +83,13 @@ public class Veg extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 Food food = foodList.get(position);
-                order.addFood(food);
                 Log.d("adf"+food.getFood().toString(), "adsf");
                 Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
+
+                //StoreSharedPreferences.setPrice(getContext(), food.getPrice());
+                StoreSharedPreferences s = new StoreSharedPreferences();
+                s.addFavorite(getContext(), food);
+
             }
 
             @Override
