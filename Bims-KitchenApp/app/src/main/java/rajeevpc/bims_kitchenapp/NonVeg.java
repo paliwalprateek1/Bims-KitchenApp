@@ -7,10 +7,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +29,10 @@ public class NonVeg extends Fragment {
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
 
+    Firebase ref;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -55,6 +62,9 @@ public class NonVeg extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Firebase.setAndroidContext(getContext());
+        ref = new Firebase(Server.URL);
         View view = inflater.inflate(R.layout.fragment_non_veg, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -83,8 +93,10 @@ public class NonVeg extends Fragment {
             }
         }));
 
-        prepareFoodData();
-        return view;    }
+       // prepareFoodData();
+        getNonVegMenu();
+        return view;
+    }
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -92,16 +104,6 @@ public class NonVeg extends Fragment {
         }
     }
 
-  /*  @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
 
     @Override
     public void onDetach() {
@@ -151,6 +153,30 @@ public class NonVeg extends Fragment {
         foodList.add(food);
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void getNonVegMenu(){
+        Firebase objRef = ref.child("Menu");
+        Query pendingTasks = objRef.orderByChild("cat").equalTo("Nonveg");
+        pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot tasksSnapshot) {
+                for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
+                    Object value = snapshot.child("f").getValue();
+                    Object valueF = snapshot.child("p").getValue();
+                    Food food = new Food(value.toString(), valueF.toString());
+                    foodList.add(food);
+                    mAdapter.notifyDataSetChanged();
+
+                    Log.d("food "+value.toString(), "price "+valueF.toString());
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
     }
 
 }

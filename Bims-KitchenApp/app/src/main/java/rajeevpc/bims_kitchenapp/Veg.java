@@ -1,5 +1,7 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +32,8 @@ public class Veg extends Fragment {
     private FoodAdapter mAdapter;
 
 
+    Firebase ref;
+
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -33,7 +43,6 @@ public class Veg extends Fragment {
     private String mParam2;
 
     MenuPage order = new MenuPage();
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,6 +72,9 @@ public class Veg extends Fragment {
                              Bundle savedInstanceState) {
 
         //StoreSharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Firebase.setAndroidContext(getContext());
+        ref = new Firebase(Server.URL);
+
 
         View view = inflater.inflate(R.layout.fragment_veg, container, false);
 
@@ -98,7 +110,9 @@ public class Veg extends Fragment {
             }
         }));
 
-        prepareFoodData();
+        //prepareFoodData();
+
+        getVegMenu();
         return view;
     }
 
@@ -118,44 +132,69 @@ public class Veg extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void prepareFoodData() {
-        Food food = new Food("Maggie", "30 Rs");
+    private void prepareFoodData(String foody, String price) {
+        Food food = new Food(foody, price);
         foodList.add(food);
 
-        food = new Food("Burger", "60 Rs");
-        foodList.add(food);
-
-        food = new Food("Pizza", "90 Rs");
-        foodList.add(food);
-
-        food = new Food("Sandwich", "120 Rs");
-        foodList.add(food);
-
-        food = new Food("Maggie", "30 Rs");
-        foodList.add(food);
-
-        food = new Food("Burger", "60 Rs");
-        foodList.add(food);
-
-        food = new Food("Pizza", "90 Rs");
-        foodList.add(food);
-
-        food = new Food("Sandwich", "120 Rs");
-        foodList.add(food);
-
-        food = new Food("Maggie", "30 Rs");
-        foodList.add(food);
-
-        food = new Food("Burger", "60 Rs");
-        foodList.add(food);
-
-        food = new Food("Pizza", "90 Rs");
-        foodList.add(food);
-
-        food = new Food("Sandwich", "120 Rs");
-        foodList.add(food);
+//        food = new Food("Burger", "60 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Pizza", "90 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Sandwich", "120 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Maggie", "30 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Burger", "60 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Pizza", "90 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Sandwich", "120 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Maggie", "30 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Burger", "60 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Pizza", "90 Rs");
+//        foodList.add(food);
+//
+//        food = new Food("Sandwich", "120 Rs");
+//        foodList.add(food);
 
         mAdapter.notifyDataSetChanged();
     }
 
+
+    private void getVegMenu(){
+        //final Food food = new Food(null, null);
+        Firebase objRef = ref.child("Menu");
+        Query pendingTasks = objRef.orderByChild("cat").equalTo("veg");
+        pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot tasksSnapshot) {
+                for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
+                    Object value = snapshot.child("f").getValue();
+                    Object valueF = snapshot.child("p").getValue();
+                    //prepareFoodData(value.toString(), valueF.toString());
+                    Food food = new Food(value.toString(), valueF.toString());
+                    foodList.add(food);
+                    mAdapter.notifyDataSetChanged();
+
+                    Log.d("food "+value.toString(), "price "+valueF.toString());
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+    }
 }

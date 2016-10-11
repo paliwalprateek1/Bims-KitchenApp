@@ -1,7 +1,9 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -23,13 +25,17 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MenuPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
 
     public List<Food> orderedList = new ArrayList<>();
 
@@ -60,6 +66,9 @@ public class MenuPage extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
@@ -82,10 +91,6 @@ public class MenuPage extends AppCompatActivity
         adapter.addFragment(new NonVeg(), "NON-VEG");
         viewPager.setAdapter(adapter);
     }
-
-//    public void fab(View view) {
-//        Toast.makeText(MenuPage.this, "hi"+orderedList.size()+"", Toast.LENGTH_SHORT).show();
-//    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
