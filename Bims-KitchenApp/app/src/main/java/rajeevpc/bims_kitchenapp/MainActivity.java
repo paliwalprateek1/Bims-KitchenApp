@@ -16,11 +16,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 500;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "38", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "41", Toast.LENGTH_SHORT).show();
 
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
                 Intent mainIntent = new Intent(MainActivity.this, M.class);
                 MainActivity.this.startActivity(mainIntent);
                 MainActivity.this.finish();

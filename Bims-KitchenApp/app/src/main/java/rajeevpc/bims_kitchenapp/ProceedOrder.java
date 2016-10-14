@@ -69,8 +69,11 @@ public class ProceedOrder extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), "Swipe to cancel", Toast.LENGTH_SHORT).show();
             }
         }));
+
+
 
 
         ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
@@ -83,10 +86,11 @@ public class ProceedOrder extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
             {
-                if(order.size()==1){finish();}
+                if(order.size()==1){storeSharedPreferences.removeAll(getApplicationContext());
+                    finish();}
                 else {
                     order.remove(order.get(viewHolder.getAdapterPosition()));
-                    Toast.makeText(ProceedOrder.this, "Removed" + order.size(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(ProceedOrder.this, "Removed" + order.size(), Toast.LENGTH_SHORT).show();
                     mAdapter.notifyDataSetChanged();
                 }
             }
