@@ -93,8 +93,8 @@ public class NonVeg extends Fragment {
             }
         }));
 
-        prepareFoodData();
-       // getNonVegMenu();
+        //prepareFoodData();
+        getNonVegMenu();
         return view;
     }
 

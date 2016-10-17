@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 public class MenuPage extends AppCompatActivity
@@ -42,6 +43,8 @@ public class MenuPage extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -65,8 +68,6 @@ public class MenuPage extends AppCompatActivity
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);

@@ -3,7 +3,12 @@ package rajeevpc.bims_kitchenapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,6 +35,12 @@ public class ProceedOrder extends AppCompatActivity {
     StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
+    private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1000; // in Meters
+    private static final long MINIMUM_TIME_BETWEEN_UPDATES = 3600000; //0 in Milliseconds
+    protected LocationManager locationManager;
+    private String latitude, longitude;
+    int PLACE_PICKER_REQUEST = 1;
+
 
     Firebase ref;
     @Override
@@ -47,6 +58,16 @@ public class ProceedOrder extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         order = storeSharedPreferences.loadFavorites(getApplicationContext());
+
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Log.d("here", "1");
+
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                MINIMUM_TIME_BETWEEN_UPDATES,
+                MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
+                new MyLocationListener()
+        );
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -100,6 +121,36 @@ public class ProceedOrder extends AppCompatActivity {
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    protected void showCurrentLocation() {
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Log.d("here", "2");
+        if (location != null) {
+            latitude = String.valueOf(location.getLatitude());
+            longitude = String.valueOf(location.getLongitude());
+        }
+        else
+        {//Toast.makeText(GetLocationStatus.this, "Location Currently Unavailable",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class MyLocationListener implements LocationListener {
+        public void onLocationChanged(Location location) {
+            String message = String.format(
+                    "New Location \n Longitude: %1$s \n Latitude: %2$s",
+                    location.getLongitude(), location.getLatitude()
+            );
+        }
+        public void onStatusChanged(String s, int i, Bundle b) {
+        }
+
+        public void onProviderDisabled(String s) {
+        }
+
+        public void onProviderEnabled(String s) {
+
+        }
+    }
+
     public void confirmOrder(View view) {
         int size = order.size();
         String fOrder="";
@@ -108,7 +159,7 @@ public class ProceedOrder extends AppCompatActivity {
         for(int i=0;i<size;i++){
             String s = order.get(i).getFood()+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
             fOrder = s+fOrder;
-            String ss = order.get(i).getFood();
+            String ss = order.get(i).getFood() + ", ";
             itemOrderString = ss+itemOrderString;
             value = value + Integer.parseInt(order.get(i).getPrice());
         }
@@ -119,11 +170,13 @@ public class ProceedOrder extends AppCompatActivity {
         final OrderSend os = new OrderSend();
         os.setAmount(String.valueOf(value));
         os.setItemString(itemOrderString);
-        os.setLatitude("olay");
-        os.setLongitude("yalo");
-        os.setLatitude("prateekp987@gmail.com");
-        Firebase newRef = ref.child("Order").push();
-        newRef.setValue(os);
+        os.setLatitude(latitude);
+        os.setLongitude(longitude);
+        os.setUserMail("prateekp987@gmail.com");
+
+
+
+
 
         Toast.makeText(ProceedOrder.this, "You have ordered" +size+"items.", Toast.LENGTH_SHORT).show();
         AlertDialog.Builder builder = new AlertDialog.Builder(ProceedOrder.this);
@@ -131,6 +184,9 @@ public class ProceedOrder extends AppCompatActivity {
                 .setPositiveButton("OrderSend", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
+                        Firebase newRef = ref.child("Order").push();
+                        newRef.setValue(os);
+                        Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
                         // FIRE ZE MISSILES!
                     }
                 })
@@ -142,5 +198,6 @@ public class ProceedOrder extends AppCompatActivity {
         // Create the AlertDialog object and return it
         builder.create().show();
     }
+
 }
 

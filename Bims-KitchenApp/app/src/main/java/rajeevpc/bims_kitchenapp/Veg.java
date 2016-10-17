@@ -1,10 +1,17 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,21 +34,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Veg extends Fragment {
+public class Veg extends Fragment{
+
     private List<Food> foodList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
-
-
+    ProgressDialog p;
     Firebase ref;
-
-
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
+    private final int CANCEL_DIALOG = 1;
+    private Handler mHandler;
+    private ProgressDialog mDialog;
+
+    private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1000; // in Meters
+    private static final long MINIMUM_TIME_BETWEEN_UPDATES = 3600000; //0 in Milliseconds
+    protected LocationManager locationManager;
 
     MenuPage order = new MenuPage();
 
@@ -66,7 +77,10 @@ public class Veg extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,14 +124,34 @@ public class Veg extends Fragment {
 
             }
         }));
+        getVegMenu();
+        mHandler = new Handler(new Handler.Callback()
+        {
+            @Override
+            public boolean handleMessage(Message msg)
+            {
+                if(msg.what == CANCEL_DIALOG)
+                {
+                    mDialog.cancel();
+                }
+
+                return false;
+            }
+        });
 
 
 
-        prepareFoodData();
 
-       // getVegMenu();
+        mDialog = new ProgressDialog(getContext());
+        mDialog.setMessage("Fetching Menu....");
+        mDialog.show();
+        mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 4600);
+        //prepareFoodData();
+
         return view;
     }
+
+
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -180,6 +214,7 @@ public class Veg extends Fragment {
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
-        });
+        });//p.dismiss();
     }
 }
+
