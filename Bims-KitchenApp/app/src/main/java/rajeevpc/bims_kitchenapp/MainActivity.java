@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "41", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "56", Toast.LENGTH_SHORT).show();
 
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);

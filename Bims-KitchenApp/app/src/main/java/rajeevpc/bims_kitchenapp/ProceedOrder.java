@@ -1,5 +1,9 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +17,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProceedOrder extends AppCompatActivity {
@@ -23,6 +31,7 @@ public class ProceedOrder extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
 
+    Firebase ref;
     @Override
     public void onBackPressed() {
         order.clear();
@@ -37,14 +46,6 @@ public class ProceedOrder extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //storeSharedPreferences.removeFavorite(getApplicationContext(), );
-                order.clear();
-            }
-        });
         order = storeSharedPreferences.loadFavorites(getApplicationContext());
 
 
@@ -98,4 +99,48 @@ public class ProceedOrder extends AppCompatActivity {
         });
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
     }
+
+    public void confirmOrder(View view) {
+        int size = order.size();
+        String fOrder="";
+        String itemOrderString="";
+        int value=0;
+        for(int i=0;i<size;i++){
+            String s = order.get(i).getFood()+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
+            fOrder = s+fOrder;
+            String ss = order.get(i).getFood();
+            itemOrderString = ss+itemOrderString;
+            value = value + Integer.parseInt(order.get(i).getPrice());
+        }
+
+        Firebase.setAndroidContext(getApplicationContext());
+        ref = new Firebase(Server.URL);
+
+        final OrderSend os = new OrderSend();
+        os.setAmount(String.valueOf(value));
+        os.setItemString(itemOrderString);
+        os.setLatitude("olay");
+        os.setLongitude("yalo");
+        os.setLatitude("prateekp987@gmail.com");
+        Firebase newRef = ref.child("Order").push();
+        newRef.setValue(os);
+
+        Toast.makeText(ProceedOrder.this, "You have ordered" +size+"items.", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProceedOrder.this);
+        builder.setTitle("YOUR ORDER").setMessage(fOrder)
+                .setPositiveButton("OrderSend", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        // FIRE ZE MISSILES!
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.create().show();
+    }
 }
+

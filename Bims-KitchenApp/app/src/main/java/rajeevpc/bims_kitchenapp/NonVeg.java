@@ -93,8 +93,8 @@ public class NonVeg extends Fragment {
             }
         }));
 
-       // prepareFoodData();
-        getNonVegMenu();
+        prepareFoodData();
+       // getNonVegMenu();
         return view;
     }
 
@@ -117,40 +117,18 @@ public class NonVeg extends Fragment {
     }
 
     private void prepareFoodData() {
-        Food food = new Food("Non-Veg Maggie", "30 Rs");
+        Food food = new Food("Non-Veg Maggie", "30");
         foodList.add(food);
 
-        food = new Food("Non-Veg Burger", "60 Rs");
+        food = new Food("Non-Veg Burger", "60");
         foodList.add(food);
 
-        food = new Food("Non-Veg Pizza", "90 Rs");
+        food = new Food("Non-Veg Pizza", "90");
         foodList.add(food);
 
-        food = new Food("Non-Veg Sandwich", "120 Rs");
+        food = new Food("Non-Veg Sandwich", "120");
         foodList.add(food);
 
-        food = new Food("Non-Veg Maggie", "30 Rs");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Burger", "60 Rs");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Pizza", "90 Rs");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Sandwich", "120 Rs");
-        foodList.add(food);
-        food = new Food("Non-Veg Maggie", "30 Rs");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Burger", "60 Rs");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Pizza", "90 Rs");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Sandwich", "120 Rs");
-        foodList.add(food);
 
         mAdapter.notifyDataSetChanged();
     }

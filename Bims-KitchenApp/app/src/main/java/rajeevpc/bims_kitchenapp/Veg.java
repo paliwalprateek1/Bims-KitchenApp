@@ -113,9 +113,9 @@ public class Veg extends Fragment {
 
 
 
-        //prepareFoodData();
+        prepareFoodData();
 
-        getVegMenu();
+       // getVegMenu();
         return view;
     }
 
@@ -135,42 +135,24 @@ public class Veg extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void prepareFoodData(String foody, String price) {
-        Food food = new Food(foody, price);
+    private void prepareFoodData() {
+        Food food = new Food("Maggie", "Aukad ke bahar");
         foodList.add(food);
 
-//        food = new Food("Burger", "60 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Pizza", "90 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Sandwich", "120 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Maggie", "30 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Burger", "60 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Pizza", "90 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Sandwich", "120 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Maggie", "30 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Burger", "60 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Pizza", "90 Rs");
-//        foodList.add(food);
-//
-//        food = new Food("Sandwich", "120 Rs");
-//        foodList.add(food);
+        food = new Food("Burger", "60");
+        foodList.add(food);
+
+        food = new Food("Pizza", "90");
+        foodList.add(food);
+
+        food = new Food("Sandwich", "120");
+        foodList.add(food);
+
+        food = new Food("Maggie", "30");
+        foodList.add(food);
+
+        food = new Food("Burger", "60");
+        foodList.add(food);
 
         mAdapter.notifyDataSetChanged();
     }
