@@ -4,7 +4,7 @@ package rajeevpc.bims_kitchenapp;
  * Created by prateek on 7/10/16.
  */
 public class Food {
-    private String food, price, data;
+    private String food, price;
 
         public Food() {
         }

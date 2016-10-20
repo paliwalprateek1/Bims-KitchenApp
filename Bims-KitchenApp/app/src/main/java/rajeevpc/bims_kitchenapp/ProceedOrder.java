@@ -23,6 +23,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,14 +41,10 @@ public class ProceedOrder extends AppCompatActivity {
     StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
-    private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1000; // in Meters
-    private static final long MINIMUM_TIME_BETWEEN_UPDATES = 3600000; //0 in Milliseconds
-    protected LocationManager locationManager;
     private String latitude, longitude;
-    int PLACE_PICKER_REQUEST = 1;
-
-
+    int status = 1;
     Firebase ref;
+
     @Override
     public void onBackPressed() {
         order.clear();
@@ -56,32 +58,15 @@ public class ProceedOrder extends AppCompatActivity {
         setContentView(R.layout.activity_proceed_order);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         order = storeSharedPreferences.loadFavorites(getApplicationContext());
-
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Log.d("here", "1");
-
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                MINIMUM_TIME_BETWEEN_UPDATES,
-                MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
-                new MyLocationListener()
-        );
-
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
         mAdapter = new FoodAdapter(order);
-
-
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -94,10 +79,6 @@ public class ProceedOrder extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Swipe to cancel", Toast.LENGTH_SHORT).show();
             }
         }));
-
-
-
-
         ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -121,33 +102,19 @@ public class ProceedOrder extends AppCompatActivity {
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    protected void showCurrentLocation() {
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Log.d("here", "2");
-        if (location != null) {
-            latitude = String.valueOf(location.getLatitude());
-            longitude = String.valueOf(location.getLongitude());
-        }
-        else
-        {//Toast.makeText(GetLocationStatus.this, "Location Currently Unavailable",Toast.LENGTH_SHORT).show();
-        }
-    }
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    private class MyLocationListener implements LocationListener {
-        public void onLocationChanged(Location location) {
-            String message = String.format(
-                    "New Location \n Longitude: %1$s \n Latitude: %2$s",
-                    location.getLongitude(), location.getLatitude()
-            );
+        if (requestCode == 100){
+            status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         }
-        public void onStatusChanged(String s, int i, Bundle b) {
-        }
+        if (requestCode == 199){
 
-        public void onProviderDisabled(String s) {
-        }
-
-        public void onProviderEnabled(String s) {
-
+            //process Intent......
+            Place place = PlacePicker.getPlace(data, this);
+            String toastMsg = String.format("Place: %s", place.getName());
+            Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -163,30 +130,42 @@ public class ProceedOrder extends AppCompatActivity {
             itemOrderString = ss+itemOrderString;
             value = value + Integer.parseInt(order.get(i).getPrice());
         }
-
         Firebase.setAndroidContext(getApplicationContext());
         ref = new Firebase(Server.URL);
-
         final OrderSend os = new OrderSend();
         os.setAmount(String.valueOf(value));
         os.setItemString(itemOrderString);
         os.setLatitude(latitude);
         os.setLongitude(longitude);
         os.setUserMail("prateekp987@gmail.com");
-
-
-
-
-
         Toast.makeText(ProceedOrder.this, "You have ordered" +size+"items.", Toast.LENGTH_SHORT).show();
         AlertDialog.Builder builder = new AlertDialog.Builder(ProceedOrder.this);
         builder.setTitle("YOUR ORDER").setMessage(fOrder)
-                .setPositiveButton("OrderSend", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Select Address", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Firebase newRef = ref.child("Order").push();
-                        newRef.setValue(os);
-                        Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
+                        status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(ProceedOrder.this);
+                        if (status != ConnectionResult.SUCCESS) {
+                            if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
+                                GooglePlayServicesUtil.getErrorDialog(status, ProceedOrder.this,
+                                        100).show();
+                            }
+                        }
+                        if (status == ConnectionResult.SUCCESS) {
+                            int PLACE_PICKER_REQUEST = 199;
+                            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                            //Context context = this;
+                            try {
+                                startActivityForResult(builder.build(ProceedOrder.this), PLACE_PICKER_REQUEST);
+                            } catch (GooglePlayServicesRepairableException e) {
+                                e.printStackTrace();
+                            } catch (GooglePlayServicesNotAvailableException e) {
+                                e.printStackTrace();
+                            }
+                        }
+//                        Firebase newRef = ref.child("Order").push();
+//                        newRef.setValue(os);
+//                        Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
                         // FIRE ZE MISSILES!
                     }
                 })
@@ -198,6 +177,5 @@ public class ProceedOrder extends AppCompatActivity {
         // Create the AlertDialog object and return it
         builder.create().show();
     }
-
 }
 
