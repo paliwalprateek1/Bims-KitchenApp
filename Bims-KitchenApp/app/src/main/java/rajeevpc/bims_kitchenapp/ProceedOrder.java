@@ -43,8 +43,11 @@ public class ProceedOrder extends AppCompatActivity {
     StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
-    private String latitude, longitude;
+    private String latitude, longitude, address;
     int status = 1;
+    String itemOrderString="";
+    String fOrder="";
+    int value=0;
     Firebase ref;
 
     @Override
@@ -102,6 +105,16 @@ public class ProceedOrder extends AppCompatActivity {
 
         });
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
+
+        int size = order.size();
+
+        for(int i=0;i<size;i++){
+            String s = order.get(i).getFood()+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
+            fOrder = s+fOrder;
+            String ss = order.get(i).getFood() + ", ";
+            itemOrderString = ss+itemOrderString;
+            value = value + Integer.parseInt(order.get(i).getPrice());
+        }
     }
 
     @Override
@@ -112,78 +125,67 @@ public class ProceedOrder extends AppCompatActivity {
             status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         }
         if (requestCode == 199){
-
-
-            //process Intent......
+            final int size = order.size();
             Place place = PlacePicker.getPlace(data, this);
-            String toastMsg = String.format("Place: %s", place.getName());
+            String toastMsg = String.format("Place: %s", place.getAddress());
+            address = place.getAddress().toString();
+            latitude = place.getLatLng().toString();
             Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProceedOrder.this);
+            builder.setTitle("Order Summary").setMessage(fOrder)
+                    .setPositiveButton("Confirm Order", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Firebase.setAndroidContext(getApplicationContext());
+                            ref = new Firebase(Server.URL);
+                            final OrderSend os = new OrderSend();
+                            os.setAmount(String.valueOf(value));
+                            os.setItemString(itemOrderString);
+                            os.setLatitude(latitude);
+                            os.setLongitude(address);
+                            os.setUserMail("prateekp987@gmail.com");
+                            Toast.makeText(ProceedOrder.this, "You have ordered" +size+"items.", Toast.LENGTH_SHORT).show();
+                            Firebase newRef = ref.child("Order").push();
+                            newRef.setValue(os);
+                            Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
+                            order.clear();
+                            storeSharedPreferences.removeAll(getApplicationContext());
+                            finish();
+                        }
+                    });
+//                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                        }
+//                    });
+            builder.create().show();
+
         }
     }
 
     public void confirmOrder(View view) {
-        int size = order.size();
-        String fOrder="";
-        String itemOrderString="";
-        int value=0;
-        for(int i=0;i<size;i++){
-            String s = order.get(i).getFood()+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
-            fOrder = s+fOrder;
-            String ss = order.get(i).getFood() + ", ";
-            itemOrderString = ss+itemOrderString;
-            value = value + Integer.parseInt(order.get(i).getPrice());
+        status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(ProceedOrder.this);
+        if (status != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
+                GooglePlayServicesUtil.getErrorDialog(status, ProceedOrder.this,
+                        100).show();
+            }
         }
-        Firebase.setAndroidContext(getApplicationContext());
-        ref = new Firebase(Server.URL);
-        final OrderSend os = new OrderSend();
-        os.setAmount(String.valueOf(value));
-        os.setItemString(itemOrderString);
-        os.setLatitude(latitude);
-        os.setLongitude(longitude);
-        os.setUserMail("prateekp987@gmail.com");
-        Toast.makeText(ProceedOrder.this, "You have ordered" +size+"items.", Toast.LENGTH_SHORT).show();
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProceedOrder.this);
-        builder.setTitle("YOUR ORDER").setMessage(fOrder)
-                .setPositiveButton("Select Address", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+        if (status == ConnectionResult.SUCCESS) {
+            int PLACE_PICKER_REQUEST = 199;
+            LatLng topLeft = new LatLng(23.179860, 72.649143);
+            LatLng bottomRight = new LatLng(23.249227 , 72.652202);
+            LatLngBounds bounds = new LatLngBounds(topLeft,bottomRight);
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            builder.setLatLngBounds(bounds);
+            //PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            //Context context = this;
+            try {
+                startActivityForResult(builder.build(ProceedOrder.this), PLACE_PICKER_REQUEST);
+            } catch (GooglePlayServicesRepairableException e) {
+                e.printStackTrace();
+            } catch (GooglePlayServicesNotAvailableException e) {
+                e.printStackTrace();
+            }
+        }
 
-                        status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(ProceedOrder.this);
-                        if (status != ConnectionResult.SUCCESS) {
-                            if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
-                                GooglePlayServicesUtil.getErrorDialog(status, ProceedOrder.this,
-                                        100).show();
-                            }
-                        }
-                        if (status == ConnectionResult.SUCCESS) {
-                            int PLACE_PICKER_REQUEST = 199;
-                            LatLng topLeft = new LatLng(23.179860, 72.649143);
-                            LatLng bottomRight = new LatLng(23.249227 , 72.652202);
-                            LatLngBounds bounds = new LatLngBounds(topLeft,bottomRight);
-                            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                            builder.setLatLngBounds(bounds);
-                            //PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                            //Context context = this;
-                            try {
-                                startActivityForResult(builder.build(ProceedOrder.this), PLACE_PICKER_REQUEST);
-                            } catch (GooglePlayServicesRepairableException e) {
-                                e.printStackTrace();
-                            } catch (GooglePlayServicesNotAvailableException e) {
-                                e.printStackTrace();
-                            }
-                        }
-//                        Firebase newRef = ref.child("Order").push();
-//                        newRef.setValue(os);
-//                        Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
-                        // FIRE ZE MISSILES!
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
-        // Create the AlertDialog object and return it
-        builder.create().show();
     }
 }
-
