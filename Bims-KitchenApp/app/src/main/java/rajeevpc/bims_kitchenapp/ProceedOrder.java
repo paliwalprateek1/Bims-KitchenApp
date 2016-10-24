@@ -29,6 +29,8 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -111,6 +113,7 @@ public class ProceedOrder extends AppCompatActivity {
         }
         if (requestCode == 199){
 
+
             //process Intent......
             Place place = PlacePicker.getPlace(data, this);
             String toastMsg = String.format("Place: %s", place.getName());
@@ -153,7 +156,12 @@ public class ProceedOrder extends AppCompatActivity {
                         }
                         if (status == ConnectionResult.SUCCESS) {
                             int PLACE_PICKER_REQUEST = 199;
+                            LatLng topLeft = new LatLng(23.179860, 72.649143);
+                            LatLng bottomRight = new LatLng(23.249227 , 72.652202);
+                            LatLngBounds bounds = new LatLngBounds(topLeft,bottomRight);
                             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                            builder.setLatLngBounds(bounds);
+                            //PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                             //Context context = this;
                             try {
                                 startActivityForResult(builder.build(ProceedOrder.this), PLACE_PICKER_REQUEST);
