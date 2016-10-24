@@ -77,11 +77,7 @@ public class Veg extends Fragment{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,36 +85,25 @@ public class Veg extends Fragment{
         //StoreSharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         Firebase.setAndroidContext(getContext());
         ref = new Firebase(Server.URL);
-
-
         View view = inflater.inflate(R.layout.fragment_veg, container, false);
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-
         mAdapter = new FoodAdapter(foodList);
-
-
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
-
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Food food = foodList.get(position);
                 Log.d("adf"+food.getFood().toString(), "adsf");
                 Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
-
                 //StoreSharedPreferences.setPrice(getContext(), food.getPrice());
                 StoreSharedPreferences s = new StoreSharedPreferences();
                 s.addFavorite(getContext(), food);
-
             }
-
             @Override
             public void onLongClick(View view, int position) {
 
@@ -138,20 +123,13 @@ public class Veg extends Fragment{
                 return false;
             }
         });
-
-
-
-
         mDialog = new ProgressDialog(getContext());
         mDialog.setMessage("Fetching Menu....");
         mDialog.show();
-        mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 4600);
+        mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 8000);
         //prepareFoodData();
-
         return view;
     }
-
-
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -191,7 +169,6 @@ public class Veg extends Fragment{
         mAdapter.notifyDataSetChanged();
     }
 
-
     private void getVegMenu(){
         //final Food food = new Food(null, null);
         Firebase objRef = ref.child("Menu");
@@ -206,7 +183,6 @@ public class Veg extends Fragment{
                     Food food = new Food(value.toString(), valueF.toString());
                     foodList.add(food);
                     mAdapter.notifyDataSetChanged();
-
                     Log.d("food "+value.toString(), "price "+valueF.toString());
                 }
             }
@@ -214,7 +190,7 @@ public class Veg extends Fragment{
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
-        });//p.dismiss();
+        });
     }
 }
 
