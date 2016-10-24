@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:textColor="@color/colorPrimaryDark"
         android:layout_height="60dp"
-        android:text="Confirm Order"
+        android:text="Pick Location"
         android:id="@+id/confirmOrder"
         android:onClick="confirmOrder"
         android:layout_alignParentBottom="true"

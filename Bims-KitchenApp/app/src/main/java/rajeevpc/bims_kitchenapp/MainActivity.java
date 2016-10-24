@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "59", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "63", Toast.LENGTH_SHORT).show();
 
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -38,15 +38,5 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
-
-//        Button btn =(Button) findViewById(R.id.button1);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Intent i =new Intent(MainActivity.this,WelcomeActivity.class);
-//                //startActivity(i);
-//            }
-//        });
-
     }
 }
