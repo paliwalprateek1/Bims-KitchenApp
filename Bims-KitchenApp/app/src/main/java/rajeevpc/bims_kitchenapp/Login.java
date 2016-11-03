@@ -9,7 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -29,18 +33,10 @@ public class Login extends AppCompatActivity {
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
-
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-
     Firebase ref;
     private final String URL = "https://bims-kitchenapp.firebaseio.com/";
-    // [END declare_auth]
-
-    // [START declare_auth_listener]
     private FirebaseAuth.AuthStateListener mAuthListener;
-    // [END declare_auth_listener]
-
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -149,7 +145,6 @@ public class Login extends AppCompatActivity {
 
             }
         }
-
         GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
         GoogleSignInAccount acct = result.getSignInAccount();
         String personName = acct.getDisplayName();
@@ -158,7 +153,6 @@ public class Login extends AppCompatActivity {
         String personEmail = acct.getEmail();
         String personId = acct.getId();
         Uri personPhoto = acct.getPhotoUrl();
-
         Log.d("here is", "  "+personName);
         Log.d("here is", "  "+personGivenName);
         Log.d("here is", "  "+personFamilyName);
@@ -166,7 +160,42 @@ public class Login extends AppCompatActivity {
         Log.d("here is", "  "+personId);
 
         StoreSharedPreferences.setUserEmail(this, personEmail);
-        Firebase newRef = ref.child("Users").push();
-        newRef.setValue(personEmail);
+        checkPerviousRegistration(personEmail);
+
+
+    }
+
+    public void checkPerviousRegistration(final String mail){
+        Firebase objRef = ref.child("Users");
+        Log.d("hi there", "sexy");
+        Query pendingTasks = objRef.orderByValue().equalTo(mail);
+        //Query a = objRef.orderByValue().equalTo(mail);
+        pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot tasksSnapshot) {
+                int a=1;
+                //String s = tasksSnapshot.getValue().toString();
+               // Log.d("greetings"+s.toString(), "prateek paliwal");
+                for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
+                    Object value = snapshot.getValue();
+                    Log.d("greetings"+value.toString(), "sexy");
+                    if(value.toString().equals(mail)){
+                        Toast.makeText(Login.this,"Already Registered", Toast.LENGTH_SHORT).show();
+                        a=0;
+                        finish();
+                    }
+                }
+                if(a==1) {
+                    Firebase newRef = ref.child("Users").push();
+                    newRef.setValue(mail);
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Toast.makeText(Login.this,"hereb", Toast.LENGTH_SHORT).show();
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
     }
 }

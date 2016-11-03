@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toast.makeText(this, "76", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "88", Toast.LENGTH_SHORT).show();
 
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
