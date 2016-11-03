@@ -175,7 +175,7 @@ public class ProceedOrder extends AppCompatActivity {
                         os.setItemString(itemOrderString);
                         os.setLatitude(latitude);
                         os.setLongitude(address);
-                        os.setUserMail("prateekp987@gmail.com");
+                        os.setUserMail(StoreSharedPreferences.getUserEmail(ProceedOrder.this));
                         //Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
                         Firebase newRef = ref.child("Order").push();
                         newRef.setValue(os);
