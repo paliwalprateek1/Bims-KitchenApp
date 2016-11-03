@@ -37,6 +37,11 @@
             android:name=".ProceedOrder"
             android:label="@string/title_activity_proceed_order"
             android:theme="@style/AppTheme" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAzv-_l9l6xMvmCQALLXcRJ73U9rYEoUSY"/>
+
     </application>
 
 </manifest>
