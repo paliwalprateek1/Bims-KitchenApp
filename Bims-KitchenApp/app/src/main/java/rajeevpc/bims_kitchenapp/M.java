@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class M extends AppCompatActivity {
 
@@ -21,6 +22,9 @@ public class M extends AppCompatActivity {
 
     public void menu(View view) {
         Intent intent = new Intent(this, MenuPage.class);
+        String ss ;
+        ss = StoreSharedPreferences.getUserEmail(this);
+        Toast.makeText(this, ss, Toast.LENGTH_SHORT).show();
         startActivity(intent);
 /*
         ProgressDialog pd = new ProgressDialog(MenuPage.this);

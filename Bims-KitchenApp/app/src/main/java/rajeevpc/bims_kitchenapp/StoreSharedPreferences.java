@@ -16,9 +16,15 @@ import java.util.List;
 public class StoreSharedPreferences {
     public static final String PREFS_NAME = "NKDROID_APP";
     public static final String FAVORITES = "Favorite";
+    public static final String PREFS_MAIL = "email";
     public StoreSharedPreferences() {
         super();
     }
+
+    static SharedPreferences getSharedPreferences(Context ctx) {
+        return PreferenceManager.getDefaultSharedPreferences(ctx);
+    }
+
     public void storeFavorites(Context context, List favorites) {
 // used for store arrayList in json format
         SharedPreferences settings;
@@ -64,6 +70,18 @@ public class StoreSharedPreferences {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
+    }
+
+    public static void setUserEmail(Context ctx, String userName)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREFS_MAIL, userName);
+        editor.commit();
+    }
+
+    public static String getUserEmail(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString("email", "");
     }
 
 
