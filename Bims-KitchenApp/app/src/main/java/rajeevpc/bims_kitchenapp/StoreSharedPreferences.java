@@ -17,6 +17,7 @@ public class StoreSharedPreferences {
     public static final String PREFS_NAME = "NKDROID_APP";
     public static final String FAVORITES = "Favorite";
     public static final String PREFS_MAIL = "email";
+    public static final String PREFS_USER_NAME = "name";
     public StoreSharedPreferences() {
         super();
     }
@@ -72,16 +73,28 @@ public class StoreSharedPreferences {
         editor.commit();
     }
 
-    public static void setUserEmail(Context ctx, String userName)
+    public static void setUserEmail(Context ctx, String userMail)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-        editor.putString(PREFS_MAIL, userName);
+        editor.putString(PREFS_MAIL, userMail);
         editor.commit();
     }
 
     public static String getUserEmail(Context ctx)
     {
         return getSharedPreferences(ctx).getString("email", "");
+    }
+
+    public static void setUserName(Context ctx, String userName)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREFS_USER_NAME, userName);
+        editor.commit();
+    }
+
+    public static String getUserName(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString("name", "");
     }
 
 

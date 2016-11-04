@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="200dp" >
+    android:layout_height="200dp"
+    android:paddingBottom="20dp">
 
     <Button
         android:id="@+id/dialogButtonOK"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text=" Order "
         android:textStyle="bold"
@@ -13,14 +14,18 @@
         android:background="@color/colorPrimaryDark"
         android:layout_marginRight="5dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="96dp" />
-
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/orderListDialog"
-        android:layout_marginTop="130dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:id="@+id/textViewDialog"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
+
 
 </RelativeLayout>
