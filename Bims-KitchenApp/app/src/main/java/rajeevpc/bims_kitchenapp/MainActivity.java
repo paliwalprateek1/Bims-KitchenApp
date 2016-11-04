@@ -1,6 +1,7 @@
 package rajeevpc.bims_kitchenapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,14 +17,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int SPLASH_DISPLAY_LENGTH = 3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Toast.makeText(this, "88", Toast.LENGTH_SHORT).show();
-
-
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
@@ -34,9 +31,16 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                Intent mainIntent = new Intent(MainActivity.this, M.class);
-                MainActivity.this.startActivity(mainIntent);
-                MainActivity.this.finish();
+                if((StoreSharedPreferences.getUserEmail(MainActivity.this).length()==0)){
+                    Intent mainIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                    MainActivity.this.startActivity(mainIntent);
+                    MainActivity.this.finish();
+                }
+                else{
+                    Intent mainIntent = new Intent(MainActivity.this, MenuPage.class);
+                    MainActivity.this.startActivity(mainIntent);
+                    MainActivity.this.finish();
+                }
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

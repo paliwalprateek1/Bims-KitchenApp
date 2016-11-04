@@ -126,7 +126,7 @@ public class Veg extends Fragment{
         mDialog = new ProgressDialog(getContext());
         mDialog.setMessage("Fetching Menu....");
         mDialog.show();
-        mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 8000);
+        mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 6500);
         //prepareFoodData();
         return view;
     }

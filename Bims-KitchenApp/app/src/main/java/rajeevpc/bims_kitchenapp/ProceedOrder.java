@@ -124,70 +124,68 @@ public class ProceedOrder extends AppCompatActivity {
         if (requestCode == 199) {
             final int size = order.size();
             Place place = PlacePicker.getPlace(data, this);
-            //while (place != null) {
-                String toastMsg = String.format("Place: %s", place.getAddress());
-                address = place.getAddress().toString();
-                latitude = place.getLatLng().toString();
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-               /* AlertDialog.Builder builder = new AlertDialog.Builder(ProceedOrder.this);
-                builder.setTitle("Order Summary").setMessage(fOrder)
-                        .setPositiveButton("Confirm Order", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Firebase.setAndroidContext(getApplicationContext());
-                                ref = new Firebase(Server.URL);
-                                final OrderSend os = new OrderSend();
-                                os.setAmount(String.valueOf(value));
-                                os.setItemString(itemOrderString);
-                                os.setLatitude(latitude);
-                                os.setLongitude(address);
-                                os.setUserMail("prateekp987@gmail.com");
-                                Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
-                                Firebase newRef = ref.child("Order").push();
-                                newRef.setValue(os);
-                                Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
-                                order.clear();
-                                storeSharedPreferences.removeAll(getApplicationContext());
-                                finish();
-                            }
-                        });
+            String toastMsg = String.format("Place: %s", place.getAddress());
+            address = place.getAddress().toString();
+            latitude = place.getLatLng().toString();
+            Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+           /* AlertDialog.Builder builder = new AlertDialog.Builder(ProceedOrder.this);
+            builder.setTitle("Order Summary").setMessage(fOrder)
+                    .setPositiveButton("Confirm Order", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Firebase.setAndroidContext(getApplicationContext());
+                            ref = new Firebase(Server.URL);
+                            final OrderSend os = new OrderSend();
+                            os.setAmount(String.valueOf(value));
+                            os.setItemString(itemOrderString);
+                            os.setLatitude(latitude);
+                            os.setLongitude(address);
+                            os.setUserMail("prateekp987@gmail.com");
+                            Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
+                            Firebase newRef = ref.child("Order").push();
+                            newRef.setValue(os);
+                            Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
+                            order.clear();
+                            storeSharedPreferences.removeAll(getApplicationContext());
+                            finish();
+                        }
+                    });
 //                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 //                        public void onClick(DialogInterface dialog, int id) {
 //                        }
 //                    });
-                builder.create().show();*/
+            builder.create().show();*/
 
 
-                final Dialog dialog = new Dialog(ProceedOrder.this);
-                dialog.setContentView(R.layout.dialog_order);
-                dialog.setTitle("Order Summary");
+            final Dialog dialog = new Dialog(ProceedOrder.this);
+            dialog.setContentView(R.layout.dialog_order);
+            dialog.setTitle(fOrder+"\n"+"tera baap");
 
 //            orderListDialog = (TextView) findViewById(R.id.orderListDialog);
 //            orderListDialog.setText(fOrder);
 
-                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Firebase.setAndroidContext(getApplicationContext());
-                        ref = new Firebase(Server.URL);
-                        final OrderSend os = new OrderSend();
-                        os.setAmount(String.valueOf(value));
-                        os.setItemString(itemOrderString);
-                        os.setLatitude(latitude);
-                        os.setLongitude(address);
-                        os.setUserMail(StoreSharedPreferences.getUserEmail(ProceedOrder.this));
-                        //Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
-                        Firebase newRef = ref.child("Order").push();
-                        newRef.setValue(os);
-                        Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
-                        order.clear();
-                        storeSharedPreferences.removeAll(getApplicationContext());
-                        finish();
-                        //dialog.dismiss();
-                    }
-                });
-                dialog.show();
-          //  }
+            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Firebase.setAndroidContext(getApplicationContext());
+                    ref = new Firebase(Server.URL);
+                    final OrderSend os = new OrderSend();
+                    os.setAmount(String.valueOf(value));
+                    os.setItemString(itemOrderString);
+                    os.setLatitude(latitude);
+                    os.setLongitude(address);
+                    os.setUserMail(StoreSharedPreferences.getUserEmail(ProceedOrder.this));
+                    //Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
+                    Firebase newRef = ref.child("Order").push();
+                    newRef.setValue(os);
+                    Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
+                    order.clear();
+                    storeSharedPreferences.removeAll(getApplicationContext());
+                    finish();
+                    //dialog.dismiss();
+                }
+            });
+            dialog.show();
         }
     }
 

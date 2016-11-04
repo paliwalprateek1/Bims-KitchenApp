@@ -35,7 +35,6 @@ public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     Firebase ref;
-    private final String URL = "https://bims-kitchenapp.firebaseio.com/";
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
 
@@ -63,20 +62,15 @@ public class Login extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
-                    Log.d("here", "login");
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
-                    // User is signed out
-                    Log.d("here", "logout");
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
             }
         };
 
         Firebase.setAndroidContext(this);
-
-        ref = new Firebase("https://bims-kitchenapp.firebaseio.com/");
+        ref = new Firebase(Server.URL);
     }
 
     @Override
@@ -102,19 +96,13 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.d("here", "not");
-                            Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(Login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+//                            Log.w(TAG, "signInWithCredential", task.getException());
+//                            Toast.makeText(Login.this, "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Log.d("here", "ohyeah");
-                            Toast.makeText(Login.this, "done", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Login.this, "done", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -133,16 +121,11 @@ public class Login extends AppCompatActivity {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            Log.d("here", "o   "+result);
-            Log.d("here", "o00000       "+result.isSuccess());
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-                Log.d("here", "success");
             } else {
-                Log.d("here", "fail");
-
             }
         }
         GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -160,42 +143,40 @@ public class Login extends AppCompatActivity {
         Log.d("here is", "  "+personId);
 
         StoreSharedPreferences.setUserEmail(this, personEmail);
-        checkPerviousRegistration(personEmail);
-
-
+        StoreSharedPreferences.setUserName(this, personGivenName);
+        checkPerviousRegistration();
     }
 
-    public void checkPerviousRegistration(final String mail){
+    public void checkPerviousRegistration(){
         Firebase objRef = ref.child("Users");
-        Log.d("hi there", "sexy");
-        Query pendingTasks = objRef.orderByValue().equalTo(mail);
-        //Query a = objRef.orderByValue().equalTo(mail);
+        Query pendingTasks = objRef.orderByValue().equalTo(StoreSharedPreferences.getUserEmail(Login.this));
         pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot tasksSnapshot) {
                 int a=1;
-                //String s = tasksSnapshot.getValue().toString();
-               // Log.d("greetings"+s.toString(), "prateek paliwal");
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
                     Object value = snapshot.getValue();
-                    Log.d("greetings"+value.toString(), "sexy");
-                    if(value.toString().equals(mail)){
+                    if(value.toString().equals(StoreSharedPreferences.getUserEmail(Login.this))){
                         Toast.makeText(Login.this,"Already Registered", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Login.this, MenuPage.class);
+                        startActivity(intent);
                         a=0;
                         finish();
                     }
                 }
                 if(a==1) {
                     Firebase newRef = ref.child("Users").push();
-                    newRef.setValue(mail);
+                    newRef.setValue(StoreSharedPreferences.getUserEmail(Login.this));
+                    Intent intent = new Intent(Login.this, MenuPage.class);
+                    startActivity(intent);
+                    finish();
+                    Toast.makeText(Login.this, "Welcome " +StoreSharedPreferences.getUserName(Login.this), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(Login.this,"hereb", Toast.LENGTH_SHORT).show();
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-
     }
 }
