@@ -18,6 +18,8 @@ public class StoreSharedPreferences {
     public static final String FAVORITES = "Favorite";
     public static final String PREFS_MAIL = "email";
     public static final String PREFS_USER_NAME = "name";
+    public static final String PREFS_USER_CUSTOM_LOCATION = "location";
+
     public StoreSharedPreferences() {
         super();
     }
@@ -97,5 +99,13 @@ public class StoreSharedPreferences {
         return getSharedPreferences(ctx).getString("name", "");
     }
 
+    public static void setUserCustomLocation(Context ctx, String userCustomLocation){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREFS_USER_CUSTOM_LOCATION, userCustomLocation);
+        editor.commit();
+    }
 
+    public static String getUserCustomLocation(Context ctx){
+        return getSharedPreferences(ctx).getString("location", "");
+    }
 }

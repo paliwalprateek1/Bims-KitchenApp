@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,6 +24,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -29,6 +35,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.vision.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +64,8 @@ public class Veg extends Fragment{
     MenuPage order = new MenuPage();
 
     private OnFragmentInteractionListener mListener;
+
+
 
     public Veg() {
     }
@@ -97,15 +106,60 @@ public class Veg extends Fragment{
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Food food = foodList.get(position);
+
+                final Food food = foodList.get(position);
                 Log.d("adf"+food.getFood().toString(), "adsf");
                 Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
                 //StoreSharedPreferences.setPrice(getContext(), food.getPrice());
+
+
+                final Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_counter);
+                dialog.setTitle("Title...");
+
+                // set the custom dialog components - text, image and button
+                TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+                text.setText(food.getFood());
+                ImageView image = (ImageView) dialog.findViewById(R.id.image);
+
+                NumberPicker np = (NumberPicker) dialog.findViewById(R.id.numberPicker);
+
+                //tv.setTextColor(Color.parseColor("#ffd32b3b"));
+
+                np.setMinValue(0);
+                //Specify the maximum value/number of NumberPicker
+                np.setMaxValue(10);
+
+                //Gets whether the selector wheel wraps when reaching the min/max value.
+                np.setWrapSelectorWheel(true);
+
+                np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                        //Display the newly selected number from picker
+                       // tv.setText("Selected Number : " + newVal);
+                        //Toast.makeText(getContext(), ""+newVal+"", Toast.LENGTH_SHORT).show();
+                        food.setQuantity(Integer.toString(newVal));
+                    }
+                });
+
+                TextView dialogOk = (TextView) dialog.findViewById(R.id.dialogOk);
+                // if button is clicked, close the custom dialog
+                dialogOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
                 StoreSharedPreferences s = new StoreSharedPreferences();
                 s.addFavorite(getContext(), food);
             }
+
             @Override
             public void onLongClick(View view, int position) {
+                final Food food = foodList.get(position);
+                Toast.makeText(getContext(), food.getQuantity()+"", Toast.LENGTH_SHORT).show();
 
             }
         }));
