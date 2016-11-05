@@ -13,19 +13,29 @@
     tools:showIn="@layout/activity_proceed_order">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycler_view_proceed_order"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="420dp"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="160sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="60dp"
+        android:text="Use Custom Location"
+        android:id="@+id/confirmOrder"
+        android:onClick="useCustomLocation"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="160sp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_height="60dp"
         android:text="Pick Location"
-        android:id="@+id/confirmOrder"
+        android:id="@+id/PickLocation"
         android:onClick="confirmOrder"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignEnd="@+id/recycler_view" />
 
 </RelativeLayout>

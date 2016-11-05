@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="rajeevpc.bims_kitchenapp" >
+    package="rajeevpc.bims_kitchenapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,8 +15,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,8 +40,12 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAzv-_l9l6xMvmCQALLXcRJ73U9rYEoUSY"/>
+            android:value="AIzaSyAzv-_l9l6xMvmCQALLXcRJ73U9rYEoUSY" />
 
+        <activity
+            android:name=".SendOrderFinal"
+            android:label="@string/title_activity_send_order_final"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
