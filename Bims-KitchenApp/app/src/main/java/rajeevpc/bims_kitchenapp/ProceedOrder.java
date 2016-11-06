@@ -66,31 +66,19 @@ public class ProceedOrder extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proceed_order);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         order = storeSharedPreferences.loadFoodQuantity(getApplicationContext());
-
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_proceed_order);
-
-
         mAdapter = new ProceedFoodAdapter(order);
-
-
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
-
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -102,10 +90,8 @@ public class ProceedOrder extends AppCompatActivity {
             public void onLongClick(View view, int position) {
             }
         }));
-
-
-
     }
+    Place place;
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
@@ -116,11 +102,15 @@ public class ProceedOrder extends AppCompatActivity {
         }
         if (requestCode == 199) {
             final int size = order.size();
-            Place place = PlacePicker.getPlace(data, this);
+            place = PlacePicker.getPlace(data, this);
             String toastMsg = String.format("Place: %s", place.getAddress());
             address = place.getAddress().toString();
             latitude = place.getLatLng().toString();
             Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(this, SendOrderFinal.class);
+            intent.putExtra("place", place.getAddress().toString());
+            startActivity(intent);
 
 
 //            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
@@ -149,8 +139,6 @@ public class ProceedOrder extends AppCompatActivity {
     }
 
     public void confirmOrder(View view) {
-
-
         int size = order.size();
         for(int i=0;i<size;i++){
             String s = order.get(i).getFood()+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
@@ -159,9 +147,6 @@ public class ProceedOrder extends AppCompatActivity {
             itemOrderString = ss+itemOrderString;
             value = value + Integer.parseInt(order.get(i).getPrice());
         }
-
-
-
 
         status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(ProceedOrder.this);
         if (status != ConnectionResult.SUCCESS) {
@@ -186,7 +171,9 @@ public class ProceedOrder extends AppCompatActivity {
             } catch (GooglePlayServicesNotAvailableException e) {
                 e.printStackTrace();
             }
+
         }
+
 
     }
 
