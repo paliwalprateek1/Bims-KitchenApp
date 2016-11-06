@@ -12,30 +12,79 @@
     tools:context="rajeevpc.bims_kitchenapp.ProceedOrder"
     tools:showIn="@layout/activity_proceed_order">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/rv1">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_proceed_order"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="420dp"/>
+        android:layout_height="220dp"/>
 
-    <Button
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:id="@+id/rv2"
+        android:layout_below="@+id/rv1"
+        android:layout_alignParentStart="true">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Special Remarks"
+            android:id="@+id/textView4"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:textSize="15sp"
+            android:textStyle="italic"
+            android:hint="Example: Bring extra ketchup or Make it more spicy"
+            android:id="@+id/editText"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:id="@+id/lv1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/rv2">
+
+        <Button
         android:layout_width="160sp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_height="60dp"
-        android:text="Use Custom Location"
-        android:id="@+id/confirmOrder"
+        android:text="Edit Order"
+        android:id="@+id/editOrder"
         android:onClick="useCustomLocation"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="160sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_height="60dp"
-        android:text="Pick Location"
-        android:id="@+id/PickLocation"
-        android:onClick="confirmOrder"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/recycler_view" />
+        <Button
+            android:layout_width="160sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_height="60dp"
+            android:text="Pick Location"
+            android:id="@+id/PickLocation"
+            android:onClick="confirmOrder"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" /></RelativeLayout>
+
 
 </RelativeLayout>

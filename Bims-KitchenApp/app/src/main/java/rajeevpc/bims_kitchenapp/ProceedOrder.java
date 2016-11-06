@@ -44,12 +44,13 @@ import java.util.List;
 
 public class ProceedOrder extends AppCompatActivity {
 
-    private static List<Food> order = new ArrayList<>();
+    private static List<FoodQuantity> order = new ArrayList<>();
     StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
     private RecyclerView recyclerView;
-    private FoodAdapter mAdapter;
+    private ProceedFoodAdapter mAdapter;
     private String latitude, longitude, address;
     int status = 1;
+
     String itemOrderString="";
     String fOrder="";
     int value=0;
@@ -59,7 +60,7 @@ public class ProceedOrder extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         order.clear();
-        storeSharedPreferences.removeAll(getApplicationContext());
+        storeSharedPreferences.removeAllQuant(getApplicationContext());
         finish();
     }
 
@@ -73,13 +74,13 @@ public class ProceedOrder extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        order = storeSharedPreferences.loadFavorites(getApplicationContext());
+        order = storeSharedPreferences.loadFoodQuantity(getApplicationContext());
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_proceed_order);
 
 
-        mAdapter = new FoodAdapter(order);
+        mAdapter = new ProceedFoodAdapter(order);
 
 
         recyclerView.setHasFixedSize(true);
@@ -93,38 +94,14 @@ public class ProceedOrder extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Food food = order.get(position);
-                storeSharedPreferences.removeFavorite(getApplicationContext(), food);
+                FoodQuantity food = order.get(position);
+                storeSharedPreferences.removeFavoriteQuantity(getApplicationContext(), food);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), "Swipe to cancel", Toast.LENGTH_SHORT).show();
             }
         }));
-
-
-//        ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
-//                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
-//            {
-//                if(order.size()==1){storeSharedPreferences.removeAll(getApplicationContext());
-//                    finish();}
-//                else {
-//                    order.remove(order.get(viewHolder.getAdapterPosition()));
-//                   // Toast.makeText(ProceedOrder.this, "Removed" + order.size(), Toast.LENGTH_SHORT).show();
-//                    mAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//        });
-//        swipeToDismissTouchHelper.attachToRecyclerView(recyclerView);
 
 
 
@@ -214,17 +191,6 @@ public class ProceedOrder extends AppCompatActivity {
     }
 
     public void useCustomLocation(View view) {
-        String location;
-        if((StoreSharedPreferences.getUserCustomLocation(ProceedOrder.this).length())==0){
-            Toast.makeText(this, "No Previous Location Defined", Toast.LENGTH_LONG).show();
-        }
-        else{
-            location = StoreSharedPreferences.getUserCustomLocation(this);
-        }
-        //get custom location here
-        //proceed to final activity
-        //go to final page
-        Intent intent = new Intent(this, SendOrderFinal.class);
-        startActivity(intent);
+        finish();
     }
 }

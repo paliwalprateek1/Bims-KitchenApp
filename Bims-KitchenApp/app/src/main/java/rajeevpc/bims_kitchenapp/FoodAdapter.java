@@ -38,12 +38,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         return new MyViewHolder(itemView);
     }
 
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Food food = foodList.get(position);
         holder.food.setText(food.getFood());
         holder.price.setText(food.getPrice());
     }
+
 
     @Override
     public int getItemCount() {

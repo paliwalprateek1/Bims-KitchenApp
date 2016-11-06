@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,9 @@ public class StoreSharedPreferences {
     public static final String PREFS_MAIL = "email";
     public static final String PREFS_USER_NAME = "name";
     public static final String PREFS_USER_CUSTOM_LOCATION = "location";
+    public static final String PREFS_NAME_QUANT = "NKDROID_APP_QUANT";
+    public static final String FAVORITES_QUANT = "Favorite_QUANT";
+
 
     public StoreSharedPreferences() {
         super();
@@ -74,6 +78,12 @@ public class StoreSharedPreferences {
         editor.clear();
         editor.commit();
     }
+    public void removeAllQuant(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME_QUANT, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+    }
 
     public static void setUserEmail(Context ctx, String userMail)
     {
@@ -108,4 +118,52 @@ public class StoreSharedPreferences {
     public static String getUserCustomLocation(Context ctx){
         return getSharedPreferences(ctx).getString("location", "");
     }
+
+    public void storeFoodQuant(Context context, List favorites) {
+// used for store arrayList in json format
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences(PREFS_NAME_QUANT,Context.MODE_PRIVATE);
+        editor = settings.edit();
+        Gson gson = new Gson();
+        String jsonFavorites = gson.toJson(favorites);
+        editor.putString(FAVORITES_QUANT, jsonFavorites);
+        editor.commit();
+    }
+    public ArrayList loadFoodQuantity(Context context) {
+// used for retrieving arraylist from json formatted string
+        SharedPreferences settings;
+        List favorites;
+        settings = context.getSharedPreferences(PREFS_NAME_QUANT,Context.MODE_PRIVATE);
+        if (settings.contains(FAVORITES_QUANT)) {
+            String jsonFavorites = settings.getString(FAVORITES_QUANT, null);
+            Gson gson = new Gson();
+            FoodQuantity[] favoriteItems = gson.fromJson(jsonFavorites,FoodQuantity[].class);
+            favorites = Arrays.asList(favoriteItems);
+            favorites = new ArrayList(favorites);
+        } else
+            return null;
+        return (ArrayList) favorites;
+    }
+    public void addFoodQuantity(Context context, FoodQuantity beanSampleList) {
+        List favorites = loadFoodQuantity(context);
+        if (favorites == null)
+            favorites = new ArrayList();
+        favorites.add(beanSampleList);
+        storeFoodQuant(context, favorites);
+    }
+
+    public void removeFavoriteQuantity(Context context, FoodQuantity beanSampleList) {
+        ArrayList favorites = loadFoodQuantity(context);
+        if (favorites != null) {
+            favorites.remove(beanSampleList);
+            storeFoodQuant(context, favorites);
+        }
+    }
+
+
+
+
+
+
 }
