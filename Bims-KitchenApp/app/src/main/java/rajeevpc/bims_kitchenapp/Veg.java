@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
@@ -35,8 +36,10 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.vision.barcode.internal.client.BarcodeDetectorOptions;
 import com.google.android.gms.vision.text.Text;
 
+import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +49,11 @@ public class Veg extends Fragment{
     private List<Food> foodList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
+    NumberPicker np;
     ProgressDialog p;
+    TextView count;
+    Button ua, da,dialogOk;
+    FoodQuantity foodQuantity = new FoodQuantity();
     Firebase ref;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -56,12 +63,7 @@ public class Veg extends Fragment{
     private final int CANCEL_DIALOG = 1;
     private Handler mHandler;
     private ProgressDialog mDialog;
-
-    private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1000; // in Meters
-    private static final long MINIMUM_TIME_BETWEEN_UPDATES = 3600000; //0 in Milliseconds
-    protected LocationManager locationManager;
-
-    MenuPage order = new MenuPage();
+    private Handler mHandler2 = new Handler();
 
     private OnFragmentInteractionListener mListener;
 
@@ -91,7 +93,6 @@ public class Veg extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //StoreSharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         Firebase.setAndroidContext(getContext());
         ref = new Firebase(Server.URL);
         View view = inflater.inflate(R.layout.fragment_veg, container, false);
@@ -108,58 +109,60 @@ public class Veg extends Fragment{
             public void onClick(View view, int position) {
 
                 final Food food = foodList.get(position);
-                Log.d("adf"+food.getFood().toString(), "adsf");
-                Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
-                //StoreSharedPreferences.setPrice(getContext(), food.getPrice());
-
+                foodQuantity.setFood(food.getFood());
+                foodQuantity.setPrice(food.getPrice());
 
                 final Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.dialog_counter);
-                dialog.setTitle("Title...");
-
-                // set the custom dialog components - text, image and button
-                TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
-                text.setText(food.getFood());
+                dialog.setTitle(food.getFood());
                 ImageView image = (ImageView) dialog.findViewById(R.id.image);
+                count = (TextView) dialog.findViewById(R.id.count);
+                count.setText("0");
+                ua = (Button) dialog.findViewById(R.id.buttonUp);
+                da = (Button) dialog.findViewById(R.id.buttonDown);
 
-                NumberPicker np = (NumberPicker) dialog.findViewById(R.id.numberPicker);
-
-                //tv.setTextColor(Color.parseColor("#ffd32b3b"));
-
-                np.setMinValue(0);
-                //Specify the maximum value/number of NumberPicker
-                np.setMaxValue(10);
-
-                //Gets whether the selector wheel wraps when reaching the min/max value.
-                np.setWrapSelectorWheel(true);
-
-                np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                ua.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                        //Display the newly selected number from picker
-                       // tv.setText("Selected Number : " + newVal);
-                        //Toast.makeText(getContext(), ""+newVal+"", Toast.LENGTH_SHORT).show();
-                        food.setQuantity(Integer.toString(newVal));
+                    public void onClick(View view) {
+                        int s = Integer.parseInt(count.getText().toString());
+                        s++;
+
+                        count.setText(Integer.toString(s));
+                        //quantityof = Integer.parseInt(count.getText().toString());
                     }
                 });
 
-                TextView dialogOk = (TextView) dialog.findViewById(R.id.dialogOk);
-                // if button is clicked, close the custom dialog
+                da.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int s = Integer.parseInt(count.getText().toString());
+                        s--;
+
+                        count.setText(Integer.toString(s));
+                        //quantityof = Integer.parseInt(count.getText().toString());
+
+                    }
+                });
+
+                dialogOk = (Button) dialog.findViewById(R.id.dialogOk);
+
                 dialogOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(getContext(), count.getText().toString(), Toast.LENGTH_SHORT).show();
+                        if(!(count.getText().toString()).equals("0")) {
+                            setValue(count.getText().toString());
+                            storeData(foodQuantity);
+                        }
                         dialog.dismiss();
                     }
                 });
                 dialog.show();
-                StoreSharedPreferences s = new StoreSharedPreferences();
-                s.addFavorite(getContext(), food);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                final Food food = foodList.get(position);
-                Toast.makeText(getContext(), food.getQuantity()+"", Toast.LENGTH_SHORT).show();
+
 
             }
         }));
@@ -181,9 +184,24 @@ public class Veg extends Fragment{
         mDialog.setMessage("Fetching Menu....");
         mDialog.show();
         mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 6500);
-        //prepareFoodData();
         return view;
     }
+    public void setValue(String str){
+        foodQuantity.setQuantity(str);
+    }
+    public void storeData(FoodQuantity fq){
+        StoreSharedPreferences s = new StoreSharedPreferences();
+        s.addFoodQuantity(getContext(), fq);
+    }
+
+//    public void setValues(String a, String b, String c){
+//        final FoodQuantity foodQuantity = new FoodQuantity();
+//        foodQuantity.setFood("hi");
+//        foodQuantity.setPrice("b");
+//        foodQuantity.setQuantity("dd");
+//        StoreSharedPreferences s = new StoreSharedPreferences();
+//        s.addFoodQuantity(getContext(), foodQuantity);
+//    }
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -201,27 +219,6 @@ public class Veg extends Fragment{
         void onFragmentInteraction(Uri uri);
     }
 
-    private void prepareFoodData() {
-        Food food = new Food("Maggie", "Aukad ke bahar");
-        foodList.add(food);
-
-        food = new Food("Burger", "60");
-        foodList.add(food);
-
-        food = new Food("Pizza", "90");
-        foodList.add(food);
-
-        food = new Food("Sandwich", "120");
-        foodList.add(food);
-
-        food = new Food("Maggie", "30");
-        foodList.add(food);
-
-        food = new Food("Burger", "60");
-        foodList.add(food);
-
-        mAdapter.notifyDataSetChanged();
-    }
 
     private void getVegMenu(){
         //final Food food = new Food(null, null);

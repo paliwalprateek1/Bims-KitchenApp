@@ -56,7 +56,7 @@ public class MenuPage extends AppCompatActivity
             public void onClick(View view) {
 
                 StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
-                List a = storeSharedPreferences.loadFavorites(getApplicationContext());
+                List a = storeSharedPreferences.loadFoodQuantity(getApplicationContext());
                 if(a==null){
                     Toast.makeText(MenuPage.this, "Select atleast on item", Toast.LENGTH_SHORT).show();
                 }

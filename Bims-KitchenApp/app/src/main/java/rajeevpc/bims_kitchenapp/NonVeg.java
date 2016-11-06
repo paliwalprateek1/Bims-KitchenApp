@@ -1,5 +1,6 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -28,8 +33,10 @@ public class NonVeg extends Fragment {
     private List<Food> foodList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
-
+    FoodQuantity foodQuantity = new FoodQuantity();
+    Button ua, da,dialogOk;
     Firebase ref;
+    TextView count;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -81,14 +88,62 @@ public class NonVeg extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Food food = foodList.get(position);
-                Toast.makeText(getActivity(), food.getFood() + " is added to your cart", Toast.LENGTH_SHORT).show();
-                StoreSharedPreferences s = new StoreSharedPreferences();
-                s.addFavorite(getContext(), food);
+
+                final Food food = foodList.get(position);
+                foodQuantity.setFood(food.getFood());
+                foodQuantity.setPrice(food.getPrice());
+
+                final Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_counter);
+                dialog.setTitle(food.getFood());
+                ImageView image = (ImageView) dialog.findViewById(R.id.image);
+                count = (TextView) dialog.findViewById(R.id.count);
+                count.setText("0");
+                ua = (Button) dialog.findViewById(R.id.buttonUp);
+                da = (Button) dialog.findViewById(R.id.buttonDown);
+
+                ua.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int s = Integer.parseInt(count.getText().toString());
+                        s++;
+
+                        count.setText(Integer.toString(s));
+                        //quantityof = Integer.parseInt(count.getText().toString());
+                    }
+                });
+
+                da.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int s = Integer.parseInt(count.getText().toString());
+                        s--;
+
+                        count.setText(Integer.toString(s));
+                        //quantityof = Integer.parseInt(count.getText().toString());
+
+                    }
+                });
+
+                dialogOk = (Button) dialog.findViewById(R.id.dialogOk);
+
+                dialogOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(), count.getText().toString(), Toast.LENGTH_SHORT).show();
+                        if(!(count.getText().toString()).equals("0")) {
+                            setValue(count.getText().toString());
+                            storeData(foodQuantity);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
 
             @Override
             public void onLongClick(View view, int position) {
+
 
             }
         }));
@@ -96,6 +151,14 @@ public class NonVeg extends Fragment {
         //prepareFoodData();
         getNonVegMenu();
         return view;
+    }
+
+    public void setValue(String str){
+        foodQuantity.setQuantity(str);
+    }
+    public void storeData(FoodQuantity fq){
+        StoreSharedPreferences s = new StoreSharedPreferences();
+        s.addFoodQuantity(getContext(), fq);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -116,22 +179,6 @@ public class NonVeg extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void prepareFoodData() {
-        Food food = new Food("Non-Veg Maggie", "30");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Burger", "60");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Pizza", "90");
-        foodList.add(food);
-
-        food = new Food("Non-Veg Sandwich", "120");
-        foodList.add(food);
-
-
-        mAdapter.notifyDataSetChanged();
-    }
 
     public void getNonVegMenu(){
         Firebase objRef = ref.child("Menu");
