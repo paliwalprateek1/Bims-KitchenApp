@@ -1,8 +1,14 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UCharacter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +28,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +50,18 @@ public class MenuPage extends AppCompatActivity
     private ViewPager viewPager;
 
 
-    public List<Food> orderedList = new ArrayList<>();
 
+    public List<Food> orderedList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_menu_page);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -81,6 +96,7 @@ public class MenuPage extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

@@ -1,5 +1,6 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
@@ -8,10 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +28,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -63,6 +68,7 @@ public class Veg extends Fragment{
     private final int CANCEL_DIALOG = 1;
     private Handler mHandler;
     private ProgressDialog mDialog;
+    protected ActionBarProvider mActionBar;
     private Handler mHandler2 = new Handler();
 
     private OnFragmentInteractionListener mListener;
@@ -71,6 +77,8 @@ public class Veg extends Fragment{
 
     public Veg() {
     }
+
+
 
     public static Veg newInstance(String param1, String param2) {
         Veg fragment = new Veg();
@@ -93,15 +101,22 @@ public class Veg extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Firebase.setAndroidContext(getContext());
+
+
+
+
+
+        Firebase.setAndroidContext(getActivity());
+        //mActionBar.setActionBarColor(new ColorDrawable(Color.parseColor("#fff000")));
+
         ref = new Firebase(Server.URL);
         View view = inflater.inflate(R.layout.fragment_veg, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mAdapter = new FoodAdapter(foodList);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
@@ -112,7 +127,7 @@ public class Veg extends Fragment{
                 foodQuantity.setFood(food.getFood());
                 foodQuantity.setPrice(food.getPrice());
 
-                final Dialog dialog = new Dialog(getContext());
+                final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.dialog_counter);
                 dialog.setTitle(food.getFood());
                 ImageView image = (ImageView) dialog.findViewById(R.id.image);
@@ -149,7 +164,7 @@ public class Veg extends Fragment{
                 dialogOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(), count.getText().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), count.getText().toString(), Toast.LENGTH_SHORT).show();
                         if(!(count.getText().toString()).equals("0")) {
                             setValue(count.getText().toString());
                             storeData(foodQuantity);
@@ -180,7 +195,7 @@ public class Veg extends Fragment{
                 return false;
             }
         });
-        mDialog = new ProgressDialog(getContext());
+        mDialog = new ProgressDialog(getActivity());
         mDialog.setMessage("Fetching Menu....");
         mDialog.show();
         mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 6500);
@@ -191,17 +206,9 @@ public class Veg extends Fragment{
     }
     public void storeData(FoodQuantity fq){
         StoreSharedPreferences s = new StoreSharedPreferences();
-        s.addFoodQuantity(getContext(), fq);
+        s.addFoodQuantity(getActivity(), fq);
     }
 
-//    public void setValues(String a, String b, String c){
-//        final FoodQuantity foodQuantity = new FoodQuantity();
-//        foodQuantity.setFood("hi");
-//        foodQuantity.setPrice("b");
-//        foodQuantity.setQuantity("dd");
-//        StoreSharedPreferences s = new StoreSharedPreferences();
-//        s.addFoodQuantity(getContext(), foodQuantity);
-//    }
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
