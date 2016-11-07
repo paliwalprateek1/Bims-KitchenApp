@@ -110,6 +110,7 @@ public class ProceedOrder extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setClass(this, SendOrderFinal.class);
             intent.putExtra("place", place.getAddress().toString());
+            intent.putExtra("latitude", place.getLatLng().toString());
             startActivity(intent);
 
 
