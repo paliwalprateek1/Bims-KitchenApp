@@ -1,13 +1,19 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -30,7 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class Login extends AppCompatActivity {
+public class RegisterUser extends AppCompatActivity {
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -38,11 +44,22 @@ public class Login extends AppCompatActivity {
     Firebase ref;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
+    TextView phno, location;
+    EditText et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register_user);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+
+        phno = (TextView) findViewById(R.id.phno);
+        location = (TextView) findViewById(R.id.location);
+        et = (EditText) findViewById(R.id.location);
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
@@ -101,18 +118,14 @@ public class Login extends AppCompatActivity {
 //                            Log.w(TAG, "signInWithCredential", task.getException());
 //                            Toast.makeText(Login.this, "Authentication failed.",
 //                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else{
+                        } else {
                             //Toast.makeText(Login.this, "done", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    public void signIn(View view) {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -137,49 +150,44 @@ public class Login extends AppCompatActivity {
         String personEmail = acct.getEmail();
         String personId = acct.getId();
         Uri personPhoto = acct.getPhotoUrl();
-        Log.d("here is", "  "+personName);
-        Log.d("here is", "  "+personGivenName);
-        Log.d("here is", "  "+personFamilyName);
-        Log.d("here is", "  "+personEmail);
-        Log.d("here is", "  "+personId);
+        Log.d("here is", "  " + personName);
+        Log.d("here is", "  " + personGivenName);
+        Log.d("here is", "  " + personFamilyName);
+        Log.d("here is", "  " + personEmail);
+        Log.d("here is", "  " + personId);
 
         StoreSharedPreferences.setUserEmail(this, personEmail);
         StoreSharedPreferences.setUserName(this, personGivenName);
         checkPerviousRegistration();
     }
 
-    public void checkPerviousRegistration(){
+    public void checkPerviousRegistration() {
         Firebase objRef = ref.child("Users");
-        Query pendingTasks = objRef.orderByValue().equalTo(StoreSharedPreferences.getUserEmail(Login.this));
+//        Query pendingTasks = objRef.orderByValue().equalTo(StoreSharedPreferences.getUserEmail(RegisterUser.this));
+        Query pendingTasks = objRef.orderByChild("email").equalTo(StoreSharedPreferences.getUserEmail(RegisterUser.this));
         pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot tasksSnapshot) {
                 int a=1;
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
                     Object value = snapshot.getValue();
-                    if(value.toString().equals(StoreSharedPreferences.getUserEmail(Login.this))){
-                        //Toast.makeText(Login.this,"Already Registered", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Login.this, MenuPage.class);
-                        StoreSharedPreferences.setUserNumber(Login.this, snapshot.child("number").getValue().toString());
-                        StoreSharedPreferences.setUserCustomLocation(Login.this, snapshot.child("location").getValue().toString());
+                    if(value.toString()!=null){
+                        Toast.makeText(RegisterUser.this,"Already Registered", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterUser.this, MenuPage.class);
+                        StoreSharedPreferences.setUserNumber(RegisterUser.this, snapshot.child("number").getValue().toString());
+                        StoreSharedPreferences.setUserCustomLocation(RegisterUser.this, snapshot.child("location").getValue().toString());
                         startActivity(intent);
                         a=0;
                         finish();
                     }
                 }
-                if(a==1) {
-                    Toast.makeText(Login.this, "Register First", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Login.this, RegisterUser.class);
+                if (a == 1) {
+                    Intent intent = new Intent(RegisterUser.this, NumberAndLocation.class);
                     startActivity(intent);
-
-//                    Firebase newRef = ref.child("Users").push();
-//                    newRef.setValue(StoreSharedPreferences.getUserEmail(Login.this));
-//                    Intent intent = new Intent(Login.this, MenuPage.class);
-//                    startActivity(intent);
-//                    finish();
-//                    Toast.makeText(Login.this, "Welcome " +StoreSharedPreferences.getUserName(Login.this), Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
@@ -187,8 +195,9 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    public void Register(View view) {
-        Intent intent = new Intent(this, RegisterUser.class);
-        startActivity(intent);
+
+    public void registerGoogle(View view) {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 }

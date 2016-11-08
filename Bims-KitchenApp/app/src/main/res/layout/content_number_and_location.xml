@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="rajeevpc.bims_kitchenapp.NumberAndLocation"
+    tools:showIn="@layout/activity_number_and_location">
+
+    <LinearLayout
+
+        android:id="@+id/phLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="15sp"
+        android:layout_marginRight="10sp"
+        android:orientation="horizontal"
+        android:paddingLeft="10sp"
+        >
+
+        <TextView
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="+91 -"
+            />
+        <EditText
+            android:textSize="20sp"
+            android:id="@+id/phno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="15sp"
+            android:hint="Phone Number"
+            android:paddingLeft="10sp"
+            android:inputType="number|phone"
+            android:maxLength="10" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Your Mobile Number"
+        android:textSize="20sp"
+        android:id="@+id/textView7"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/phLinear" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:paddingLeft="8dp"
+        android:src="@drawable/gf"
+        android:onClick="selectLocation"
+        android:layout_marginTop="62dp"
+        android:layout_below="@+id/phLinear"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:hint="Click on the icon to set Location"
+        android:layout_height="wrap_content"
+        android:id="@+id/location"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_toEndOf="@+id/imageView2" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/button2"
+        android:onClick="done"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+</RelativeLayout>

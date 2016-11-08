@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Toast.makeText(this, "63", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "77", Toast.LENGTH_SHORT).show();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ImageView myImageView= (ImageView)findViewById(R.id.splashscreen);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if((StoreSharedPreferences.getUserEmail(MainActivity.this).length()==0)){
-                    Intent mainIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                    Intent mainIntent = new Intent(MainActivity.this, Login.class);
                     MainActivity.this.startActivity(mainIntent);
                     MainActivity.this.finish();
                 }
