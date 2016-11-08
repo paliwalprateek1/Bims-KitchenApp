@@ -22,6 +22,8 @@ public class StoreSharedPreferences {
     public static final String PREFS_USER_CUSTOM_LOCATION = "location";
     public static final String PREFS_NAME_QUANT = "NKDROID_APP_QUANT";
     public static final String FAVORITES_QUANT = "Favorite_QUANT";
+    public static final String NUMBER = "number";
+    public static final String REMARKS = "remarks";
 
 
     public StoreSharedPreferences() {
@@ -97,6 +99,19 @@ public class StoreSharedPreferences {
         return getSharedPreferences(ctx).getString("email", "");
     }
 
+    public static void setUserNumber(Context ctx, String userNumber)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(NUMBER, userNumber);
+        editor.commit();
+    }
+
+    public static String getUserNumber(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString("number", "");
+    }
+
+
     public static void setUserName(Context ctx, String userName)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
@@ -161,9 +176,15 @@ public class StoreSharedPreferences {
         }
     }
 
+    public static void setRemarks(Context ctx, String remarks)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(REMARKS, remarks);
+        editor.commit();
+    }
 
-
-
-
-
+    public static String getRemarks(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString("remarks", "");
+    }
 }

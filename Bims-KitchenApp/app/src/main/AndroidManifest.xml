@@ -46,7 +46,15 @@
             android:name=".SendOrderFinal"
             android:label="@string/title_activity_send_order_final"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Register" />
+        <activity
+            android:name=".RegisterUser"
+            android:label="@string/title_activity_register_user"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NumberAndLocation"
+            android:label="@string/title_activity_number_and_location"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

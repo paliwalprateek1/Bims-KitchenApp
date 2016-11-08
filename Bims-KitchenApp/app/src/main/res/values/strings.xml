@@ -30,4 +30,7 @@
     <string name="play_again">Play Again</string>
     <string name="title_activity_proceed_order">ProceedOrder</string>
     <string name="title_activity_send_order_final">SendOrderFinal</string>
+    <string name="title_activity_wanta">Wanta</string>
+    <string name="title_activity_register_user">RegisterUser</string>
+    <string name="title_activity_number_and_location">NumberAndLocation</string>
 </resources>
