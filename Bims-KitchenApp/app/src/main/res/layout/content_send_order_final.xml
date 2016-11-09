@@ -7,55 +7,171 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="rajeevpc.bims_kitchenapp.SendOrderFinal"
     tools:showIn="@layout/activity_send_order_final">
-    
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200sp"></RelativeLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200sp"
-        android:layout_above="@+id/dialogButtonOK"
-        android:layout_alignParentEnd="true">
 
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout66"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Special Remarks"
-            android:id="@+id/textView2"
-            android:textStyle="bold"
-            android:layout_alignParentTop="true"
+            android:text="Name"
+            android:textColor="#000"
+            android:id="@+id/asdfnn"
+
             android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="180sp"
-            android:textStyle="italic"
-            android:hint="Eg: Bring extra ketchup or Make the food spicy...."
-            android:layout_below="@+id/textView2"
-            android:id="@+id/textView3"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:hint="prateka;kjsdng"
+            android:layout_marginBottom="40dp"
+            android:layout_below="@+id/asdfnn"/>
+
+
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayou"
+        android:layout_alignTop="@+id/relativeLayout66"
+        android:layout_alignEnd="@+id/relativeLayout5">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number"
+            android:textColor="#000"
+            android:id="@+id/asdfoo"
+
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/number"
+            android:hint=""
+            android:layout_below="@+id/asdfoo"
+            android:layout_alignParentStart="true" />
+
+
+    </RelativeLayout>
+    
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:id="@+id/relativeLayout6"
+        android:layout_above="@+id/relativeLayout5"
+        android:layout_alignParentEnd="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000"
+            android:layout_above="@+id/total"
+            android:id="@+id/view" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total ="
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:id="@+id/total"
+            android:layout_marginEnd="104dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/amount"
+            android:layout_alignTop="@+id/total"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:textSize="20dp"
+            android:id="@+id/order"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dialogButtonCancel"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout4">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remarks"
+            android:textColor="#000"
+            android:id="@+id/asdf"
+
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/remarksFinal"
+            android:hint="No Remarks"
+            android:layout_marginBottom="40dp"
+            android:layout_below="@+id/asdf"/>
+
+
+    </RelativeLayout>
+
+
     <Button
-        android:id="@+id/dialogButtonOK"
+        android:id="@+id/dialogButtonCancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=" Order "
         android:textStyle="bold"
+        android:onClick="sendOrderFinalMaaKasam"
         android:textColor="@color/colorWhite"
         android:background="@color/colorPrimaryDark"
         android:layout_marginRight="5dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-    
-    
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout5"
+        android:layout_above="@+id/relativeLayout4"
+        android:layout_alignEnd="@+id/dialogButtonCancel">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textColor="#000"
+            android:id="@+id/asdfg"
+
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/placeFinal"
+            android:hint=""
+            android:layout_marginBottom="40dp"
+            android:layout_below="@+id/asdfg"/>
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -49,7 +49,6 @@ public class ProceedFoodAdapter extends RecyclerView.Adapter<ProceedFoodAdapter.
     @Override
     public void onBindViewHolder(OtherViewHolder holder, int position) {
         FoodQuantity food = foodList.get(position);
-
         if(!food.getQuantity().equals("0")) {
             holder.food_quant.setText(food.getFood());
             holder.price_quant.setText("    X    "+food.getQuantity() + "      =");

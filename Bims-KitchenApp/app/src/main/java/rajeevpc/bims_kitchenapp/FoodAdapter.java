@@ -1,9 +1,12 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.media.Image;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,11 +20,13 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView food, price;
+        public ImageView foodItemIcon;
 
         public MyViewHolder(View view) {
             super(view);
             food = (TextView) view.findViewById(R.id.food);
             price = (TextView) view.findViewById(R.id.price);
+            foodItemIcon = (ImageView) view.findViewById(R.id.foodItemIcon);
         }
     }
 
@@ -44,6 +49,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         Food food = foodList.get(position);
         holder.food.setText(food.getFood());
         holder.price.setText(food.getPrice());
+        holder.foodItemIcon.setImageURI(Uri.parse(food.getImageUri()));
     }
 
 

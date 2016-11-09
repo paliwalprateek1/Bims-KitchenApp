@@ -7,7 +7,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ public class SendOrderFinal extends AppCompatActivity {
     private static List<Food> order = new ArrayList<>();
     StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
     Data data = new Data();
+    Firebase ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,22 +29,71 @@ public class SendOrderFinal extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Firebase.setAndroidContext(this);
+        ref = new Firebase(Server.URL);
+
+
 //        Intent intent = new Intent();
 //        intent.setClass(getApplicationContext(), SendOrderFinal.class);
 
         String place="";
         String latitude= "";
+        String specialRemarks="";
+        String price = "";
+        String itemOrderString="";
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         place = extras.getString("place");
         latitude = extras.getString("latitude");
+        specialRemarks = extras.getString("specialRemarks");
+        price = extras.getString("price");
+        itemOrderString = extras.getString("itemOrderString");
+
+        TextView placeFinal =(TextView) findViewById(R.id.placeFinal);
+        TextView name =(TextView) findViewById(R.id.name);
+
+        TextView number =(TextView) findViewById(R.id.number);
+        TextView amount =(TextView) findViewById(R.id.amount);
+        TextView remarksFinal =(TextView) findViewById(R.id.remarksFinal);
+        TextView order = (TextView) findViewById(R.id.order);
+        order.setText(itemOrderString);
+
+        placeFinal.setText(place);
+        name.setText(StoreSharedPreferences.getUserName(this));
+        number.setText(StoreSharedPreferences.getUserNumber(this));
+        amount.setText(price);
+        remarksFinal.setText(specialRemarks);
+
+
         data.setPlace(place);
         data.setCordinates(latitude);
+        data.setRemarks(specialRemarks);
+        data.setEmail(StoreSharedPreferences.getUserEmail(this));
+        data.setNumber(StoreSharedPreferences.getUserNumber(this));
+        data.setName(StoreSharedPreferences.getUserName(this));
+        data.setFood(itemOrderString);
+        data.setPrice(price);
+        data.setOrderStatus("pending");
 
 
     }
 
+    public void sendOrderFinalUltimate(Data data){
+        Firebase.setAndroidContext(getApplicationContext());
+        ref = new Firebase(Server.URL);
+        //Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
+        Firebase newRef = ref.child("Order").push();
+        newRef.setValue(data);
+    }
+
+    public void sendOrderFinalMaaKasam(View view) {
+        sendOrderFinalUltimate(data);
+        Toast.makeText(this, "Ordered", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MenuPage.class);
+        startActivity(intent);
+        finish();
+    }
 }
 
 class Data{
@@ -48,17 +101,29 @@ class Data{
     private String price;
     private String place;
     private String remarks;
+    private String cordinates;
+    private String name;
+    private String email;
+    private String number;
+    private String orderStatus;
 
     public Data(){}
 
-    public Data(String food, String price, String place, String remarks, String cordinates, String name){
+    public Data(String food, String price, String place, String remarks, String cordinates,
+                String name, String email, String number, String orderStatus){
         this.food = food;
         this.price = price;
         this.place = place;
         this.remarks = remarks;
         this.cordinates = cordinates;
         this.name = name;
+        this.number = number;
+        this.email = email;
+        this.orderStatus= orderStatus;
     }
+    public String getOrderStatus(){return orderStatus;}
+
+    public void setOrderStatus(String orderStatus){this.orderStatus = orderStatus;}
 
     public String getCordinates() {
         return cordinates;
@@ -66,6 +131,20 @@ class Data{
 
     public void setCordinates(String cordinates) {
         this.cordinates = cordinates;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getName() {
@@ -108,6 +187,4 @@ class Data{
         this.food = food;
     }
 
-    private String cordinates;
-    private String name;
 }

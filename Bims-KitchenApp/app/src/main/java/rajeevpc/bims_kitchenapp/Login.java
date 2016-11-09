@@ -137,6 +137,8 @@ public class Login extends AppCompatActivity {
         String personEmail = acct.getEmail();
         String personId = acct.getId();
         Uri personPhoto = acct.getPhotoUrl();
+        String s = personPhoto.toString();
+        StoreSharedPreferences.setImageUri(this, s);
         Log.d("here is", "  "+personName);
         Log.d("here is", "  "+personGivenName);
         Log.d("here is", "  "+personFamilyName);
@@ -168,8 +170,8 @@ public class Login extends AppCompatActivity {
                     }
                 }
                 if(a==1) {
-                    Toast.makeText(Login.this, "Register First", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Login.this, RegisterUser.class);
+                    //Toast.makeText(Login.this, "Register First", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Login.this, NumberAndLocation.class);
                     startActivity(intent);
 
 //                    Firebase newRef = ref.child("Users").push();

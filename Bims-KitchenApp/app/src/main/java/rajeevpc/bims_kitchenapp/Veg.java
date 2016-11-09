@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -65,10 +66,11 @@ public class Veg extends Fragment{
 
     private String mParam1;
     private String mParam2;
+    private List<FoodQuantity> orderChange = new ArrayList<>();
     private final int CANCEL_DIALOG = 1;
     private Handler mHandler;
     private ProgressDialog mDialog;
-    protected ActionBarProvider mActionBar;
+
     private Handler mHandler2 = new Handler();
 
     private OnFragmentInteractionListener mListener;
@@ -80,13 +82,13 @@ public class Veg extends Fragment{
 
 
 
+
     public static Veg newInstance(String param1, String param2) {
         Veg fragment = new Veg();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+
     }
 
     @Override
@@ -97,12 +99,11 @@ public class Veg extends Fragment{
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
 
 
 
@@ -127,6 +128,10 @@ public class Veg extends Fragment{
                 foodQuantity.setFood(food.getFood());
                 foodQuantity.setPrice(food.getPrice());
 
+                try {
+                    (new StoreSharedPreferences()).removeFood(getContext(), food);
+                }catch (Exception e){}
+
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.dialog_counter);
                 dialog.setTitle(food.getFood());
@@ -141,7 +146,6 @@ public class Veg extends Fragment{
                     public void onClick(View view) {
                         int s = Integer.parseInt(count.getText().toString());
                         s++;
-
                         count.setText(Integer.toString(s));
                         //quantityof = Integer.parseInt(count.getText().toString());
                     }
@@ -152,7 +156,6 @@ public class Veg extends Fragment{
                     public void onClick(View view) {
                         int s = Integer.parseInt(count.getText().toString());
                         s--;
-
                         count.setText(Integer.toString(s));
                         //quantityof = Integer.parseInt(count.getText().toString());
 
@@ -181,6 +184,8 @@ public class Veg extends Fragment{
 
             }
         }));
+
+        Toast.makeText(getActivity(), StoreSharedPreferences.getImageuri(getActivity())+"imageUri", Toast.LENGTH_SHORT).show();
         getVegMenu();
         mHandler = new Handler(new Handler.Callback()
         {
@@ -238,7 +243,7 @@ public class Veg extends Fragment{
                     Object value = snapshot.child("f").getValue();
                     Object valueF = snapshot.child("p").getValue();
                     //prepareFoodData(value.toString(), valueF.toString());
-                    Food food = new Food(value.toString(), valueF.toString());
+                    Food food = new Food(value.toString(), valueF.toString(), StoreSharedPreferences.getImageuri(getActivity()));
                     foodList.add(food);
                     mAdapter.notifyDataSetChanged();
                     Log.d("food "+value.toString(), "price "+valueF.toString());

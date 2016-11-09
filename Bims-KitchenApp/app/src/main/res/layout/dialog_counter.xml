@@ -2,17 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="400dp"
-    android:layout_height="200dp">
-
-    <!--<NumberPicker-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/numberPicker"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginEnd="101dp" />-->
-
+    android:layout_height="150dp">
 
 
     <Button
@@ -20,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="OK"
         android:id="@+id/dialogOk"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/buttonUp" />
 
     <Button
@@ -29,9 +19,9 @@
         android:layout_height="wrap_content"
         android:text="-"
         android:id="@+id/buttonDown"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="45dp" />
+        android:layout_marginStart="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -48,8 +38,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:hint="0"
         android:id="@+id/count"
-        android:layout_centerVertical="true"
-        android:layout_margin="130dp" />
+        android:layout_marginLeft="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="13dp"
+        android:layout_toStartOf="@+id/buttonUp" />
 
 
 </RelativeLayout>
