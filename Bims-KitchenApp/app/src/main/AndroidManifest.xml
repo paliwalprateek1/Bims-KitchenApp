@@ -36,17 +36,17 @@
         <activity
             android:name=".ProceedOrder"
             android:label="@string/title_activity_proceed_order"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".SendOrderFinal"
+            android:label="@string/title_activity_proceed_order"
             android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAzv-_l9l6xMvmCQALLXcRJ73U9rYEoUSY" />
 
-        <activity
-            android:name=".SendOrderFinal"
-            android:label="@string/title_activity_send_order_final"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Register" />
         <activity
             android:name=".RegisterUser"
             android:label="@string/title_activity_register_user"

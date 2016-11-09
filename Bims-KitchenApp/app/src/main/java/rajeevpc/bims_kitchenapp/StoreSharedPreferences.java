@@ -23,7 +23,7 @@ public class StoreSharedPreferences {
     public static final String PREFS_NAME_QUANT = "NKDROID_APP_QUANT";
     public static final String FAVORITES_QUANT = "Favorite_QUANT";
     public static final String NUMBER = "number";
-    public static final String REMARKS = "remarks";
+    public static final String IMAGEURI = "imageUri";
 
 
     public StoreSharedPreferences() {
@@ -168,6 +168,14 @@ public class StoreSharedPreferences {
         storeFoodQuant(context, favorites);
     }
 
+    public void removeFood(Context context, Food f){
+        ArrayList a = loadFavorites(context);
+        if(a != null){
+            a.remove(f);
+            storeFoodQuant(context, a);
+        }
+    }
+
     public void removeFavoriteQuantity(Context context, FoodQuantity beanSampleList) {
         ArrayList favorites = loadFoodQuantity(context);
         if (favorites != null) {
@@ -176,15 +184,15 @@ public class StoreSharedPreferences {
         }
     }
 
-    public static void setRemarks(Context ctx, String remarks)
+    public static void setImageUri(Context ctx, String imageUri)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-        editor.putString(REMARKS, remarks);
+        editor.putString(IMAGEURI, imageUri);
         editor.commit();
     }
 
-    public static String getRemarks(Context ctx)
+    public static String getImageuri(Context ctx)
     {
-        return getSharedPreferences(ctx).getString("remarks", "");
+        return getSharedPreferences(ctx).getString("imageUri", "");
     }
 }

@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,12 +52,11 @@ public class ProceedOrder extends AppCompatActivity {
     private ProceedFoodAdapter mAdapter;
     private String latitude, longitude, address;
     int status = 1;
-
+    EditText specialRemarks;
     String itemOrderString="";
-    String fOrder="";
+    String fOrder="", valueP="";
     int value=0;
-    Firebase ref;
-    TextView orderListDialog;
+
 
     @Override
     public void onBackPressed() {
@@ -90,6 +91,8 @@ public class ProceedOrder extends AppCompatActivity {
             public void onLongClick(View view, int position) {
             }
         }));
+
+        specialRemarks = (EditText) findViewById(R.id.specialRemarks);
     }
     Place place;
 
@@ -101,53 +104,59 @@ public class ProceedOrder extends AppCompatActivity {
             status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         }
         if (requestCode == 199) {
-            final int size = order.size();
-            place = PlacePicker.getPlace(data, this);
-            String toastMsg = String.format("Place: %s", place.getAddress());
-            address = place.getAddress().toString();
-            latitude = place.getLatLng().toString();
-            Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent();
-            intent.setClass(this, SendOrderFinal.class);
-            intent.putExtra("place", place.getAddress().toString());
-            intent.putExtra("latitude", place.getLatLng().toString());
-            startActivity(intent);
+            if(data!=null) {
+                place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getAddress());
+                address = place.getAddress().toString();
+                latitude = place.getLatLng().toString();
+                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+
+                int size = order.size();
+                //Toast.makeText(getApplicationContext(), order.size()+"size", Toast.LENGTH_SHORT).show();
+
+                for(int i=0;i<size;i++){
+                    String s = order.get(i).getFood();
+                    //+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
+                    int a = Integer.parseInt(order.get(i).getQuantity());
+                    int b = Integer.parseInt(order.get(i).getPrice());
+                    String ss = order.get(i).getFood() +"       X   " + order.get(i).getQuantity()+ "    =        "+
+                            order.get(i).getPrice()+", \n";
+                    itemOrderString = ss+itemOrderString;
+                    value = value + Integer.parseInt(Integer.toString(a*b));
+                }
+                int a = itemOrderString.length();
+                itemOrderString = itemOrderString.substring(0,a-2);
+                valueP = Integer.toString(value);
+                //Toast.makeText(getApplicationContext(), itemOrderString + valueP, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+                intent.setClass(this, SendOrderFinal.class);
+                intent.putExtra("place", place.getAddress().toString());
+                intent.putExtra("latitude", place.getLatLng().toString());
+                intent.putExtra("itemOrderString", itemOrderString);
+                intent.putExtra("price", valueP);
+                if((specialRemarks.getText().toString())!=null){
+                    intent.putExtra("specialRemarks", specialRemarks.getText().toString());
+                    startActivity(intent);
+                }
+                else{
+                    intent.putExtra("specialRemarks", "");
+                    startActivity(intent);
+                }
+
+            }
+            else{
+                Toast.makeText(this, "Select your location", Toast.LENGTH_SHORT).show();
+            }
 
 
-//            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-//            dialogButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Firebase.setAndroidContext(getApplicationContext());
-//                    ref = new Firebase(Server.URL);
-//                    final OrderSend os = new OrderSend();
-//                    os.setAmount(String.valueOf(value));
-//                    os.setItemString(itemOrderString);
-//                    os.setLatitude(latitude);
-//                    os.setLongitude(address);
-//                    os.setUserMail(StoreSharedPreferences.getUserEmail(ProceedOrder.this));
-//                    //Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
-//                    Firebase newRef = ref.child("Order").push();
-//                    newRef.setValue(os);
-//                    Toast.makeText(getApplicationContext(), "Ordered", Toast.LENGTH_SHORT).show();
-//                    order.clear();
-//                    storeSharedPreferences.removeAll(getApplicationContext());
-//                    finish();
-//                    //dialog.dismiss();
-//                }
-//            });
+
         }
     }
 
     public void confirmOrder(View view) {
-        int size = order.size();
-        for(int i=0;i<size;i++){
-            String s = order.get(i).getFood()+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
-            fOrder = s+fOrder;
-            String ss = order.get(i).getFood() + ", ";
-            itemOrderString = ss+itemOrderString;
-            value = value + Integer.parseInt(order.get(i).getPrice());
-        }
+
+
 
         status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(ProceedOrder.this);
         if (status != ConnectionResult.SUCCESS) {
@@ -172,13 +181,11 @@ public class ProceedOrder extends AppCompatActivity {
             } catch (GooglePlayServicesNotAvailableException e) {
                 e.printStackTrace();
             }
-
         }
-
-
     }
 
     public void useCustomLocation(View view) {
+        (new StoreSharedPreferences()).removeAllQuant(getApplicationContext());
         finish();
     }
 }

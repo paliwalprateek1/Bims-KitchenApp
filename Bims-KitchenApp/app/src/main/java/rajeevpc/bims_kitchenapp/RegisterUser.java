@@ -150,6 +150,8 @@ public class RegisterUser extends AppCompatActivity {
         String personEmail = acct.getEmail();
         String personId = acct.getId();
         Uri personPhoto = acct.getPhotoUrl();
+        String s = personPhoto.toString();
+        StoreSharedPreferences.setImageUri(this, s);
         Log.d("here is", "  " + personName);
         Log.d("here is", "  " + personGivenName);
         Log.d("here is", "  " + personFamilyName);

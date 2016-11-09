@@ -70,6 +70,7 @@ public class NonVeg extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         Firebase.setAndroidContext(getContext());
         ref = new Firebase(Server.URL);
         View view = inflater.inflate(R.layout.fragment_non_veg, container, false);
@@ -189,7 +190,7 @@ public class NonVeg extends Fragment {
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
                     Object value = snapshot.child("f").getValue();
                     Object valueF = snapshot.child("p").getValue();
-                    Food food = new Food(value.toString(), valueF.toString());
+                    Food food = new Food(value.toString(), valueF.toString(), StoreSharedPreferences.getImageuri(getActivity()));
                     foodList.add(food);
                     mAdapter.notifyDataSetChanged();
 
