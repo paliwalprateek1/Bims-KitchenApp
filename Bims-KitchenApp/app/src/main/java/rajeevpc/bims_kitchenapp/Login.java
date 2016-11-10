@@ -151,14 +151,14 @@ public class Login extends AppCompatActivity {
     }
 
     public void checkPerviousRegistration(){
-        Firebase objRef = ref.child("UsersMail");
+        Firebase objRef = ref.child("Users");
         Query pendingTasks = objRef.orderByValue().equalTo(StoreSharedPreferences.getUserEmail(Login.this));
         pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot tasksSnapshot) {
                 int a=1;
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
-                    Object value = snapshot.getValue();
+                    Object value = snapshot.child("email").getValue();
                     if(value.toString().equals(StoreSharedPreferences.getUserEmail(Login.this))){
                         Toast.makeText(Login.this,"Already Registered", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Login.this, MenuPage.class);
@@ -167,6 +167,7 @@ public class Login extends AppCompatActivity {
                         startActivity(intent);
                         a=0;
                         finish();
+                        break;
                     }
                 }
                 if(a==1) {

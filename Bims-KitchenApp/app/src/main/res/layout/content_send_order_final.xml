@@ -98,12 +98,24 @@
             android:layout_alignParentEnd="true" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="165dp"
             android:layout_height="110dp"
-            android:textSize="20dp"
+            android:layout_above="@+id/total"
             android:id="@+id/order"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:layout_width="95dp"
+            android:layout_height="110dp"
+            android:id="@+id/quantityiss"
+            android:layout_above="@+id/total"
+            android:layout_toEndOf="@+id/order" />
+
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="110dp"
+            android:id="@+id/pricess"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
