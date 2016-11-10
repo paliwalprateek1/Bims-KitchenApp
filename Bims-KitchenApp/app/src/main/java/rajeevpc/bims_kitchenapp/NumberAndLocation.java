@@ -78,6 +78,8 @@ public class NumberAndLocation extends AppCompatActivity {
         userToBeRegistered.setName(StoreSharedPreferences.getUserName(NumberAndLocation.this));
         userToBeRegistered.setLocation(StoreSharedPreferences.getUserCustomLocation(NumberAndLocation.this));
         Firebase newRef = ref.child("Users").push();
+        Firebase newerRef = ref.child("UsersMail").push();
+        newerRef.setValue(StoreSharedPreferences.getUserEmail(NumberAndLocation.this));
         newRef.setValue(userToBeRegistered);
         Intent intent = new Intent(this, MenuPage.class);
         startActivity(intent);
