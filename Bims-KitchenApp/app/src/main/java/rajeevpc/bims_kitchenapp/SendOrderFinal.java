@@ -41,6 +41,9 @@ public class SendOrderFinal extends AppCompatActivity {
         String specialRemarks="";
         String price = "";
         String itemOrderString="";
+        String itemOrderStringSend="";
+        String itemQuantString="";
+        String itemValueString="";
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -49,6 +52,10 @@ public class SendOrderFinal extends AppCompatActivity {
         specialRemarks = extras.getString("specialRemarks");
         price = extras.getString("price");
         itemOrderString = extras.getString("itemOrderString");
+        itemOrderStringSend=extras.getString("itemOrderStringSend");
+        itemValueString=extras.getString("itemValueString");
+        itemQuantString=extras.getString("itemQuantString");
+
 
         TextView placeFinal =(TextView) findViewById(R.id.placeFinal);
         TextView name =(TextView) findViewById(R.id.name);
@@ -57,7 +64,12 @@ public class SendOrderFinal extends AppCompatActivity {
         TextView amount =(TextView) findViewById(R.id.amount);
         TextView remarksFinal =(TextView) findViewById(R.id.remarksFinal);
         TextView order = (TextView) findViewById(R.id.order);
+        TextView quantiss =(TextView) findViewById(R.id.quantityiss);
+        TextView pricess = (TextView) findViewById(R.id.pricess);
+
         order.setText(itemOrderString);
+        quantiss.setText(itemQuantString);
+        pricess.setText(itemValueString);
 
         placeFinal.setText(place);
         name.setText(StoreSharedPreferences.getUserName(this));
@@ -72,7 +84,7 @@ public class SendOrderFinal extends AppCompatActivity {
         data.setEmail(StoreSharedPreferences.getUserEmail(this));
         data.setNumber(StoreSharedPreferences.getUserNumber(this));
         data.setName(StoreSharedPreferences.getUserName(this));
-        data.setFood(itemOrderString);
+        data.setFood(itemOrderStringSend);
         data.setPrice(price);
         data.setOrderStatus("pending");
 

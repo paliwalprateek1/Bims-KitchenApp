@@ -53,7 +53,7 @@ public class ProceedOrder extends AppCompatActivity {
     private String latitude, longitude, address;
     int status = 1;
     EditText specialRemarks;
-    String itemOrderString="";
+    String itemOrderString="", itemQuantString="", itemValueString="", itemOrderStringSend="";
     String fOrder="", valueP="";
     int value=0;
 
@@ -115,26 +115,31 @@ public class ProceedOrder extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), order.size()+"size", Toast.LENGTH_SHORT).show();
 
                 for(int i=0;i<size;i++){
-                    String s = order.get(i).getFood();
-                    //+"\t\t\t\t"+"-"+"\t\t\t\t"+order.get(i).getPrice()+"\n";
                     int a = Integer.parseInt(order.get(i).getQuantity());
                     int b = Integer.parseInt(order.get(i).getPrice());
-                    String ss = order.get(i).getFood() +"       X   " + order.get(i).getQuantity()+ "    =        "+
-                            order.get(i).getPrice()+", \n";
-                    itemOrderString = ss+itemOrderString;
+                    String ss = order.get(i).getFood()+"\n";
+                    String sss = "       X   " + order.get(i).getQuantity()+ "    =        "+"\n";
+                    String ssss = order.get(i).getPrice()+"\n";
+                    itemOrderStringSend = ss+sss+ssss+itemOrderStringSend;
+                    itemOrderString=ss+itemOrderString;
+                    itemQuantString=sss+itemQuantString;
+                    itemValueString=ssss+itemValueString;
                     value = value + Integer.parseInt(Integer.toString(a*b));
                 }
                 int a = itemOrderString.length();
                 itemOrderString = itemOrderString.substring(0,a-2);
                 valueP = Integer.toString(value);
-                //Toast.makeText(getApplicationContext(), itemOrderString + valueP, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent();
                 intent.setClass(this, SendOrderFinal.class);
                 intent.putExtra("place", place.getAddress().toString());
                 intent.putExtra("latitude", place.getLatLng().toString());
                 intent.putExtra("itemOrderString", itemOrderString);
+                intent.putExtra("itemOrderStringSend", itemOrderStringSend);
+                intent.putExtra("itemValueString", itemValueString);
+                intent.putExtra("itemQuantString", itemQuantString);
                 intent.putExtra("price", valueP);
+
                 if((specialRemarks.getText().toString())!=null){
                     intent.putExtra("specialRemarks", specialRemarks.getText().toString());
                     startActivity(intent);

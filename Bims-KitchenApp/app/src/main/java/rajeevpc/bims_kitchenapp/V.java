@@ -31,17 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link V.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link V#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class V extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private List<Food> foodList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
@@ -69,15 +60,6 @@ public class V extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment V.
-     */
-    // TODO: Rename and change types and number of parameters
     public static V newInstance(String param1, String param2) {
         V fragment = new V();
         Bundle args = new Bundle();
@@ -182,23 +164,6 @@ public class V extends Fragment {
         getBevMenu();
 
 
-        //for(int i=0;i<5;i++) {
-            mHandler = new Handler(new Handler.Callback() {
-                @Override
-                public boolean handleMessage(Message msg) {
-                    if (msg.what == CANCEL_DIALOG) {
-                        mDialog.cancel();
-                    }
-
-                    return false;
-                }
-            });
-                mDialog = new ProgressDialog(getActivity());
-                mDialog.setMessage("Fetching Menu....");
-                mDialog.show();
-                mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 3000);
-
-        //}
         return view;
     }
     public void setValue(String str){
@@ -233,7 +198,7 @@ public class V extends Fragment {
 
     private void getBevMenu(){
         //final Food food = new Food(null, null);
-        Food food = new Food("a", "b", StoreSharedPreferences.getImageuri(getActivity()));
+        Food food = new Food("a", "22", "c");
         foodList.add(food);
         mAdapter.notifyDataSetChanged();
         Firebase objRef = ref.child("Menu");
