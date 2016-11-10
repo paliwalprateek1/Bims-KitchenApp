@@ -185,7 +185,6 @@ public class Veg extends Fragment{
             }
         }));
 
-        Toast.makeText(getActivity(), StoreSharedPreferences.getImageuri(getActivity())+"imageUri", Toast.LENGTH_SHORT).show();
         getVegMenu();
         mHandler = new Handler(new Handler.Callback()
         {

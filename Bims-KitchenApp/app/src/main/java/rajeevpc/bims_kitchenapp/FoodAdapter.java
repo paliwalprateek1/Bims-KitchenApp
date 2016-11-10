@@ -1,5 +1,8 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -49,7 +56,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         Food food = foodList.get(position);
         holder.food.setText(food.getFood());
         holder.price.setText(food.getPrice());
-        holder.foodItemIcon.setImageURI(Uri.parse(food.getImageUri()));
+        Bitmap image=null;
+
+        Picasso.with(holder.foodItemIcon.getContext())
+                .load("http://sj.uploads.im/bgszo.png")
+                .into(holder.foodItemIcon);
+//        try {
+//            URL url = new URL("http://sj.uploads.im/bgszo.png");
+//            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//        } catch(IOException e) {
+//            System.out.println(e);
+//        }
+       // holder.foodItemIcon.setImageBitmap(image);
+
     }
 
 
