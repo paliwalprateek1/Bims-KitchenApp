@@ -19,7 +19,7 @@
         card_view:contentPadding="10dp">
 
         <ImageView
-            android:layout_width="50sp"
+            android:layout_width="70sp"
             android:layout_height="match_parent"
             android:id="@+id/foodItemIcon"
             android:layout_centerVertical="true"

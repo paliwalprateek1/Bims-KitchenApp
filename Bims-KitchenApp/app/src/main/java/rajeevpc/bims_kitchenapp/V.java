@@ -1,37 +1,21 @@
 package rajeevpc.bims_kitchenapp;
 
-import android.app.ActionBar;
 import android.app.Dialog;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -42,16 +26,22 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
-import com.google.android.gms.vision.barcode.internal.client.BarcodeDetectorOptions;
-import com.google.android.gms.vision.text.Text;
 
-import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Veg extends Fragment{
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link V.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link V#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class V extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private List<Food> foodList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FoodAdapter mAdapter;
@@ -75,20 +65,26 @@ public class Veg extends Fragment{
 
     private OnFragmentInteractionListener mListener;
 
-
-
-    public Veg() {
+    public V() {
+        // Required empty public constructor
     }
 
-
-
-
-    public static Veg newInstance(String param1, String param2) {
-        Veg fragment = new Veg();
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment V.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static V newInstance(String param1, String param2) {
+        V fragment = new V();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-
     }
 
     @Override
@@ -100,7 +96,6 @@ public class Veg extends Fragment{
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,7 +106,7 @@ public class Veg extends Fragment{
         //mActionBar.setActionBarColor(new ColorDrawable(Color.parseColor("#fff000")));
 
         ref = new Firebase(Server.URL);
-        View view = inflater.inflate(R.layout.fragment_veg, container, false);
+        View view = inflater.inflate(R.layout.fragment_v, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mAdapter = new FoodAdapter(foodList);
         recyclerView.setHasFixedSize(true);
@@ -129,7 +124,7 @@ public class Veg extends Fragment{
                 foodQuantity.setPrice(food.getPrice());
 
                 try {
-                    (new StoreSharedPreferences()).removeFood(getContext(), food);
+                    (new StoreSharedPreferences()).removeFood(getActivity(), food);
                 }catch (Exception e){}
 
                 final Dialog dialog = new Dialog(getActivity());
@@ -184,8 +179,9 @@ public class Veg extends Fragment{
 
             }
         }));
+        getBevMenu();
 
-        getVegMenu();
+
         for(int i=0;i<5;i++) {
             mHandler = new Handler(new Handler.Callback() {
                 @Override
@@ -197,15 +193,11 @@ public class Veg extends Fragment{
                     return false;
                 }
             });
-            if(foodList.size()>=1) {
                 mDialog = new ProgressDialog(getActivity());
                 mDialog.setMessage("Fetching Menu....");
                 mDialog.show();
                 mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 3000);
-            }
-            else if(foodList.size()==0 && i==4){
-                Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_SHORT).show();
-            }
+
         }
         return view;
     }
@@ -217,10 +209,21 @@ public class Veg extends Fragment{
         s.addFoodQuantity(getActivity(), fq);
     }
 
-
+    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -234,11 +237,13 @@ public class Veg extends Fragment{
         void onFragmentInteraction(Uri uri);
     }
 
-
-    private void getVegMenu(){
+    private void getBevMenu(){
         //final Food food = new Food(null, null);
+        Food food = new Food("a", "b", StoreSharedPreferences.getImageuri(getActivity()));
+        foodList.add(food);
+        mAdapter.notifyDataSetChanged();
         Firebase objRef = ref.child("Menu");
-        Query pendingTasks = objRef.orderByChild("cat").equalTo("veg");
+        Query pendingTasks = objRef.orderByChild("cat").equalTo("bev");
         pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot tasksSnapshot) {
@@ -259,4 +264,3 @@ public class Veg extends Fragment{
         });
     }
 }
-

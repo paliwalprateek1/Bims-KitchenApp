@@ -3,6 +3,9 @@ package rajeevpc.bims_kitchenapp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.media.Image;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.IOException;
 import java.net.URL;
@@ -56,10 +60,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         Food food = foodList.get(position);
         holder.food.setText(food.getFood());
         holder.price.setText(food.getPrice());
-        Bitmap image=null;
 
         Picasso.with(holder.foodItemIcon.getContext())
                 .load("http://sj.uploads.im/bgszo.png")
+                .transform(new CircleTransform())
                 .into(holder.foodItemIcon);
 //        try {
 //            URL url = new URL("http://sj.uploads.im/bgszo.png");
@@ -75,5 +79,40 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     @Override
     public int getItemCount() {
         return foodList.size();
+    }
+}
+
+class CircleTransform implements Transformation {
+    @Override
+    public Bitmap transform(Bitmap source) {
+        int size = Math.min(source.getWidth(), source.getHeight());
+
+        int x = (source.getWidth() - size + 1) / 2;
+        int y = (source.getHeight() - size + 1) / 2;
+
+        Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+        if (squaredBitmap != source) {
+            source.recycle();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        BitmapShader shader = new BitmapShader(squaredBitmap,
+                BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+        paint.setShader(shader);
+        paint.setAntiAlias(true);
+
+        float r = size / 2f;
+        canvas.drawCircle(r, r, r, paint);
+
+        squaredBitmap.recycle();
+        return bitmap;
+    }
+
+    @Override
+    public String key() {
+        return "circle";
     }
 }
