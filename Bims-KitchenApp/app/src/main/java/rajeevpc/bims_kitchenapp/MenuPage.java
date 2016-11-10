@@ -117,7 +117,7 @@ public class MenuPage extends AppCompatActivity
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new Veg(), "VEG");
         adapter.addFragment(new NonVeg(), "NON-VEG");
-        //adapter.addFragment(new V(), "Beverages");
+        adapter.addFragment(new V(), "Beverages");
         viewPager.setAdapter(adapter);
     }
 
