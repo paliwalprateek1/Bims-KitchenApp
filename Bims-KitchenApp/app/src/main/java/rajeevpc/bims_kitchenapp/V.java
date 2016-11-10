@@ -182,7 +182,7 @@ public class V extends Fragment {
         getBevMenu();
 
 
-        for(int i=0;i<5;i++) {
+        //for(int i=0;i<5;i++) {
             mHandler = new Handler(new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
@@ -198,7 +198,7 @@ public class V extends Fragment {
                 mDialog.show();
                 mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 3000);
 
-        }
+        //}
         return view;
     }
     public void setValue(String str){
@@ -209,7 +209,6 @@ public class V extends Fragment {
         s.addFoodQuantity(getActivity(), fq);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -219,12 +218,7 @@ public class V extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        mListener = null;
     }
 
     @Override

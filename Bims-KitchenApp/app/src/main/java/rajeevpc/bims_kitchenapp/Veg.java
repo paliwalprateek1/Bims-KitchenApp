@@ -186,7 +186,7 @@ public class Veg extends Fragment{
         }));
 
         getVegMenu();
-        for(int i=0;i<5;i++) {
+        //for(int i=0;i<5;i++) {
             mHandler = new Handler(new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
@@ -197,16 +197,16 @@ public class Veg extends Fragment{
                     return false;
                 }
             });
-            if(foodList.size()>=1) {
+            ////if(foodList.size()>=1) {
                 mDialog = new ProgressDialog(getActivity());
                 mDialog.setMessage("Fetching Menu....");
                 mDialog.show();
                 mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 3000);
-            }
-            else if(foodList.size()==0 && i==4){
+            //}
+            //else if(foodList.size()==0 && i==4){
                 Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_SHORT).show();
-            }
-        }
+            //}
+        //}
         return view;
     }
     public void setValue(String str){
