@@ -2,22 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="400dp"
-    android:layout_height="150dp">
+    android:layout_height="150dp"
+    android:background="#49BB80">
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
+        android:background="#ffffff"
         android:id="@+id/dialogOk"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/buttonUp" />
+        android:textColor="#5349BB"
+
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/buttonDown" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
+        android:textColor="#5349BB"
+        android:background="#ffffff"
         android:id="@+id/buttonDown"
         android:layout_marginStart="41dp"
         android:layout_alignParentTop="true"
@@ -28,6 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
+        android:textColor="#5349BB"
+        android:background="#ffffff"
         android:id="@+id/buttonUp"
         android:layout_alignTop="@+id/buttonDown"
         android:layout_centerHorizontal="true" />
@@ -37,6 +45,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:hint="0"
+        android:textColor="#EBE035"
         android:id="@+id/count"
         android:layout_marginLeft="130dp"
         android:layout_marginRight="130dp"
