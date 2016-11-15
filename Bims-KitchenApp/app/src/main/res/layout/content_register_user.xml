@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#E3DD81"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -11,7 +12,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingRight="24dp"
+        >
 
         <!--  Name Label -->
         <android.support.design.widget.TextInputLayout
@@ -23,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="Name" />
+                android:hint="Name"
+                android:textColor="#0F2454"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Email Label -->
@@ -36,7 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:hint="Email"
+                android:textColor="#0F2454"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -49,7 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:textColor="#0F2454"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Signup Button -->
@@ -78,6 +83,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:background="#ffffff"
             android:text="Register Using Google"/>
 
     </LinearLayout>
