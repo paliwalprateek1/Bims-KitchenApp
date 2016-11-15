@@ -209,8 +209,9 @@ public class V extends Fragment {
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
                     Object value = snapshot.child("f").getValue();
                     Object valueF = snapshot.child("p").getValue();
+                    Object valueU = snapshot.child("url").getValue();
                     //prepareFoodData(value.toString(), valueF.toString());
-                    Food food = new Food(value.toString(), valueF.toString(), StoreSharedPreferences.getImageuri(getActivity()));
+                    Food food = new Food(value.toString(), valueF.toString(), valueU.toString());
                     foodList.add(food);
                     mAdapter.notifyDataSetChanged();
                     Log.d("food "+value.toString(), "price "+valueF.toString());

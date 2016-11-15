@@ -9,22 +9,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="rajeevpc.bims_kitchenapp.Login">
 
-    <Button
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:onClick="signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GoogleSignIn"
-        android:onClick="signIn"
-
-        android:id="@+id/button3"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_below="@+id/button3"
+        android:layout_below="@+id/sign_in_button"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="50dp"
         android:id="@+id/relativeLayout2">

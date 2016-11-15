@@ -108,10 +108,8 @@ public class NonVeg extends Fragment {
                     public void onClick(View view) {
                         int s = Integer.parseInt(count.getText().toString());
                         s++;
-
                         count.setText(Integer.toString(s));
-                        //quantityof = Integer.parseInt(count.getText().toString());
-                    }
+                                          }
                 });
 
                 da.setOnClickListener(new View.OnClickListener() {
@@ -119,9 +117,7 @@ public class NonVeg extends Fragment {
                     public void onClick(View view) {
                         int s = Integer.parseInt(count.getText().toString());
                         s--;
-
                         count.setText(Integer.toString(s));
-                        //quantityof = Integer.parseInt(count.getText().toString());
 
                     }
                 });
@@ -190,10 +186,10 @@ public class NonVeg extends Fragment {
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
                     Object value = snapshot.child("f").getValue();
                     Object valueF = snapshot.child("p").getValue();
-                    Food food = new Food(value.toString(), valueF.toString(), StoreSharedPreferences.getImageuri(getActivity()));
+                    Object valueU = snapshot.child("url").getValue();
+                    Food food = new Food(value.toString(), valueF.toString(), valueU.toString());
                     foodList.add(food);
                     mAdapter.notifyDataSetChanged();
-
                     Log.d("food "+value.toString(), "price "+valueF.toString());
                 }
             }

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -34,6 +35,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,6 +123,10 @@ public class MenuPage extends AppCompatActivity
         viewPager.setAdapter(adapter);
     }
 
+    public void profMenu(MenuItem item) {
+
+    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -166,19 +172,50 @@ public class MenuPage extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
+        if (id == R.id.nav_prof) {
+            Intent intent = new Intent(MenuPage.this, UserProfile.class);
+            startActivity(intent);
+            // Handle the camera action
+        } else if (id == R.id.nav_track) {
+
+        } else if (id == R.id.nav_refer) {
+
+        } else if (id == R.id.nav_prevOrder) {
+
+        } else if (id == R.id.nav_feedback) {
+
+        } else if (id == R.id.nav_about) {
+
+        } else if( id == R.id.nav_location){
+            android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(MenuPage.this);
+            builderSingle.setTitle("Select Your Location");
+            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    MenuPage.this, android.R.layout.select_dialog_item);
+            arrayAdapter.add("Gandhinagar");
+            arrayAdapter.add("Vadodara");
+
+            builderSingle.setAdapter(
+
+                    arrayAdapter, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String strName = arrayAdapter.getItem(which);
+                            android.app.AlertDialog.Builder builderInner = new android.app.AlertDialog.Builder(
+                                    MenuPage.this);
+                            if (strName == "Gandhinagar") {
+                                StoreSharedPreferences.setUserCustomLocation(MenuPage.this, "Gandhinagar");
+
+                            } else if (strName == "Vadodara") {
+                                StoreSharedPreferences.setUserCustomLocation(MenuPage.this, "Vadodara");
+
+                            }
+                        }
+                    });
+            builderSingle.create().show();
+
+        } else if( id == R.id.nav_settings){
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

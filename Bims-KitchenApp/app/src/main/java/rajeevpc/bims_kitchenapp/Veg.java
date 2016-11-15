@@ -236,17 +236,16 @@ public class Veg extends Fragment{
 
 
     private void getVegMenu(){
-        //final Food food = new Food(null, null);
         Firebase objRef = ref.child("Menu");
-        Query pendingTasks = objRef.orderByChild("cat").equalTo("veg");
+        Query pendingTasks = objRef.orderByChild("cat").equalTo("Veg");
         pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot tasksSnapshot) {
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
                     Object value = snapshot.child("f").getValue();
                     Object valueF = snapshot.child("p").getValue();
-                    //prepareFoodData(value.toString(), valueF.toString());
-                    Food food = new Food(value.toString(), valueF.toString(), StoreSharedPreferences.getImageuri(getActivity()));
+                    Object valueU = snapshot.child("url").getValue();
+                    Food food = new Food(value.toString(), valueF.toString(), valueU.toString());
                     foodList.add(food);
                     mAdapter.notifyDataSetChanged();
                     Log.d("food "+value.toString(), "price "+valueF.toString());

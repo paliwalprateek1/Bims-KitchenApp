@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -20,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +40,7 @@ public class Login extends AppCompatActivity {
     Firebase ref;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
+    SignInButton signInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,10 @@ public class Login extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         ref = new Firebase(Server.URL);
+        setGooglePlusButtonText(signInButton, "Sign In Using Google");
+
+
+
     }
 
     @Override
@@ -79,6 +86,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
 
     @Override
     public void onStop() {
@@ -138,7 +146,6 @@ public class Login extends AppCompatActivity {
         String personId = acct.getId();
         Uri personPhoto = acct.getPhotoUrl();
         String s = personPhoto.toString();
-        StoreSharedPreferences.setImageUri(this, s);
         Log.d("here is", "  "+personName);
         Log.d("here is", "  "+personGivenName);
         Log.d("here is", "  "+personFamilyName);
@@ -150,38 +157,31 @@ public class Login extends AppCompatActivity {
         checkPerviousRegistration();
     }
 
+
+
     public void checkPerviousRegistration(){
         Firebase objRef = ref.child("Users");
-        Query pendingTasks = objRef.orderByValue().equalTo(StoreSharedPreferences.getUserEmail(Login.this));
+        Query pendingTasks = objRef.orderByChild("email").equalTo(StoreSharedPreferences.getUserEmail(Login.this));
         pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot tasksSnapshot) {
-                int a=1;
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
-                    Object value = snapshot.child("email").getValue();
-                    if(value.toString().equals(StoreSharedPreferences.getUserEmail(Login.this))){
+                    Object value = snapshot.child("name").getValue();
+                    if(value.toString().length()!=0){
                         Toast.makeText(Login.this,"Already Registered", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Login.this, MenuPage.class);
                         StoreSharedPreferences.setUserNumber(Login.this, snapshot.child("number").getValue().toString());
                         StoreSharedPreferences.setUserCustomLocation(Login.this, snapshot.child("location").getValue().toString());
                         startActivity(intent);
-                        a=0;
                         finish();
                         break;
                     }
-                }
-                if(a==1) {
-                    //Toast.makeText(Login.this, "Register First", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Login.this, NumberAndLocation.class);
-                    startActivity(intent);
-                    finish();
-
-//                    Firebase newRef = ref.child("Users").push();
-//                    newRef.setValue(StoreSharedPreferences.getUserEmail(Login.this));
-//                    Intent intent = new Intent(Login.this, MenuPage.class);
-//                    startActivity(intent);
-//                    finish();
-//                    Toast.makeText(Login.this, "Welcome " +StoreSharedPreferences.getUserName(Login.this), Toast.LENGTH_LONG).show();
+                    else{
+                        Toast.makeText(Login.this, "New Registration", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Login.this, NumberAndLocation.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
             @Override
@@ -189,6 +189,20 @@ public class Login extends AppCompatActivity {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
+    }
+
+
+
+
+    protected void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
+        for (int i = 0; i < signInButton.getChildCount(); i++) {
+            View v = signInButton.getChildAt(i);
+            if (v instanceof TextView) {
+                TextView mTextView = (TextView) v;
+                mTextView.setText(buttonText);
+                return;
+            }
+        }
     }
 
     public void Register(View view) {

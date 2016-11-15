@@ -37,7 +37,7 @@
             android:name=".ProceedOrder"
             android:label="@string/title_activity_proceed_order"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SendOrderFinal"
             android:label="@string/title_activity_proceed_order"
@@ -54,6 +54,10 @@
         <activity
             android:name=".NumberAndLocation"
             android:label="@string/title_activity_number_and_location"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserProfile"
+            android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

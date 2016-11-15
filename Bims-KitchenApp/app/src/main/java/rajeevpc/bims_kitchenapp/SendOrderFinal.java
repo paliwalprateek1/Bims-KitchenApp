@@ -97,6 +97,7 @@ public class SendOrderFinal extends AppCompatActivity {
         //Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
         Firebase newRef = ref.child("Order").push();
         newRef.setValue(data);
+        String r = newRef.getKey();
     }
 
     public void sendOrderFinalMaaKasam(View view) {

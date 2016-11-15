@@ -21,6 +21,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.appdatasearch.RegisterSectionInfo;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -53,8 +54,6 @@ public class RegisterUser extends AppCompatActivity {
         setContentView(R.layout.activity_register_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         phno = (TextView) findViewById(R.id.phno);
         location = (TextView) findViewById(R.id.location);
@@ -151,13 +150,6 @@ public class RegisterUser extends AppCompatActivity {
         String personId = acct.getId();
         Uri personPhoto = acct.getPhotoUrl();
         String s = personPhoto.toString();
-        StoreSharedPreferences.setImageUri(this, s);
-        Log.d("here is", "  " + personName);
-        Log.d("here is", "  " + personGivenName);
-        Log.d("here is", "  " + personFamilyName);
-        Log.d("here is", "  " + personEmail);
-        Log.d("here is", "  " + personId);
-
         StoreSharedPreferences.setUserEmail(this, personEmail);
         StoreSharedPreferences.setUserName(this, personGivenName);
         checkPerviousRegistration();
@@ -165,28 +157,27 @@ public class RegisterUser extends AppCompatActivity {
 
     public void checkPerviousRegistration() {
         Firebase objRef = ref.child("Users");
-//        Query pendingTasks = objRef.orderByValue().equalTo(StoreSharedPreferences.getUserEmail(RegisterUser.this));
         Query pendingTasks = objRef.orderByChild("email").equalTo(StoreSharedPreferences.getUserEmail(RegisterUser.this));
         pendingTasks.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot tasksSnapshot) {
-                int a=1;
                 for (DataSnapshot snapshot: tasksSnapshot.getChildren()) {
-                    Object value = snapshot.getValue();
-                    if(value.toString()!=null){
+                    Object value = snapshot.child("name").getValue();
+                    if(value.toString().length()!=0){
                         Toast.makeText(RegisterUser.this,"Already Registered", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterUser.this, MenuPage.class);
                         StoreSharedPreferences.setUserNumber(RegisterUser.this, snapshot.child("number").getValue().toString());
                         StoreSharedPreferences.setUserCustomLocation(RegisterUser.this, snapshot.child("location").getValue().toString());
                         startActivity(intent);
-                        a=0;
+                        finish();
+                        break;
+                    }
+                    else{
+                        Toast.makeText(RegisterUser.this, "New Registration", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterUser.this, NumberAndLocation.class);
+                        startActivity(intent);
                         finish();
                     }
-                }
-                if (a == 1) {
-                    Intent intent = new Intent(RegisterUser.this, NumberAndLocation.class);
-                    startActivity(intent);
-                    finish();
                 }
             }
 
@@ -196,7 +187,6 @@ public class RegisterUser extends AppCompatActivity {
             }
         });
     }
-
 
     public void registerGoogle(View view) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);

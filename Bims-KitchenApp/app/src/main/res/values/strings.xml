@@ -33,4 +33,5 @@
     <string name="title_activity_wanta">Wanta</string>
     <string name="title_activity_register_user">RegisterUser</string>
     <string name="title_activity_number_and_location">NumberAndLocation</string>
+    <string name="title_activity_user_profile">UserProfile</string>
 </resources>

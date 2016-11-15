@@ -4,15 +4,15 @@ package rajeevpc.bims_kitchenapp;
  * Created by prateek on 7/10/16.
  */
 public class Food {
-    private String food, price, imageUri;
+    private String food, price, imageUrl;
 
         public Food() {
         }
 
-        public Food(String food, String price, String imageUri) {
+        public Food(String food, String price, String imageUrl) {
             this.food = food;
             this.price = price;
-            this.imageUri = imageUri;
+            this.imageUrl = imageUrl;
         }
 
 
@@ -33,9 +33,9 @@ public class Food {
             this.price = price;
         }
 
-        public void setImageUri(String imageUri){this.imageUri = imageUri;}
+        public void setImageUrl(String imageUrl){this.imageUrl = imageUrl;}
 
-        public String getImageUri(){ return  imageUri;}
+        public String getImageUrl(){ return  imageUrl;}
 
 
 
