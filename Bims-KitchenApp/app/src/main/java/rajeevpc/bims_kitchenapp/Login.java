@@ -145,6 +145,7 @@ public class Login extends AppCompatActivity {
         String personId = acct.getId();
         Uri personPhoto = acct.getPhotoUrl();
         String s = personPhoto.toString();
+        StoreSharedPreferences.setImageuri(Login.this, s);
         Log.d("here is", "  "+personName);
         Log.d("here is", "  "+personGivenName);
         Log.d("here is", "  "+personFamilyName);

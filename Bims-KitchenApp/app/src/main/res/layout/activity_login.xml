@@ -15,8 +15,7 @@
         android:onClick="signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GoogleSignIn"
-        android:background="#0F2454"
+        android:text="Sign In Using Google"
         android:textColor="#ffffff"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>

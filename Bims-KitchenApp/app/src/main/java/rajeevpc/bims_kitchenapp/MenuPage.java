@@ -93,7 +93,7 @@ public class MenuPage extends AppCompatActivity
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        imageView = (ImageView)findViewById(R.id.imageView);
+//        imageView = (ImageView)findViewById(R.id.imageView);
 
 
 
@@ -109,6 +109,7 @@ public class MenuPage extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
 
     }
@@ -214,6 +215,15 @@ public class MenuPage extends AppCompatActivity
             builderSingle.create().show();
 
         }
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View view = navigationView.inflateHeaderView(R.layout.nav_header_menu_page);
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageViewNav);
+        imageView.setImageURI(Uri.parse(StoreSharedPreferences.getImageUri(MenuPage.this)));
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
