@@ -62,17 +62,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         holder.price.setText(food.getPrice());
 
         Picasso.with(holder.foodItemIcon.getContext())
-                .load("http://sj.uploads.im/bgszo.png")
+                .load(food.getImageUrl())
                 .transform(new CircleTransform())
                 .into(holder.foodItemIcon);
-//        try {
-//            URL url = new URL("http://sj.uploads.im/bgszo.png");
-//            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//        } catch(IOException e) {
-//            System.out.println(e);
-//        }
-       // holder.foodItemIcon.setImageBitmap(image);
-
     }
 
 

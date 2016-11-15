@@ -75,7 +75,6 @@ public class Login extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         ref = new Firebase(Server.URL);
-        setGooglePlusButtonText(signInButton, "Sign In Using Google");
 
 
 
@@ -193,17 +192,6 @@ public class Login extends AppCompatActivity {
 
 
 
-
-    protected void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
-        for (int i = 0; i < signInButton.getChildCount(); i++) {
-            View v = signInButton.getChildAt(i);
-            if (v instanceof TextView) {
-                TextView mTextView = (TextView) v;
-                mTextView.setText(buttonText);
-                return;
-            }
-        }
-    }
 
     public void Register(View view) {
         Intent intent = new Intent(this, RegisterUser.class);

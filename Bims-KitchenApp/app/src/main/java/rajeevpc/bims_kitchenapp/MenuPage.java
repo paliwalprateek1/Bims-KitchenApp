@@ -213,8 +213,6 @@ public class MenuPage extends AppCompatActivity
                     });
             builderSingle.create().show();
 
-        } else if( id == R.id.nav_settings){
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

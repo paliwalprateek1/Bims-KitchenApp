@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "91269716459",
+    "firebase_url": "https://bims-kitchenapp.firebaseio.com",
+    "project_id": "bims-kitchenapp",
+    "storage_bucket": "bims-kitchenapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91269716459:android:e1c2b6afbde3b888",
+        "android_client_info": {
+          "package_name": "rajeevpc.bims_kitchenapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91269716459-dvj8npjkaitqrh83t51nuigpodkon482.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "rajeevpc.bims_kitchenapp",
+            "certificate_hash": "40AF03CD9EC8583CC57EBFA96543F909C708777C"
+          }
+        },
+        {
+          "client_id": "91269716459-vmf8bcj2hvj17drna0270g824kn52hts.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "91269716459-45jomt6ps6f6jbkcso938gvh7jbgf3kq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJIz9WxtWuQnnozlP3sWGG3JU8GtscpZM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91269716459-vmf8bcj2hvj17drna0270g824kn52hts.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

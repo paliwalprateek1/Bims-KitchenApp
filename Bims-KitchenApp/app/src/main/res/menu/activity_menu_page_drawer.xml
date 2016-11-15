@@ -40,8 +40,8 @@
                 android:title="About" />
 
             <item
-                android:id="@+id/nav_signOut"
-                android:icon="@drawable/signOut"
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/signout"
                 android:title="About" />
 
         </menu>
