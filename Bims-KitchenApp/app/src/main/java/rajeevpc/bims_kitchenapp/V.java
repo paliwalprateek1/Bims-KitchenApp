@@ -122,8 +122,8 @@ public class V extends Fragment {
                     @Override
                     public void onClick(View view) {
                         int s = Integer.parseInt(count.getText().toString());
-                        s++;
-                        count.setText(Integer.toString(s));
+                            s++;
+                            count.setText(Integer.toString(s));
                         //quantityof = Integer.parseInt(count.getText().toString());
                     }
                 });
@@ -132,8 +132,10 @@ public class V extends Fragment {
                     @Override
                     public void onClick(View view) {
                         int s = Integer.parseInt(count.getText().toString());
-                        s--;
-                        count.setText(Integer.toString(s));
+                        if(s>0) {
+                            s--;
+                            count.setText(Integer.toString(s));
+                        }
                         //quantityof = Integer.parseInt(count.getText().toString());
 
                     }
@@ -144,7 +146,7 @@ public class V extends Fragment {
                 dialogOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), count.getText().toString(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getActivity(), count.getText().toString(), Toast.LENGTH_SHORT).show();
                         if(!(count.getText().toString()).equals("0")) {
                             setValue(count.getText().toString());
                             storeData(foodQuantity);

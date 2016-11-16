@@ -41,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.vision.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,12 @@ public class MenuPage extends AppCompatActivity
     private ViewPager viewPager;
     ImageView imageView;
 
+    NavigationView navigationView;
+
+
+    Menu menu;
+    MenuItem nav_location;
+    // Handle navigation view item clicks here.
 
     public List<Food> orderedList = new ArrayList<>();
 
@@ -107,8 +114,13 @@ public class MenuPage extends AppCompatActivity
         toggle.syncState();
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        menu = navigationView.getMenu();
+        nav_location =   menu.findItem(R.id.nav_location);
+        nav_location.setTitle(StoreSharedPreferences.getUserCustomLocation(MenuPage.this));
+
 
 
 
@@ -170,7 +182,9 @@ public class MenuPage extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
+
+
         int id = item.getItemId();
 
         if (id == R.id.nav_prof) {
@@ -195,6 +209,9 @@ public class MenuPage extends AppCompatActivity
             arrayAdapter.add("Gandhinagar");
             arrayAdapter.add("Vadodara");
 
+            final TextView tv= (TextView) findViewById(R.id.nav_location);
+
+
             builderSingle.setAdapter(
 
                     arrayAdapter, new DialogInterface.OnClickListener() {
@@ -204,25 +221,18 @@ public class MenuPage extends AppCompatActivity
                             android.app.AlertDialog.Builder builderInner = new android.app.AlertDialog.Builder(
                                     MenuPage.this);
                             if (strName == "Gandhinagar") {
+                                nav_location.setTitle("Gandhinagar");
                                 StoreSharedPreferences.setUserCustomLocation(MenuPage.this, "Gandhinagar");
 
                             } else if (strName == "Vadodara") {
                                 StoreSharedPreferences.setUserCustomLocation(MenuPage.this, "Vadodara");
-
+                                nav_location.setTitle("Vadodara");
                             }
                         }
                     });
             builderSingle.create().show();
 
         }
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        View view = navigationView.inflateHeaderView(R.layout.nav_header_menu_page);
-
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageViewNav);
-        imageView.setImageURI(Uri.parse(StoreSharedPreferences.getImageUri(MenuPage.this)));
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

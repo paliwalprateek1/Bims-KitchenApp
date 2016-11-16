@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Toast.makeText(this, "127", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "131", Toast.LENGTH_SHORT).show();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ImageView myImageView= (ImageView)findViewById(R.id.splashscreen);

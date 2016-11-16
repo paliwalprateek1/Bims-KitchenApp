@@ -114,44 +114,44 @@ public class ProceedOrder extends AppCompatActivity {
                 int size = order.size();
                 //Toast.makeText(getApplicationContext(), order.size()+"size", Toast.LENGTH_SHORT).show();
 
-                for(int i=0;i<size;i++){
-                    int a = Integer.parseInt(order.get(i).getQuantity());
-                    int b = Integer.parseInt(order.get(i).getPrice());
-                    String ss = order.get(i).getFood()+"\n";
-                    String sss = "       X   " + order.get(i).getQuantity()+ "    =        "+"\n";
-                    String ssss = order.get(i).getPrice()+"\n";
-                    itemOrderStringSend = ss+sss+ssss+itemOrderStringSend;
-                    itemOrderString=ss+itemOrderString;
-                    itemQuantString=sss+itemQuantString;
-                    itemValueString=ssss+itemValueString;
-                    value = value + Integer.parseInt(Integer.toString(a*b));
-                }
-                int a = itemOrderString.length();
-                itemOrderString = itemOrderString.substring(0,a-2);
-                valueP = Integer.toString(value);
+                if (itemValueString.length() == 0) {
+                    for (int i = 0; i < size; i++) {
+                        int a = Integer.parseInt(order.get(i).getQuantity());
+                        int b = Integer.parseInt(order.get(i).getPrice());
+                        String ss = order.get(i).getFood() + "\n";
+                        String sss = "       X   " + order.get(i).getQuantity() + "    =        " + "\n";
+                        String ssss = order.get(i).getPrice() + "\n";
+                        itemOrderStringSend = ss + sss + ssss + itemOrderStringSend;
+                        itemOrderString = ss + itemOrderString;
+                        itemQuantString = sss + itemQuantString;
+                        itemValueString = ssss + itemValueString;
+                        value = value + Integer.parseInt(Integer.toString(a * b));
+                    }
+                    int a = itemOrderString.length();
+                    itemOrderString = itemOrderString.substring(0, a - 1);
+                    valueP = Integer.toString(value);
 
-                Intent intent = new Intent();
-                intent.setClass(this, SendOrderFinal.class);
-                intent.putExtra("place", place.getAddress().toString());
-                intent.putExtra("latitude", place.getLatLng().toString());
-                intent.putExtra("itemOrderString", itemOrderString);
-                intent.putExtra("itemOrderStringSend", itemOrderStringSend);
-                intent.putExtra("itemValueString", itemValueString);
-                intent.putExtra("itemQuantString", itemQuantString);
-                intent.putExtra("price", valueP);
+                    Intent intent = new Intent();
+                    intent.setClass(this, SendOrderFinal.class);
+                    intent.putExtra("place", place.getAddress().toString());
+                    intent.putExtra("latitude", place.getLatLng().toString());
+                    intent.putExtra("itemOrderString", itemOrderString);
+                    intent.putExtra("itemOrderStringSend", itemOrderStringSend);
+                    intent.putExtra("itemValueString", itemValueString);
+                    intent.putExtra("itemQuantString", itemQuantString);
+                    intent.putExtra("price", valueP);
 
-                if((specialRemarks.getText().toString())!=null){
-                    intent.putExtra("specialRemarks", specialRemarks.getText().toString());
-                    startActivity(intent);
-                }
-                else{
-                    intent.putExtra("specialRemarks", "");
-                    startActivity(intent);
-                }
+                    if ((specialRemarks.getText().toString()) != null) {
+                        intent.putExtra("specialRemarks", specialRemarks.getText().toString());
+                        startActivity(intent);
+                    } else {
+                        intent.putExtra("specialRemarks", "");
+                        startActivity(intent);
+                    }
 
-            }
-            else{
-                Toast.makeText(this, "Select your location", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Select your location", Toast.LENGTH_SHORT).show();
+                }
             }
 
 
@@ -160,7 +160,6 @@ public class ProceedOrder extends AppCompatActivity {
     }
 
     public void confirmOrder(View view) {
-
 
 
         status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(ProceedOrder.this);
@@ -172,9 +171,17 @@ public class ProceedOrder extends AppCompatActivity {
         }
         if (status == ConnectionResult.SUCCESS) {
             int PLACE_PICKER_REQUEST = 199;
-            LatLng topLeft = new LatLng(23.179860, 72.649143);
-            LatLng bottomRight = new LatLng(23.249227 , 72.652202);
-            LatLngBounds bounds = new LatLngBounds(topLeft,bottomRight);
+            LatLng topLeft = new LatLng(0, 0);
+            LatLng bottomRight = new LatLng(0,0);
+            if(StoreSharedPreferences.getUserCustomLocation(ProceedOrder.this).equals("Gandhinagar")) {
+                topLeft = new LatLng(23.179860, 72.649143);
+                bottomRight = new LatLng(23.249227, 72.652202);
+            }
+            else if(StoreSharedPreferences.getUserCustomLocation(ProceedOrder.this).equals("Vadodara")){
+                topLeft = new LatLng(22.265240, 73.204044);
+                bottomRight = new LatLng(22.381635, 73.125201);
+            }
+            LatLngBounds bounds = new LatLngBounds(topLeft, bottomRight);
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             builder.setLatLngBounds(bounds);
             //PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();

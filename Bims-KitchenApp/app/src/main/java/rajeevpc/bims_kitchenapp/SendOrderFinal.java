@@ -21,6 +21,14 @@ public class SendOrderFinal extends AppCompatActivity {
     StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
     Data data = new Data();
     Firebase ref;
+    String place="";
+    String latitude= "";
+    String specialRemarks="";
+    String price = "";
+    String itemOrderString="";
+    String itemOrderStringSend="";
+    String itemQuantString="";
+    String itemValueString="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +44,7 @@ public class SendOrderFinal extends AppCompatActivity {
 //        Intent intent = new Intent();
 //        intent.setClass(getApplicationContext(), SendOrderFinal.class);
 
-        String place="";
-        String latitude= "";
-        String specialRemarks="";
-        String price = "";
-        String itemOrderString="";
-        String itemOrderStringSend="";
-        String itemQuantString="";
-        String itemValueString="";
+
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -90,6 +91,7 @@ public class SendOrderFinal extends AppCompatActivity {
 
 
     }
+
 
     public void sendOrderFinalUltimate(Data data){
         Firebase.setAndroidContext(getApplicationContext());
