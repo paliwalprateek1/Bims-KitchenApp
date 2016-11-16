@@ -161,7 +161,9 @@ public class V extends Fragment {
 
             }
         }));
-        getBevMenu();
+        if(foodList.size()==0) {
+            getBevMenu();
+        }
 
 
         return view;
@@ -197,9 +199,6 @@ public class V extends Fragment {
     }
 
     private void getBevMenu(){
-        //final Food food = new Food(null, null);
-        Food food = new Food("a", "22", "c");
-        foodList.add(food);
         mAdapter.notifyDataSetChanged();
         Firebase objRef = ref.child("Menu");
         Query pendingTasks = objRef.orderByChild("cat").equalTo("bev");

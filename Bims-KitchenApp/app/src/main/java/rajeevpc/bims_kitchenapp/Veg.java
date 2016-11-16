@@ -67,10 +67,11 @@ public class Veg extends Fragment{
     private String mParam1;
     private String mParam2;
     private List<FoodQuantity> orderChange = new ArrayList<>();
-    private final int CANCEL_DIALOG = 1;
+
     private Handler mHandler;
     private ProgressDialog mDialog;
 
+    private final int CANCEL_DIALOG = 1;
     private Handler mHandler2 = new Handler();
 
     private OnFragmentInteractionListener mListener;
@@ -184,9 +185,8 @@ public class Veg extends Fragment{
 
             }
         }));
-
         getVegMenu();
-        //for(int i=0;i<5;i++) {
+        if(foodList.size()==0) {
             mHandler = new Handler(new Handler.Callback() {
                 @Override
                 public boolean handleMessage(Message msg) {
@@ -197,16 +197,13 @@ public class Veg extends Fragment{
                     return false;
                 }
             });
-            ////if(foodList.size()>=1) {
-                mDialog = new ProgressDialog(getActivity());
-                mDialog.setMessage("Fetching Menu....");
-                mDialog.show();
-                mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 3000);
-            //}
-            //else if(foodList.size()==0 && i==4){
-                Toast.makeText(getContext(), "Poor Network Connection", Toast.LENGTH_SHORT).show();
-            //}
-        //}
+            mDialog = new ProgressDialog(getActivity());
+            mDialog.setMessage("Fetching Menu....");
+            mDialog.show();
+            mHandler.sendEmptyMessageDelayed(CANCEL_DIALOG, 5000);
+        }
+
+
         return view;
     }
     public void setValue(String str){

@@ -28,6 +28,10 @@
 
         <TextView
             android:id="@+id/food"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:hint="food"
             android:textAlignment="textStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,9 +42,11 @@
 
         <TextView
             android:id="@+id/price"
+            android:layout_marginTop="10dp"
+            android:hint="price"
             android:textAlignment="viewEnd"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginRight="13dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

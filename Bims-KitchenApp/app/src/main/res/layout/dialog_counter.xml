@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="400dp"
+    android:layout_width="250dp"
     android:layout_height="150dp"
-    android:background="#49BB80">
+>
 
 
     <Button
@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:text="OK"
         android:background="#ffffff"
+        android:layout_marginBottom="20dp"
         android:id="@+id/dialogOk"
-        android:textColor="#5349BB"
 
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/buttonDown" />
@@ -22,11 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
-        android:textColor="#5349BB"
         android:background="#ffffff"
         android:id="@+id/buttonDown"
-        android:layout_marginStart="41dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginStart="43dp"
+        android:layout_alignBottom="@+id/count"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -34,23 +33,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
-        android:textColor="#5349BB"
         android:background="#ffffff"
         android:id="@+id/buttonUp"
-        android:layout_alignTop="@+id/buttonDown"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBottom="@+id/count"
+        android:layout_toEndOf="@+id/dialogOk" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:hint="0"
-        android:textColor="#EBE035"
         android:id="@+id/count"
         android:layout_marginLeft="130dp"
         android:layout_marginRight="130dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="40dp"
         android:layout_toStartOf="@+id/buttonUp" />
 
 

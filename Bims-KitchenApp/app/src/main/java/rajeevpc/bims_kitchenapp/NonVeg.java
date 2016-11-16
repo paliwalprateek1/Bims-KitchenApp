@@ -145,8 +145,9 @@ public class NonVeg extends Fragment {
             }
         }));
 
-        //prepareFoodData();
-        getNonVegMenu();
+        if(foodList.size()==0) {
+            getNonVegMenu();
+        }
         return view;
     }
 
