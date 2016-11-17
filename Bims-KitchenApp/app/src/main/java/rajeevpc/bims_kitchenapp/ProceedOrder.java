@@ -109,10 +109,8 @@ public class ProceedOrder extends AppCompatActivity {
                 String toastMsg = String.format("Place: %s", place.getAddress());
                 address = place.getAddress().toString();
                 latitude = place.getLatLng().toString();
-                //Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
 
                 int size = order.size();
-                //Toast.makeText(getApplicationContext(), order.size()+"size", Toast.LENGTH_SHORT).show();
 
                 if (itemValueString.length() == 0) {
                     for (int i = 0; i < size; i++) {

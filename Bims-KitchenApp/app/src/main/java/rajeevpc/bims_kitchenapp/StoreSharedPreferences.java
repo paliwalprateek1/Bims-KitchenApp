@@ -9,11 +9,9 @@ import com.google.gson.Gson;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by prateek on 10/10/16.
- */
 public class StoreSharedPreferences {
     public static final String PREFS_NAME = "NKDROID_APP";
     public static final String FAVORITES = "Favorite";
@@ -46,7 +44,6 @@ public class StoreSharedPreferences {
         editor.commit();
     }
     public ArrayList loadFavorites(Context context) {
-// used for retrieving arraylist from json formatted string
         SharedPreferences settings;
         List favorites;
         settings = context.getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
@@ -184,17 +181,14 @@ public class StoreSharedPreferences {
         }
     }
 
-    public static String getImageUri(Context ctx)
-    {
+    public static String getImageUri(Context ctx) {
         return getSharedPreferences(ctx).getString("imageUri", "");
     }
 
 
-    public static void setImageuri(Context ctx, String imageUri)
-    {
+    public static void setImageuri(Context ctx, String imageUri) {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(IMAGEURI, imageUri);
         editor.commit();
     }
-
 }

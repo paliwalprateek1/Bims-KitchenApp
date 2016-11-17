@@ -19,6 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
         <TextView
+            android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name"
@@ -31,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/name"
+            android:textSize="16sp"
             android:hint="prateka;kjsdng"
             android:layout_marginBottom="40dp"
             android:layout_below="@+id/asdfnn"/>
@@ -47,6 +49,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:text="Number"
             android:textColor="#000"
             android:id="@+id/asdfoo"
@@ -57,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/number"
+            android:textSize="16sp"
             android:hint=""
             android:layout_below="@+id/asdfoo"
             android:layout_alignParentStart="true" />
@@ -84,6 +88,7 @@
             android:layout_height="wrap_content"
             android:text="Total ="
             android:textColor="#000"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:id="@+id/total"
             android:layout_marginEnd="104dp"
@@ -92,6 +97,7 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:textSize="16sp"
             android:layout_height="wrap_content"
             android:id="@+id/amount"
             android:layout_alignTop="@+id/total"
@@ -101,11 +107,13 @@
             android:layout_width="165dp"
             android:layout_height="110dp"
             android:layout_above="@+id/total"
+            android:textSize="16sp"
             android:id="@+id/order"
             android:layout_centerVertical="true" />
         <TextView
             android:layout_width="95dp"
             android:layout_height="110dp"
+            android:textSize="16sp"
             android:id="@+id/quantityiss"
             android:layout_above="@+id/total"
             android:layout_toEndOf="@+id/order" />
@@ -113,8 +121,9 @@
         <TextView
             android:layout_width="45dp"
             android:layout_height="110dp"
+            android:textSize="16sp"
             android:id="@+id/pricess"
-            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
@@ -129,6 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Remarks"
+            android:textSize="16sp"
             android:textColor="#000"
             android:id="@+id/asdf"
 
@@ -139,6 +149,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/remarksFinal"
             android:hint="No Remarks"
+            android:textSize="16sp"
             android:layout_marginBottom="40dp"
             android:layout_below="@+id/asdf"/>
 
@@ -169,6 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Address"
+            android:textSize="16sp"
             android:textColor="#000"
             android:id="@+id/asdfg"
 
@@ -179,6 +191,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/placeFinal"
             android:hint=""
+            android:textSize="16sp"
             android:layout_marginBottom="40dp"
             android:layout_below="@+id/asdfg"/>
 

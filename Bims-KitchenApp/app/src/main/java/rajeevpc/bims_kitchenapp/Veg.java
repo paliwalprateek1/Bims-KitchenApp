@@ -46,8 +46,12 @@ import com.google.android.gms.vision.barcode.internal.client.BarcodeDetectorOpti
 import com.google.android.gms.vision.text.Text;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class Veg extends Fragment{
@@ -63,27 +67,20 @@ public class Veg extends Fragment{
     Firebase ref;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private String mParam1;
     private String mParam2;
     private List<FoodQuantity> orderChange = new ArrayList<>();
-
     private Handler mHandler;
     private ProgressDialog mDialog;
-
     private final int CANCEL_DIALOG = 1;
     private Handler mHandler2 = new Handler();
-
-
     private OnFragmentInteractionListener mListener;
 
-
+    HashMap<String, Integer> hmPrice = new HashMap<>();
+    HashMap<String, Integer> hmQuant = new HashMap<>();
 
     public Veg() {
     }
-
-
-
 
     public static Veg newInstance(String param1, String param2) {
         Veg fragment = new Veg();
@@ -102,7 +99,6 @@ public class Veg extends Fragment{
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,8 +106,6 @@ public class Veg extends Fragment{
 
 
         Firebase.setAndroidContext(getActivity());
-        //mActionBar.setActionBarColor(new ColorDrawable(Color.parseColor("#fff000")));
-
         ref = new Firebase(Server.URL);
         View view = inflater.inflate(R.layout.fragment_veg, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -127,6 +121,12 @@ public class Veg extends Fragment{
             public void onClick(View view, int position) {
 
                 final Food food = foodList.get(position);
+
+
+
+                StoreSharedPreferences s = new StoreSharedPreferences();
+                s.removeFavoriteQuantity(getActivity(), foodQuantity);
+
                 foodQuantity.setFood(food.getFood());
                 foodQuantity.setPrice(food.getPrice());
 
@@ -146,7 +146,6 @@ public class Veg extends Fragment{
                         int s = Integer.parseInt(count.getText().toString());
                             s++;
                             count.setText(Integer.toString(s));
-                        //quantityof = Integer.parseInt(count.getText().toString());
                     }
                 });
 
@@ -158,10 +157,9 @@ public class Veg extends Fragment{
                             s--;
                             count.setText(Integer.toString(s));
                         }
-                        //quantityof = Integer.parseInt(count.getText().toString());
-
                     }
                 });
+
 
                 dialogOk = (Button) dialog.findViewById(R.id.dialogOk);
 
@@ -210,6 +208,18 @@ public class Veg extends Fragment{
     public void storeData(FoodQuantity fq){
         StoreSharedPreferences s = new StoreSharedPreferences();
         s.addFoodQuantity(getActivity(), fq);
+
+        hmPrice.put(fq.getFood(), Integer.parseInt(fq.getPrice()));
+        hmQuant.put(fq.getFood(), Integer.parseInt(fq.getQuantity()));
+
+        System.out.println(hmPrice.entrySet()+"here it is.....");
+        System.out.println(hmQuant.entrySet()+"and here it is.....");
+
+        System.out.println(hmPrice.keySet()+"herasdfasdfe it is.....");
+        System.out.println(hmPrice.get("food")+"here it is.....");
+
+
+
     }
 
 
