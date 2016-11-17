@@ -97,7 +97,6 @@ public class MenuPage extends AppCompatActivity
 
 
 
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 //        imageView = (ImageView)findViewById(R.id.imageView);
@@ -120,9 +119,6 @@ public class MenuPage extends AppCompatActivity
         menu = navigationView.getMenu();
         nav_location =   menu.findItem(R.id.nav_location);
         nav_location.setTitle(StoreSharedPreferences.getUserCustomLocation(MenuPage.this));
-
-
-
 
     }
 
@@ -196,6 +192,8 @@ public class MenuPage extends AppCompatActivity
         } else if (id == R.id.nav_refer) {
 
         } else if (id == R.id.nav_prevOrder) {
+            Intent intent = new Intent(MenuPage.this, PreviousOrders.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_feedback) {
 

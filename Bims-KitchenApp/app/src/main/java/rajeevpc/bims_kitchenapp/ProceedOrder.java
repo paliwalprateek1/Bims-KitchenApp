@@ -178,8 +178,8 @@ public class ProceedOrder extends AppCompatActivity {
                 bottomRight = new LatLng(23.249227, 72.652202);
             }
             else if(StoreSharedPreferences.getUserCustomLocation(ProceedOrder.this).equals("Vadodara")){
-                topLeft = new LatLng(22.265240, 73.204044);
-                bottomRight = new LatLng(22.381635, 73.125201);
+                topLeft = new LatLng(22.265240, 73.144044);
+                bottomRight = new LatLng(22.381635, 73.195201);
             }
             LatLngBounds bounds = new LatLngBounds(topLeft, bottomRight);
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();

@@ -74,6 +74,7 @@ public class Veg extends Fragment{
     private final int CANCEL_DIALOG = 1;
     private Handler mHandler2 = new Handler();
 
+
     private OnFragmentInteractionListener mListener;
 
 
@@ -129,9 +130,6 @@ public class Veg extends Fragment{
                 foodQuantity.setFood(food.getFood());
                 foodQuantity.setPrice(food.getPrice());
 
-                try {
-                    (new StoreSharedPreferences()).removeFood(getContext(), food);
-                }catch (Exception e){}
 
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.dialog_counter);
@@ -183,8 +181,6 @@ public class Veg extends Fragment{
 
             @Override
             public void onLongClick(View view, int position) {
-
-
             }
         }));
         if(foodList.size()==0) {

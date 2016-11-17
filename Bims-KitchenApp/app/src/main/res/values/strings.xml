@@ -34,4 +34,5 @@
     <string name="title_activity_register_user">RegisterUser</string>
     <string name="title_activity_number_and_location">NumberAndLocation</string>
     <string name="title_activity_user_profile">UserProfile</string>
+    <string name="title_activity_previous_orders">PreviousOrders</string>
 </resources>
