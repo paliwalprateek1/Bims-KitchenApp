@@ -19,7 +19,15 @@ public class StoreSharedPreferences {
     public static final String PREFS_USER_NAME = "name";
     public static final String PREFS_USER_CUSTOM_LOCATION = "location";
     public static final String PREFS_NAME_QUANT = "NKDROID_APP_QUANT";
+    public static final String PREFS_NAME_VEG_QUANT = "NKDROID_APP_VEG_QUANT";
     public static final String FAVORITES_QUANT = "Favorite_QUANT";
+    public static final String FAVORITES_VEG_QUANT = "Favorite_VEG_QUANT";
+    public static final String FAVORITES_NON_QUANT = "Favorite_NON_QUANT";
+    public static final String FAVORITES_BEV_QUANT = "Favorite_BEV_QUANT";
+
+    public static final String PREFS_NAME_NON_QUANT = "NKDROID_APP_NON_QUANT";
+    public static final String PREFS_NAME_BEV_QUANT = "NKDROID_APP_BEV_QUANT";
+
     public static final String NUMBER = "number";
     public static final String IMAGEURI = "imageUri";
 
@@ -84,40 +92,34 @@ public class StoreSharedPreferences {
         editor.commit();
     }
 
-    public static void setUserEmail(Context ctx, String userMail)
-    {
+    public static void setUserEmail(Context ctx, String userMail) {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(PREFS_MAIL, userMail);
         editor.commit();
     }
 
-    public static String getUserEmail(Context ctx)
-    {
+    public static String getUserEmail(Context ctx) {
         return getSharedPreferences(ctx).getString("email", "");
     }
 
-    public static void setUserNumber(Context ctx, String userNumber)
-    {
+    public static void setUserNumber(Context ctx, String userNumber) {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(NUMBER, userNumber);
         editor.commit();
     }
 
-    public static String getUserNumber(Context ctx)
-    {
+    public static String getUserNumber(Context ctx) {
         return getSharedPreferences(ctx).getString("number", "");
     }
 
 
-    public static void setUserName(Context ctx, String userName)
-    {
+    public static void setUserName(Context ctx, String userName) {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(PREFS_USER_NAME, userName);
         editor.commit();
     }
 
-    public static String getUserName(Context ctx)
-    {
+    public static String getUserName(Context ctx) {
         return getSharedPreferences(ctx).getString("name", "");
     }
 
@@ -143,7 +145,6 @@ public class StoreSharedPreferences {
         editor.commit();
     }
     public ArrayList loadFoodQuantity(Context context) {
-// used for retrieving arraylist from json formatted string
         SharedPreferences settings;
         List favorites;
         settings = context.getSharedPreferences(PREFS_NAME_QUANT,Context.MODE_PRIVATE);
@@ -164,6 +165,134 @@ public class StoreSharedPreferences {
         favorites.add(beanSampleList);
         storeFoodQuant(context, favorites);
     }
+
+    public void removeAllVegQuant(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME_VEG_QUANT, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+
+    public void removeAllNonQuant(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME_NON_QUANT, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
+    public void removeAllBevQuant(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME_BEV_QUANT, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
+    public void storeFoodVegQuant(Context context, List favorites) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences(PREFS_NAME_VEG_QUANT,Context.MODE_PRIVATE);
+        editor = settings.edit();
+        Gson gson = new Gson();
+        String jsonFavorites = gson.toJson(favorites);
+        editor.putString(FAVORITES_VEG_QUANT, jsonFavorites);
+        editor.commit();
+    }
+
+    public ArrayList loadFoodVegQuantity(Context context) {
+        SharedPreferences settings;
+        List favorites;
+        settings = context.getSharedPreferences(PREFS_NAME_VEG_QUANT,Context.MODE_PRIVATE);
+        if (settings.contains(FAVORITES_VEG_QUANT)) {
+            String jsonFavorites = settings.getString(FAVORITES_VEG_QUANT, null);
+            Gson gson = new Gson();
+            FoodQuantity[] favoriteItems = gson.fromJson(jsonFavorites,FoodQuantity[].class);
+            favorites = Arrays.asList(favoriteItems);
+            favorites = new ArrayList(favorites);
+        } else
+            return null;
+        return (ArrayList) favorites;
+    }
+
+    public void addFoodVegQuantity(Context context, FoodQuantity beanSampleList) {
+        List favorites = loadFoodQuantity(context);
+        if (favorites == null)
+            favorites = new ArrayList();
+        favorites.add(beanSampleList);
+        storeFoodVegQuant(context, favorites);
+    }
+
+
+
+    //////////////////////////////////////
+    public void storeFoodNonQuant(Context context, List favorites) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences(PREFS_NAME_NON_QUANT,Context.MODE_PRIVATE);
+        editor = settings.edit();
+        Gson gson = new Gson();
+        String jsonFavorites = gson.toJson(favorites);
+        editor.putString(FAVORITES_NON_QUANT, jsonFavorites);
+        editor.commit();
+    }
+
+    public ArrayList loadFoodNonQuantity(Context context) {
+        SharedPreferences settings;
+        List favorites;
+        settings = context.getSharedPreferences(PREFS_NAME_NON_QUANT,Context.MODE_PRIVATE);
+        if (settings.contains(FAVORITES_NON_QUANT)) {
+            String jsonFavorites = settings.getString(FAVORITES_NON_QUANT, null);
+            Gson gson = new Gson();
+            FoodQuantity[] favoriteItems = gson.fromJson(jsonFavorites,FoodQuantity[].class);
+            favorites = Arrays.asList(favoriteItems);
+            favorites = new ArrayList(favorites);
+        } else
+            return null;
+        return (ArrayList) favorites;
+    }
+
+    public void addFoodNonQuantity(Context context, FoodQuantity beanSampleList) {
+        List favorites = loadFoodQuantity(context);
+        if (favorites == null)
+            favorites = new ArrayList();
+        favorites.add(beanSampleList);
+        storeFoodNonQuant(context, favorites);
+    }
+    ///////////////////////////////////
+
+    public void storeFoodBevQuant(Context context, List favorites) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences(PREFS_NAME_BEV_QUANT,Context.MODE_PRIVATE);
+        editor = settings.edit();
+        Gson gson = new Gson();
+        String jsonFavorites = gson.toJson(favorites);
+        editor.putString(FAVORITES_BEV_QUANT, jsonFavorites);
+        editor.commit();
+    }
+
+    public ArrayList loadFoodBevQuantity(Context context) {
+        SharedPreferences settings;
+        List favorites;
+        settings = context.getSharedPreferences(PREFS_NAME_BEV_QUANT,Context.MODE_PRIVATE);
+        if (settings.contains(FAVORITES_BEV_QUANT)) {
+            String jsonFavorites = settings.getString(FAVORITES_BEV_QUANT, null);
+            Gson gson = new Gson();
+            FoodQuantity[] favoriteItems = gson.fromJson(jsonFavorites,FoodQuantity[].class);
+            favorites = Arrays.asList(favoriteItems);
+            favorites = new ArrayList(favorites);
+        } else
+            return null;
+        return (ArrayList) favorites;
+    }
+
+    public void addFoodBevQuantity(Context context, FoodQuantity beanSampleList) {
+        List favorites = loadFoodQuantity(context);
+        if (favorites == null)
+            favorites = new ArrayList();
+        favorites.add(beanSampleList);
+        storeFoodBevQuant(context, favorites);
+    }
+    ///////////////////////////////////
 
     public void removeFood(Context context, Food f){
         ArrayList a = loadFavorites(context);

@@ -28,7 +28,10 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class V extends Fragment {
@@ -54,10 +57,12 @@ public class V extends Fragment {
 
     private Handler mHandler2 = new Handler();
 
+    HashMap<String, Integer> hmPrice = new HashMap<>();
+    HashMap<String, Integer> hmQuant = new HashMap<>();
+
     private OnFragmentInteractionListener mListener;
 
     public V() {
-        // Required empty public constructor
     }
 
     public static V newInstance(String param1, String param2) {
@@ -104,10 +109,6 @@ public class V extends Fragment {
                 final Food food = foodList.get(position);
                 foodQuantity.setFood(food.getFood());
                 foodQuantity.setPrice(food.getPrice());
-
-                try {
-                    (new StoreSharedPreferences()).removeFood(getActivity(), food);
-                }catch (Exception e){}
 
                 final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.dialog_counter);
@@ -173,9 +174,30 @@ public class V extends Fragment {
     public void setValue(String str){
         foodQuantity.setQuantity(str);
     }
+    FoodQuantity fa = new FoodQuantity();
     public void storeData(FoodQuantity fq){
         StoreSharedPreferences s = new StoreSharedPreferences();
-        s.addFoodQuantity(getActivity(), fq);
+        hmPrice.put(fq.getFood(), Integer.parseInt(fq.getPrice()));
+        hmQuant.put(fq.getFood(), Integer.parseInt(fq.getQuantity()));
+
+
+        System.out.println("here211");
+        s.removeAllBevQuant(getActivity());
+        Iterator it = hmPrice.entrySet().iterator();
+        while (it.hasNext()) {
+            System.out.println("hereregaadfg2");
+            Map.Entry pair = (Map.Entry)it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+
+            for(Map.Entry<String, Integer> entry: hmPrice.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue() + " : "+  hmQuant.get(pair.getKey()));
+                fa.setFood(pair.getKey().toString());
+                fa.setPrice(Integer.toString(hmPrice.get(pair.getKey())));
+                fa.setQuantity(Integer.toString(hmQuant.get(pair.getKey())));
+            }
+            s.addFoodBevQuantity(getActivity(), fa);
+        }
+
     }
 
     public void onButtonPressed(Uri uri) {

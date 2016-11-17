@@ -47,6 +47,10 @@ import java.util.List;
 public class ProceedOrder extends AppCompatActivity {
 
     private static List<FoodQuantity> order = new ArrayList<>();
+    private static List<FoodQuantity> orderV = new ArrayList<>();
+    private static List<FoodQuantity> orderN = new ArrayList<>();
+    private static List<FoodQuantity> orderB = new ArrayList<>();
+
     StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
     private RecyclerView recyclerView;
     private ProceedFoodAdapter mAdapter;
@@ -71,13 +75,28 @@ public class ProceedOrder extends AppCompatActivity {
         setContentView(R.layout.activity_proceed_order);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        order = storeSharedPreferences.loadFoodQuantity(getApplicationContext());
+
+        //order = storeSharedPreferences.loadFoodVegQuantity(getApplicationContext());
+        orderV = storeSharedPreferences.loadFoodVegQuantity(getApplicationContext());
+
+        orderN = storeSharedPreferences.loadFoodNonQuantity(getApplicationContext());
+
+        orderB = storeSharedPreferences.loadFoodBevQuantity(getApplicationContext());
+
+        if(orderB!=null)
+            order.addAll(orderB);
+        if(orderN!=null)
+            order.addAll(orderN);
+        if(orderV!=null)
+            order.addAll(orderV);
+
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_proceed_order);
         mAdapter = new ProceedFoodAdapter(order);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
@@ -196,6 +215,9 @@ public class ProceedOrder extends AppCompatActivity {
 
     public void useCustomLocation(View view) {
         (new StoreSharedPreferences()).removeAllQuant(getApplicationContext());
+        (new StoreSharedPreferences()).removeAllVegQuant(getApplicationContext());
+        (new StoreSharedPreferences()).removeAllNonQuant(getApplicationContext());
+        (new StoreSharedPreferences()).removeAllBevQuant(getApplicationContext());
         finish();
     }
 }

@@ -140,6 +140,8 @@ public class Veg extends Fragment{
                 ua = (Button) dialog.findViewById(R.id.buttonUp);
                 da = (Button) dialog.findViewById(R.id.buttonDown);
 
+
+
                 ua.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -175,6 +177,8 @@ public class Veg extends Fragment{
                     }
                 });
                 dialog.show();
+
+
             }
 
             @Override
@@ -202,24 +206,93 @@ public class Veg extends Fragment{
 
         return view;
     }
+
     public void setValue(String str){
         foodQuantity.setQuantity(str);
     }
+    FoodQuantity fa = new FoodQuantity();
+
+
+//    public void storeData(FoodQuantity fq){
+//        StoreSharedPreferences s = new StoreSharedPreferences();
+//
+//
+//            hmPrice.put(fq.getFood(), Integer.parseInt(fq.getPrice()));
+//            hmQuant.put(fq.getFood(), Integer.parseInt(fq.getQuantity()));
+//            //s.removeAllVegQuant(getActivity());
+//
+//            System.out.println("here211");
+//            s.removeAllQuant(getActivity());
+//            Iterator it = hmPrice.entrySet().iterator();
+//            while (it.hasNext()) {
+//                System.out.println("hereregaadfg2");
+//                Map.Entry pair = (Map.Entry) it.next();
+//                System.out.println(pair.getKey() + " = " + pair.getValue());
+//
+//                for (Map.Entry<String, Integer> entry : hmPrice.entrySet()) {
+//                    System.out.println(entry.getKey() + " : " + entry.getValue() + " : " + hmQuant.get(pair.getKey()));
+//                    fa.setFood(entry.getKey());
+//                    fa.setPrice(Integer.toString(entry.getValue()));
+//                    fa.setQuantity(Integer.toString(hmQuant.get(entry.getKey())));
+//                    s.addFoodVegQuantity(getActivity(), fa);
+//                }
+//            }
+//            v = s.loadFoodVegQuantity(getActivity());
+//            nv = s.loadFoodNonQuantity(getActivity());
+//            bv = s.loadFoodBevQuantity(getActivity());
+//
+//
+//            if (v != null) {
+//                for (int l = 0; l < v.size(); l++) {
+//                    FoodQuantity foff = new FoodQuantity();
+//                    foff.setFood(v.get(l).getFood());
+//                    foff.setPrice(v.get(l).getPrice());
+//                    foff.setQuantity(v.get(l).getQuantity());
+//                    s.addFoodQuantity(getActivity(), foff);
+//                }
+//            }
+//            if (nv != null) {
+//                for (int l = 0; l < nv.size(); l++) {
+//                    FoodQuantity foff = new FoodQuantity();
+//                    foff.setFood(nv.get(l).getFood());
+//                    foff.setPrice(nv.get(l).getPrice());
+//                    foff.setQuantity(nv.get(l).getQuantity());
+//                    s.addFoodQuantity(getActivity(), foff);
+//                }
+//            }
+//            if (bv != null) {
+//                for (int l = 0; l < bv.size(); l++) {
+//                    FoodQuantity foff = new FoodQuantity();
+//                    foff.setFood(bv.get(l).getFood());
+//                    foff.setPrice(bv.get(l).getPrice());
+//                    foff.setQuantity(bv.get(l).getQuantity());
+//                    s.addFoodQuantity(getActivity(), foff);
+//                }
+//            }
+//    }
+
     public void storeData(FoodQuantity fq){
         StoreSharedPreferences s = new StoreSharedPreferences();
-        s.addFoodQuantity(getActivity(), fq);
-
         hmPrice.put(fq.getFood(), Integer.parseInt(fq.getPrice()));
         hmQuant.put(fq.getFood(), Integer.parseInt(fq.getQuantity()));
 
-        System.out.println(hmPrice.entrySet()+"here it is.....");
-        System.out.println(hmQuant.entrySet()+"and here it is.....");
 
-        System.out.println(hmPrice.keySet()+"herasdfasdfe it is.....");
-        System.out.println(hmPrice.get("food")+"here it is.....");
+        System.out.println("here211");
+        s.removeAllVegQuant(getActivity());
+        Iterator it = hmPrice.entrySet().iterator();
+        while (it.hasNext()) {
+            System.out.println("hereregaadfg2");
+            Map.Entry pair = (Map.Entry)it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
 
-
-
+            for(Map.Entry<String, Integer> entry: hmPrice.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue() + " : "+  hmQuant.get(pair.getKey()));
+                fa.setFood(pair.getKey().toString());
+                fa.setPrice(Integer.toString(hmPrice.get(pair.getKey())));
+                fa.setQuantity(Integer.toString(hmQuant.get(pair.getKey())));
+            }
+            s.addFoodVegQuantity(getActivity(), fa);
+        }
     }
 
 

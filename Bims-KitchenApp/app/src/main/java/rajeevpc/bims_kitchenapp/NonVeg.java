@@ -25,7 +25,10 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 public class NonVeg extends Fragment {
@@ -153,12 +156,37 @@ public class NonVeg extends Fragment {
         return view;
     }
 
+
+    HashMap<String, Integer> hmPrice = new HashMap<>();
+    HashMap<String, Integer> hmQuant = new HashMap<>();
+    FoodQuantity fa = new FoodQuantity();
+
+
     public void setValue(String str){
         foodQuantity.setQuantity(str);
     }
     public void storeData(FoodQuantity fq){
         StoreSharedPreferences s = new StoreSharedPreferences();
-        s.addFoodQuantity(getContext(), fq);
+        hmPrice.put(fq.getFood(), Integer.parseInt(fq.getPrice()));
+        hmQuant.put(fq.getFood(), Integer.parseInt(fq.getQuantity()));
+
+
+        System.out.println("here211");
+        s.removeAllNonQuant(getActivity());
+        Iterator it = hmPrice.entrySet().iterator();
+        while (it.hasNext()) {
+            System.out.println("hereregaadfg2");
+            Map.Entry pair = (Map.Entry)it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+
+            for(Map.Entry<String, Integer> entry: hmPrice.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue() + " : "+  hmQuant.get(pair.getKey()));
+                fa.setFood(pair.getKey().toString());
+                fa.setPrice(Integer.toString(hmPrice.get(pair.getKey())));
+                fa.setQuantity(Integer.toString(hmQuant.get(pair.getKey())));
+            }
+            s.addFoodNonQuantity(getActivity(), fa);
+        }
     }
 
     public void onButtonPressed(Uri uri) {

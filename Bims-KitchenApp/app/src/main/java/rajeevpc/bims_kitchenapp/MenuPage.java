@@ -83,13 +83,13 @@ public class MenuPage extends AppCompatActivity
 
                 StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
                 List a = storeSharedPreferences.loadFoodQuantity(getApplicationContext());
-                if(a==null){
-                    Toast.makeText(MenuPage.this, "Select atleast on item", Toast.LENGTH_SHORT).show();
-                }
-                else {
+//                if(a==null){
+//                    Toast.makeText(MenuPage.this, "Select atleast on item", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
                     Intent intent = new Intent(MenuPage.this, ProceedOrder.class);
                     startActivity(intent);
-                }
+                //}
             }
         });
 

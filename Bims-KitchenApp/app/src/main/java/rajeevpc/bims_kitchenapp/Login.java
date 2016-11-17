@@ -116,10 +116,9 @@ public class Login extends AppCompatActivity {
                 });
     }
 
-    public void signIn(View view) {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+//    public void signIn(View view) {
+//
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -197,5 +196,10 @@ public class Login extends AppCompatActivity {
     public void Register(View view) {
         Intent intent = new Intent(this, RegisterUser.class);
         startActivity(intent);
+    }
+
+    public void signIn(View view) {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 }
