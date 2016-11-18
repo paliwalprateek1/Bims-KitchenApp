@@ -62,6 +62,10 @@
         <activity
             android:name=".PreviousOrders"
             android:label="@string/title_activity_previous_orders"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FeedBackForm"
+            android:label="@string/title_activity_feed_back_form"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

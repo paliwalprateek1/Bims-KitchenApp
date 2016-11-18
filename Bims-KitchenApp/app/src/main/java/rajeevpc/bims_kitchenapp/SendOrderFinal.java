@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SendOrderFinal extends AppCompatActivity {
@@ -39,11 +41,6 @@ public class SendOrderFinal extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         ref = new Firebase(Server.URL);
-
-
-//        Intent intent = new Intent();
-//        intent.setClass(getApplicationContext(), SendOrderFinal.class);
-
 
 
         Intent intent = getIntent();
@@ -79,6 +76,8 @@ public class SendOrderFinal extends AppCompatActivity {
         remarksFinal.setText(specialRemarks);
 
 
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
         data.setPlace(place);
         data.setCordinates(latitude);
         data.setRemarks(specialRemarks);
@@ -88,6 +87,7 @@ public class SendOrderFinal extends AppCompatActivity {
         data.setFood(itemOrderStringSend);
         data.setPrice(price);
         data.setOrderStatus("pending");
+        data.setDate(date);
 
 
     }
@@ -96,7 +96,6 @@ public class SendOrderFinal extends AppCompatActivity {
     public void sendOrderFinalUltimate(Data data){
         Firebase.setAndroidContext(getApplicationContext());
         ref = new Firebase(Server.URL);
-        //Toast.makeText(ProceedOrder.this, "You have ordered" + size + "items.", Toast.LENGTH_SHORT).show();
         Firebase newRef = ref.child("Order").push();
         newRef.setValue(data);
         String r = newRef.getKey();
@@ -121,11 +120,12 @@ class Data{
     private String email;
     private String number;
     private String orderStatus;
+    private String date;
 
     public Data(){}
 
     public Data(String food, String price, String place, String remarks, String cordinates,
-                String name, String email, String number, String orderStatus){
+                String name, String email, String number, String orderStatus, String date){
         this.food = food;
         this.price = price;
         this.place = place;
@@ -135,7 +135,12 @@ class Data{
         this.number = number;
         this.email = email;
         this.orderStatus= orderStatus;
+        this.date = date;
     }
+
+    public String getDate(){return date;}
+
+    public void setDate(String date){this.date = date;}
     public String getOrderStatus(){return orderStatus;}
 
     public void setOrderStatus(String orderStatus){this.orderStatus = orderStatus;}

@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/name"
             android:textSize="16sp"
-            android:hint="prateka;kjsdng"
+            android:hint=""
             android:layout_marginBottom="40dp"
             android:layout_below="@+id/asdfnn"/>
 
@@ -41,16 +41,17 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayou"
         android:layout_alignTop="@+id/relativeLayout66"
-        android:layout_alignEnd="@+id/relativeLayout5">
+        android:layout_alignEnd="@+id/dialogButtonOrder">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="Number"
+            android:layout_marginStart="250dp"
             android:textColor="#000"
             android:id="@+id/asdfoo"
 
@@ -61,7 +62,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/number"
             android:textSize="16sp"
-            android:hint=""
+            android:hint="fghj"
+            android:layout_marginStart="250dp"
             android:layout_below="@+id/asdfoo"
             android:layout_alignParentStart="true" />
 
@@ -88,7 +90,7 @@
             android:layout_height="wrap_content"
             android:text="Total ="
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:id="@+id/total"
             android:layout_marginEnd="104dp"
@@ -97,7 +99,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:layout_height="wrap_content"
             android:id="@+id/amount"
             android:layout_alignTop="@+id/total"
@@ -107,23 +109,23 @@
             android:layout_width="165dp"
             android:layout_height="110dp"
             android:layout_above="@+id/total"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:id="@+id/order"
             android:layout_centerVertical="true" />
         <TextView
             android:layout_width="95dp"
             android:layout_height="110dp"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:id="@+id/quantityiss"
-            android:layout_above="@+id/total"
+            android:layout_alignBottom="@+id/view"
             android:layout_toEndOf="@+id/order" />
 
         <TextView
             android:layout_width="45dp"
             android:layout_height="110dp"
-            android:textSize="16sp"
+            android:textSize="13sp"
             android:id="@+id/pricess"
-            android:layout_alignParentTop="true"
+            android:layout_above="@+id/view"
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
@@ -159,16 +161,29 @@
 
     <Button
         android:id="@+id/dialogButtonCancel"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text=" Order "
+        android:text=" Cancel "
+        android:background="#283593"
         android:textStyle="bold"
-        android:onClick="sendOrderFinalMaaKasam"
+        android:onClick="cancelOrderFinalMaaKasam"
         android:textColor="@color/colorWhite"
-        android:background="@color/colorPrimaryDark"
         android:layout_marginRight="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/dialogButtonOrder"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text=" Order "
+        android:textStyle="bold"
+        android:background="#283593"
+        android:onClick="sendOrderFinalMaaKasam"
+        android:textColor="@color/colorWhite"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"

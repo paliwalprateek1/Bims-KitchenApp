@@ -198,7 +198,7 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void signIn(View view) {
+    public void clickedgooglesignin(View view) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }

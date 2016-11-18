@@ -1,54 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="250dp"
-    android:layout_height="150dp"
+    android:layout_width="280dp"
+    android:layout_height="280dp"
 >
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OK"
-        android:background="#ffffff"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/dialogOk"
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="OK"-->
+        <!--android:background="#ffffff"-->
+        <!--android:id="@+id/dialogOk"-->
 
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/buttonDown" />
+        <!--android:layout_marginStart="78dp"-->
+        <!--android:layout_marginBottom="36dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:background="#ffffff"
-        android:id="@+id/buttonDown"
-        android:layout_marginStart="43dp"
-        android:layout_alignBottom="@+id/count"
-        android:layout_alignParentStart="true" />
+    <!--<Button-->
+        <!--style="?android:attr/buttonStyleSmall"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="-"-->
+        <!--android:textStyle="bold"-->
+        <!--android:background="#FF0000"-->
+        <!--android:id="@+id/buttonDown"-->
+        <!--android:layout_alignTop="@+id/buttonUp"-->
+        <!--android:layout_alignParentEnd="true" />-->
+
+    <!--<Button-->
+        <!--style="?android:attr/buttonStyleSmall"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="+"-->
+        <!--android:textStyle="bold"-->
+        <!--android:background="#7CFC00"-->
+        <!--android:id="@+id/buttonUp"-->
+        <!--android:layout_above="@+id/dialogOk"-->
+        <!--android:layout_toEndOf="@+id/imageView6"-->
+        <!--android:layout_marginStart="36dp"-->
+        <!--android:layout_marginBottom="78dp" />-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="0"-->
+        <!--android:layout_marginLeft="275dp"-->
+        <!--android:id="@+id/count"-->
+        <!--android:layout_alignBaseline="@+id/buttonDown"-->
+        <!--android:layout_alignBottom="@+id/buttonDown"-->
+<!--/>-->
+
+    <!--<ImageView-->
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="120dp"-->
+        <!--android:id="@+id/imageView6"-->
+        <!--android:layout_alignTop="@+id/buttonUp"-->
+        <!--android:layout_alignEnd="@+id/dialogOk" />-->
+
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textAppearance="?android:attr/textAppearanceLarge"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:hint="0"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textSize="30sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/count"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginLeft="30dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginRight="130dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_below="@+id/buttonUp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_centerHorizontal="true" />&ndash;&gt;-->
+
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/dialogImageBox"
+        android:layout_above="@+id/buttonUp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
-        android:background="#ffffff"
+        android:background="#fff"
+        android:textStyle="bold"
         android:id="@+id/buttonUp"
-        android:layout_alignBottom="@+id/count"
-        android:layout_toEndOf="@+id/dialogOk" />
+        android:layout_above="@+id/dialogOk"
+        android:layout_toEndOf="@+id/dialogImageBox" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:text="-"
+        android:textStyle="bold"
+        android:id="@+id/buttonDown"
+        android:layout_above="@+id/dialogOk"
+        android:layout_toStartOf="@+id/dialogImageBox" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:hint="0"
+        android:layout_marginLeft="180dp"
+        android:text="0"
         android:id="@+id/count"
-        android:layout_marginLeft="130dp"
-        android:layout_marginRight="130dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginTop="40dp"
-        android:layout_toStartOf="@+id/buttonUp" />
+        android:textSize="30dp"
+        android:layout_alignTop="@+id/buttonDown"
+        android:layout_centerHorizontal="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ok"
+        android:id="@+id/dialogOk"
+        android:background="#3395ff"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

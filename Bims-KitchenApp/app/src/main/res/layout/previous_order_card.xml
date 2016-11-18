@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="15dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="10dp"
+    android:background="#fff"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="rajeevpc.bims_kitchenapp.SendOrderFinal"
+>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_height="1dp"
+        android:background="#000"
+        />
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout66"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="#000"
+            android:id="@+id/nam"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/namePrevOrder"
+            android:layout_below="@+id/nam"/>
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayou"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/relativeLayout66">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Date"
+            android:layout_marginStart="240dp"
+            android:textColor="#000"
+            android:id="@+id/asdfoo"
+
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/datePrevOrder"
+            android:textSize="13sp"
+            android:hint="fghj"
+            android:layout_marginStart="220dp"
+            android:layout_below="@+id/asdfoo"
+            android:layout_alignParentStart="true" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:id="@+id/relativeLayout6"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/relativeLayou">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total ="
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/total"
+            android:layout_marginEnd="56dp"
+            android:layout_centerVertical="true"
+            android:layout_alignEnd="@+id/pricePrevOrder" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/p"
+            android:layout_marginLeft="300dp"
+            android:layout_alignTop="@+id/total"
+            android:layout_alignParentStart="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:textSize="16sp"
+            android:id="@+id/orderPrevOrder"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="asdgsaf"
+            android:id="@+id/pricePrevOrder"
+            android:layout_below="@+id/total"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:id="@+id/bak"
+
+        android:layout_below="@+id/relativeLayout6"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_below="@+id/bak"
+        android:id="@+id/address"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="#000"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#000"
+        />
+
+
+</RelativeLayout>

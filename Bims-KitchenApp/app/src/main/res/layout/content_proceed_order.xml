@@ -54,12 +54,11 @@
 
         <Button
         android:layout_width="160dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="#800000"
         android:textColor="#fff"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:text="Reset Order"
             android:id="@+id/editOrder"
-            android:layout_alignParentBottom="true"
             android:layout_marginTop="45dp"
             android:onClick="useCustomLocation"
             android:layout_alignParentLeft="true"
@@ -67,9 +66,8 @@
 
         <Button
             android:layout_width="160dp"
-            android:height="30dp"
-            android:background="@color/colorPrimaryDark"
-            android:layout_height="25dp"
+            android:background="#3395ff"
+            android:layout_height="wrap_content"
             android:textColor="#fff"
             android:layout_marginTop="45dp"
             android:layout_toRightOf="@+id/editOrder"
@@ -78,7 +76,6 @@
             android:id="@+id/PickLocation"
             android:onClick="confirmOrder"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:layout_below="@+id/relativeLayout3"/>
 
 

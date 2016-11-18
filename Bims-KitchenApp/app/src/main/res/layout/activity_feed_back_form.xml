@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="rajeevpc.bims_kitchenapp.PreviousOrders">
+    tools:context="rajeevpc.bims_kitchenapp.FeedBackForm">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_previous_orders" />
+    <include layout="@layout/content_feed_back_form" />
+
 
 
 </android.support.design.widget.CoordinatorLayout>

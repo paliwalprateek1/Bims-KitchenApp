@@ -13,6 +13,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.vision.barcode.internal.client.BarcodeDetectorOptions;
 import com.google.android.gms.vision.text.Text;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -139,6 +141,15 @@ public class Veg extends Fragment{
                 count.setText("0");
                 ua = (Button) dialog.findViewById(R.id.buttonUp);
                 da = (Button) dialog.findViewById(R.id.buttonDown);
+
+
+                ImageView dialogImage = (ImageView) dialog.findViewById(R.id.dialogImageBox);
+
+                Picasso.with(dialogImage.getContext())
+                        .load(food.getImageUrl())
+                        .transform(new CircleTransform())
+                        .into(dialogImage);
+
 
 
 
@@ -336,4 +347,6 @@ public class Veg extends Fragment{
         });
     }
 }
+
+
 

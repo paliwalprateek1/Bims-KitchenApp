@@ -63,7 +63,6 @@ public class MenuPage extends AppCompatActivity
 
     Menu menu;
     MenuItem nav_location;
-    // Handle navigation view item clicks here.
 
     public List<Food> orderedList = new ArrayList<>();
 
@@ -83,13 +82,16 @@ public class MenuPage extends AppCompatActivity
 
                 StoreSharedPreferences storeSharedPreferences = new StoreSharedPreferences();
                 List a = storeSharedPreferences.loadFoodQuantity(getApplicationContext());
-//                if(a==null){
-//                    Toast.makeText(MenuPage.this, "Select atleast on item", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
+                List b = storeSharedPreferences.loadFoodBevQuantity(getApplicationContext());
+                List c = storeSharedPreferences.loadFoodNonQuantity(getApplicationContext());
+                List d = storeSharedPreferences.loadFoodVegQuantity(getApplicationContext());
+                if(a==null && b==null && c==null  &&d==null){
+                    Toast.makeText(MenuPage.this, "Select atleast on item", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     Intent intent = new Intent(MenuPage.this, ProceedOrder.class);
                     startActivity(intent);
-                //}
+                }
             }
         });
 
@@ -199,7 +201,12 @@ public class MenuPage extends AppCompatActivity
 
         } else if (id == R.id.nav_about) {
 
-        } else if( id == R.id.nav_location){
+        }
+        else if (id == R.id.nav_signout) {
+            Intent intent = new Intent(MenuPage.this, Login.class);
+            startActivity(intent);
+
+        }else if( id == R.id.nav_location){
             android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(MenuPage.this);
             builderSingle.setTitle("Select Your Location");
             final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(

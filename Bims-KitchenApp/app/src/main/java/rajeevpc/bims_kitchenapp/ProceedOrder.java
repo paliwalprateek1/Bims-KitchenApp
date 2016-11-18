@@ -138,7 +138,7 @@ public class ProceedOrder extends AppCompatActivity {
                         String ss = order.get(i).getFood() + "\n";
                         String sss = "       X   " + order.get(i).getQuantity() + "    =        " + "\n";
                         String ssss = order.get(i).getPrice() + "\n";
-                        itemOrderStringSend = ss + sss + ssss + itemOrderStringSend;
+                        itemOrderStringSend = ss + sss + itemOrderStringSend;
                         itemOrderString = ss + itemOrderString;
                         itemQuantString = sss + itemQuantString;
                         itemValueString = ssss + itemValueString;

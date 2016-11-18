@@ -23,6 +23,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,6 +106,14 @@ public class NonVeg extends Fragment {
                 count.setText("0");
                 ua = (Button) dialog.findViewById(R.id.buttonUp);
                 da = (Button) dialog.findViewById(R.id.buttonDown);
+
+
+                ImageView dialogImage = (ImageView) dialog.findViewById(R.id.dialogImageBox);
+
+                Picasso.with(dialogImage.getContext())
+                        .load(food.getImageUrl())
+                        .transform(new CircleTransform())
+                        .into(dialogImage);
 
                 ua.setOnClickListener(new View.OnClickListener() {
                     @Override

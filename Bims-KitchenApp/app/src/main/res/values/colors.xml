@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorWhite">#FFFF</color>
-    <color name="colorPrimary">#3395ff</color>
-    <color name="colorPrimaryDark">#4895ff</color>
+    <!--<color name="colorPrimary">#00695c</color>-->
+    <!--<color name="colorPrimaryDark">#004d40</color>-->
+
+    <color name="colorPrimary">#6a1b9a</color>
+    <color name="colorPrimaryDark">#7b1fa2</color>
+    <color name="colorAccent">#ffa500</color>
+    <color name="colorPrimary1">#3395ff</color>
+    <color name="colorPrimaryDark1">#4895ff</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#2278d4</color>
+    <color name="colorAccent1">#2278d4</color>
 
 
     <!-- Screens background color-->
