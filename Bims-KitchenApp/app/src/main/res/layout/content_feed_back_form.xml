@@ -13,16 +13,19 @@
     tools:showIn="@layout/activity_feed_back_form">
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="30dp"
         android:id="@+id/recycler_view_feedback_form"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"/>
+
+
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit Feedback"
+        android:onClick="goToSubmitFeedback"
         android:id="@+id/button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

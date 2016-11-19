@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.lang.UCharacter;
@@ -198,11 +199,18 @@ public class MenuPage extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_feedback) {
+            Intent intent = new Intent(MenuPage.this, FeedBackForm.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_about) {
 
         }
         else if (id == R.id.nav_signout) {
+            SharedPreferences preferences = getSharedPreferences("PREFERENCE", 0);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+
             Intent intent = new Intent(MenuPage.this, Login.class);
             startActivity(intent);
 
@@ -242,6 +250,7 @@ public class MenuPage extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 }

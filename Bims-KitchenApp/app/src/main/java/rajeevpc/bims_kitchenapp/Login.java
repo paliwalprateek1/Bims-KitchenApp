@@ -126,13 +126,16 @@ public class Login extends AppCompatActivity {
         Log.d("here", "on1");
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
-            } else {
+            if (data != null) {
+                if (result.isSuccess()) {
+                    // Google Sign In was successful, authenticate with Firebase
+                    GoogleSignInAccount account = result.getSignInAccount();
+                    firebaseAuthWithGoogle(account);
+                } else {
+                }
             }
         }
         GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -145,11 +148,6 @@ public class Login extends AppCompatActivity {
         Uri personPhoto = acct.getPhotoUrl();
         String s = personPhoto.toString();
         StoreSharedPreferences.setImageuri(Login.this, s);
-        Log.d("here is", "  "+personName);
-        Log.d("here is", "  "+personGivenName);
-        Log.d("here is", "  "+personFamilyName);
-        Log.d("here is", "  "+personEmail);
-        Log.d("here is", "  "+personId);
 
         StoreSharedPreferences.setUserEmail(this, personEmail);
         StoreSharedPreferences.setUserName(this, personGivenName);

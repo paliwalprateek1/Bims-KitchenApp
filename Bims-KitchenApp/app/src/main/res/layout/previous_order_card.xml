@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="15dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+
     android:paddingTop="10dp"
-    android:background="#fff"
+    android:background="@drawable/border"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="rajeevpc.bims_kitchenapp.SendOrderFinal"
 >
@@ -27,7 +28,7 @@
 
     <RelativeLayout
         android:layout_width="150dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout66"
         android:layout_alignParentTop="true"
@@ -84,22 +85,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200sp"
+        android:layout_height="wrap_content"
         android:id="@+id/relativeLayout6"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/relativeLayou">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total ="
-            android:textColor="#000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/total"
-            android:layout_marginEnd="56dp"
-            android:layout_centerVertical="true"
-            android:layout_alignEnd="@+id/pricePrevOrder" />
+        android:layout_below="@+id/relativeLayou"
+        android:layout_alignEnd="@+id/relativeLayou">
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,24 +96,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/p"
             android:layout_marginLeft="300dp"
-            android:layout_alignTop="@+id/total"
             android:layout_alignParentStart="false" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:textColor="#000"
             android:id="@+id/orderPrevOrder"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="asdgsaf"
-            android:id="@+id/pricePrevOrder"
-            android:layout_below="@+id/total"
-            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
@@ -133,6 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Address"
+        android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="#000"
         android:id="@+id/bak"
@@ -160,6 +142,26 @@
         android:layout_alignParentBottom="true"
         android:background="#000"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total ="
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/total"
+        android:layout_alignTop="@+id/bak"
+        android:layout_toEndOf="@+id/relativeLayout66"
+        android:layout_marginStart="74dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="asdgsaf"
+        android:id="@+id/pricePrevOrder"
+        android:layout_alignBottom="@+id/bak"
+        android:layout_alignEnd="@+id/bak" />
 
 
 </RelativeLayout>
