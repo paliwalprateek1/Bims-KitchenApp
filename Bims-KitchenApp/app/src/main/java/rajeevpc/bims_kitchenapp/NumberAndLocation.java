@@ -1,8 +1,11 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,14 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
 public class NumberAndLocation extends AppCompatActivity {
-    EditText et, phno;
+    EditText  phno;
+    TextView et;
     Firebase ref;
     UserToBeRegistered userToBeRegistered = new UserToBeRegistered();
 
+    private Handler mHandler;
+    private ProgressDialog mDialog;
 
 
     @Override
@@ -28,11 +35,26 @@ public class NumberAndLocation extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+
+        mHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if (msg.what == 1) {
+                    mDialog.cancel();
+                }
+
+                return false;
+            }
+        });
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage("Signing In....");
+        mDialog.show();
+        mHandler.sendEmptyMessageDelayed(1, 3000);
         Firebase.setAndroidContext(this);
 
         ref = new Firebase(Server.URL);
 
-        et = (EditText) findViewById(R.id.location);
+        et = (TextView) findViewById(R.id.location);
         phno = (EditText) findViewById(R.id.phno);
 
     }

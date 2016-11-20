@@ -1,5 +1,6 @@
 package rajeevpc.bims_kitchenapp;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -46,7 +48,7 @@ public class RegisterUser extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
     TextView phno, location;
-    EditText et;
+    EditText etName, etMail, etPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,11 @@ public class RegisterUser extends AppCompatActivity {
 
         phno = (TextView) findViewById(R.id.phno);
         location = (TextView) findViewById(R.id.location);
-        et = (EditText) findViewById(R.id.location);
+
+        etName = (EditText)findViewById(R.id.input_name);
+        etMail = (EditText)findViewById(R.id.input_email);
+        etPass = (EditText)findViewById(R.id.input_password);
+
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -134,25 +140,29 @@ public class RegisterUser extends AppCompatActivity {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
-            } else {
+            if(data!=null) {
+                if (result.isSuccess()) {
+                    // Google Sign In was successful, authenticate with Firebase
+                    GoogleSignInAccount account = result.getSignInAccount();
+                    firebaseAuthWithGoogle(account);
+                } else {
+                }
             }
         }
-        GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-        GoogleSignInAccount acct = result.getSignInAccount();
-        String personName = acct.getDisplayName();
-        String personGivenName = acct.getGivenName();
-        String personFamilyName = acct.getFamilyName();
-        String personEmail = acct.getEmail();
-        String personId = acct.getId();
-        Uri personPhoto = acct.getPhotoUrl();
-        String s = personPhoto.toString();
-        StoreSharedPreferences.setUserEmail(this, personEmail);
-        StoreSharedPreferences.setUserName(this, personGivenName);
-        checkPerviousRegistration();
+        if(data!=null) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            GoogleSignInAccount acct = result.getSignInAccount();
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+            String s = personPhoto.toString();
+            StoreSharedPreferences.setUserEmail(this, personEmail);
+            StoreSharedPreferences.setUserName(this, personGivenName);
+            checkPerviousRegistration();
+        }
     }
 
     public void checkPerviousRegistration() {
@@ -191,5 +201,52 @@ public class RegisterUser extends AppCompatActivity {
     public void registerGoogle(View view) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+    ProgressDialog progressDialog;
+    FirebaseAuth firebaseAuth;
+
+    public void createAccount(View view) {
+        final String name = etName.getText().toString().trim();
+        final String email=etMail.getText().toString().trim();
+        String password=etPass.getText().toString().trim();
+
+        if(TextUtils.isEmpty(name)){
+            Toast.makeText(this,"Please enter your name",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            return;
+
+        }
+
+
+        firebaseAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //progressDialog.dismiss();
+                        if(task.isSuccessful()){
+
+
+                                StoreSharedPreferences.setUserName(getApplicationContext(),name);
+                            StoreSharedPreferences.setUserEmail(getApplicationContext(),email);
+                            checkPerviousRegistration();
+                           // startActivity(new Intent(getApplicationContext(), NumberAndLocation.class));
+
+                        }else {
+                            Toast.makeText(RegisterUser.this,"Registration Error",Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    }
+
+                });
     }
 }

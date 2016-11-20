@@ -63,7 +63,7 @@
             android:id="@+id/number"
             android:textSize="16sp"
             android:hint="fghj"
-            android:layout_marginStart="250dp"
+            android:layout_marginStart="230dp"
             android:layout_below="@+id/asdfoo"
             android:layout_alignParentStart="true" />
 

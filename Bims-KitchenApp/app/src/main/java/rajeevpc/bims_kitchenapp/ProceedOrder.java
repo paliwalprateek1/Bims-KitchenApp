@@ -76,19 +76,19 @@ public class ProceedOrder extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //order = storeSharedPreferences.loadFoodVegQuantity(getApplicationContext());
-        orderV = storeSharedPreferences.loadFoodVegQuantity(getApplicationContext());
-
-        orderN = storeSharedPreferences.loadFoodNonQuantity(getApplicationContext());
-
-        orderB = storeSharedPreferences.loadFoodBevQuantity(getApplicationContext());
-
-        if(orderB!=null)
-            order.addAll(orderB);
-        if(orderN!=null)
-            order.addAll(orderN);
-        if(orderV!=null)
-            order.addAll(orderV);
+        order = storeSharedPreferences.loadFoodQuantity(getApplicationContext());
+//        orderV = storeSharedPreferences.loadFoodVegQuantity(getApplicationContext());
+//
+//        orderN = storeSharedPreferences.loadFoodNonQuantity(getApplicationContext());
+//
+//        orderB = storeSharedPreferences.loadFoodBevQuantity(getApplicationContext());
+//
+//        if(orderB!=null)
+//            order.addAll(orderB);
+//        if(orderN!=null)
+//            order.addAll(orderN);
+//        if(orderV!=null)
+//            order.addAll(orderV);
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_proceed_order);
@@ -214,6 +214,7 @@ public class ProceedOrder extends AppCompatActivity {
     }
 
     public void useCustomLocation(View view) {
+        order.clear();
         (new StoreSharedPreferences()).removeAllQuant(getApplicationContext());
         (new StoreSharedPreferences()).removeAllVegQuant(getApplicationContext());
         (new StoreSharedPreferences()).removeAllNonQuant(getApplicationContext());

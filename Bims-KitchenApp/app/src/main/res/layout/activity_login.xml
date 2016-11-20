@@ -30,67 +30,26 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp">
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="E-mail"
-            android:padding="10dp"
-            android:layout_margin="10dp"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/border" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:inputType="textPassword"
-            android:background="@drawable/border" />
-
-    </LinearLayout>
-
-
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Not a member Yet? Register here"
-    android:onClick="Register"
-    android:id="@+id/textView5"
-        android:layout_marginBottom="48dp"
-        android:layout_above="@+id/loginSignup"
-        android:layout_alignStart="@+id/imageView5" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:src="@drawable/gsin"
-        android:onClick="clickedgooglesignin"
+        android:onClick="signIn"
         android:layout_height="wrap_content"
         android:id="@+id/imageView5"
-        android:layout_above="@+id/textView5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="73dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Or"
-        android:id="@+id/textView2"
-        android:layout_marginBottom="50dp"
-        android:layout_alignBottom="@+id/textView5"
+        android:layout_marginBottom="39dp"
+        android:layout_above="@+id/loginSignup"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:src="@drawable/bk3"
+        android:layout_height="250dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp" />
+
 </RelativeLayout><!--<?xml version="1.0" encoding="utf-8"?>-->
 <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:tools="http://schemas.android.com/tools"-->

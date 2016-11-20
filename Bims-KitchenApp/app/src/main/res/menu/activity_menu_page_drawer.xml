@@ -7,17 +7,17 @@
             android:onClick="profMenu"
             android:icon="@drawable/user"
             android:title="Profile" />
-        <item
-            android:id="@+id/nav_track"
-            android:icon="@drawable/track"
-            android:title="Track Your Order" />
-        <item
-            android:id="@+id/nav_refer"
-            android:icon="@drawable/coins"
-            android:title="Refer 'N' Earn" />
+        <!--<item-->
+            <!--android:id="@+id/nav_track"-->
+            <!--android:icon="@drawable/track"-->
+            <!--android:title="Track Your Order" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_refer"-->
+            <!--android:icon="@drawable/coins"-->
+            <!--android:title="Refer 'N' Earn" />-->
         <item
             android:id="@+id/nav_prevOrder"
-            android:icon="@drawable/settings"
+            android:icon="@drawable/track"
             android:title="Previous Orders" />
 
         <item
@@ -34,10 +34,10 @@
                 android:id="@+id/nav_feedback"
                 android:icon="@drawable/feed"
                 android:title="Feedback" />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/about"
-                android:title="About" />
+            <!--<item-->
+                <!--android:id="@+id/nav_about"-->
+                <!--android:icon="@drawable/about"-->
+                <!--android:title="About" />-->
 
             <item
                 android:id="@+id/nav_signout"

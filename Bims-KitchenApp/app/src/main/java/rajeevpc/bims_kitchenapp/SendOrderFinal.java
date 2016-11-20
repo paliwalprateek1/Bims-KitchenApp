@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +100,21 @@ public class SendOrderFinal extends AppCompatActivity {
         Firebase newRef = ref.child("Order").push();
         newRef.setValue(data);
         String r = newRef.getKey();
+
+        String s = "Name: "+ data.getName() +"\n"+ "Address: "+data.getPlace()+"\n"+"Order: "+ data.getFood()
+                +"\n"+"Total Price: "+data.getPrice();
+
+
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage("8128268097", null, "You have an order\n"+s+"\n", null, null);
+
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.putExtra("sms_body", "default content");
+        sendIntent.setType("vnd.android-dir/mms-sms");
+        startActivity(sendIntent);
+
+        finish();(new StoreSharedPreferences()).removeAll(SendOrderFinal.this);
+
     }
 
     public void sendOrderFinalMaaKasam(View view) {

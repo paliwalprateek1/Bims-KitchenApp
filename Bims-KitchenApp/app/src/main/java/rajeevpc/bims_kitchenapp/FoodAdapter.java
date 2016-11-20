@@ -59,7 +59,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Food food = foodList.get(position);
         holder.food.setText(food.getFood());
-        holder.price.setText(food.getPrice());
+        holder.price.setText(food.getPrice()+" Rs");
 
         Picasso.with(holder.foodItemIcon.getContext())
                 .load(food.getImageUrl())

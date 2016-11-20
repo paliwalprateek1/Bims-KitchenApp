@@ -21,16 +21,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Handler mHandler;
     private ProgressDialog mDialog;
-
     private Handler mHandler2 = new Handler();
-
-
     private final int SPLASH_DISPLAY_LENGTH = 3000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Toast.makeText(this, "216", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "248", Toast.LENGTH_SHORT).show();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         ImageView myImageView= (ImageView)findViewById(R.id.splashscreen);

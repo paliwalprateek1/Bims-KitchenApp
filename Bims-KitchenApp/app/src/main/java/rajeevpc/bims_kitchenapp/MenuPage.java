@@ -63,7 +63,7 @@ public class MenuPage extends AppCompatActivity
 
 
     Menu menu;
-    MenuItem nav_location;
+    MenuItem nav_location, nav_prof;
 
     public List<Food> orderedList = new ArrayList<>();
 
@@ -122,6 +122,8 @@ public class MenuPage extends AppCompatActivity
         menu = navigationView.getMenu();
         nav_location =   menu.findItem(R.id.nav_location);
         nav_location.setTitle(StoreSharedPreferences.getUserCustomLocation(MenuPage.this));
+        nav_prof = menu.findItem(R.id.nav_prof);
+        nav_prof.setTitle(StoreSharedPreferences.getUserName(MenuPage.this));
 
     }
 
@@ -186,15 +188,9 @@ public class MenuPage extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_prof) {
-            Intent intent = new Intent(MenuPage.this, UserProfile.class);
-            startActivity(intent);
-            // Handle the camera action
-        } else if (id == R.id.nav_track) {
 
-        } else if (id == R.id.nav_refer) {
-
-        } else if (id == R.id.nav_prevOrder) {
+        TextView t = (TextView )findViewById(R.id.nav_prof);
+        if (id == R.id.nav_prevOrder) {
             Intent intent = new Intent(MenuPage.this, PreviousOrders.class);
             startActivity(intent);
 
@@ -202,14 +198,9 @@ public class MenuPage extends AppCompatActivity
             Intent intent = new Intent(MenuPage.this, FeedBackForm.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_about) {
-
         }
         else if (id == R.id.nav_signout) {
-            SharedPreferences preferences = getSharedPreferences("PREFERENCE", 0);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.clear();
-            editor.commit();
+            StoreSharedPreferences.setUserEmail(MenuPage.this, null);
 
             Intent intent = new Intent(MenuPage.this, Login.class);
             startActivity(intent);

@@ -3,6 +3,7 @@ package rajeevpc.bims_kitchenapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -194,6 +195,7 @@ public class StoreSharedPreferences {
         editor = settings.edit();
         Gson gson = new Gson();
         String jsonFavorites = gson.toJson(favorites);
+        Log.d("SharedPref","now saving "+jsonFavorites);
         editor.putString(FAVORITES_VEG_QUANT, jsonFavorites);
         editor.commit();
     }
@@ -204,12 +206,16 @@ public class StoreSharedPreferences {
         settings = context.getSharedPreferences(PREFS_NAME_VEG_QUANT,Context.MODE_PRIVATE);
         if (settings.contains(FAVORITES_VEG_QUANT)) {
             String jsonFavorites = settings.getString(FAVORITES_VEG_QUANT, null);
+
             Gson gson = new Gson();
             FoodQuantity[] favoriteItems = gson.fromJson(jsonFavorites,FoodQuantity[].class);
+
             favorites = Arrays.asList(favoriteItems);
+
             favorites = new ArrayList(favorites);
         } else
             return null;
+
         return (ArrayList) favorites;
     }
 
@@ -218,6 +224,7 @@ public class StoreSharedPreferences {
         if (favorites == null)
             favorites = new ArrayList();
         favorites.add(beanSampleList);
+        Log.d("SharedPref","after loading size"+favorites.size());
         storeFoodVegQuant(context, favorites);
     }
 

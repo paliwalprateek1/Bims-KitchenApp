@@ -1,6 +1,7 @@
 package rajeevpc.bims_kitchenapp;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class ProceedFoodAdapter extends RecyclerView.Adapter<ProceedFoodAdapter.
 
     @Override
     public int getItemCount() {
+        Log.d("ProceedAdapter","size "+foodList.size());
         return foodList.size();
     }
 }
